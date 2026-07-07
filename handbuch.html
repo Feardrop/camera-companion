@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#14171a">
+<meta name="color-scheme" content="dark">
+<title>Handbuch · X-H2S Reisebegleiter</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="handbuch">
+
+<main>
+<section id="tab-handbuch">
+  <h2>Offizielles Handbuch (deutsch)</h2>
+  <div class="card">
+    <p style="margin-top:0">Der komplette <b>Text</b> aller 404 Seiten ist in dieser App eingebaut und <b>offline durchsuchbar</b>. Für die Abbildungen lade dir einmal (im WLAN) das Original-PDF herunter — es lässt sich dann jederzeit offline in der Dateien-App öffnen.</p>
+    <div class="dlbtns">
+      <a class="btn" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf" target="_blank" rel="noopener">📥 Handbuch-PDF herunterladen (deutsch, 7 MB)</a>
+      <a class="btn ghost" href="https://fujifilm-dsc.com/en/manual/x-h2s/" target="_blank" rel="noopener">🌐 Online-Handbuch (Web)</a>
+    </div>
+  </div>
+
+  <div class="search">
+    <input id="q" type="search" placeholder="Im Handbuch suchen … z. B. Selbstauslöser" oninput="doSearch()">
+  </div>
+  <div id="mres"></div>
+
+  <h2>Direkt zu den Kapiteln</h2>
+  <div class="chips">
+    <button class="chip" onclick="openPage(358)">🚑 Fehlerbehebung · 358</button>
+    <button class="chip" onclick="openPage(365)">⚠️ Warnmeldungen · 365</button>
+    <button class="chip" onclick="openPage(220)">🎞️ RAW-Konvertierung · 220</button>
+    <button class="chip" onclick="openPage(129)">🖼️ JPEG/HEIF · 129</button>
+    <button class="chip" onclick="openPage(1)">Kap. 1 Grundlagen · 1</button>
+    <button class="chip" onclick="openPage(37)">Kap. 2 Erste Schritte · 37</button>
+    <button class="chip" onclick="openPage(55)">Kap. 3 Foto-Basics · 55</button>
+    <button class="chip" onclick="openPage(63)">Kap. 4 Video-Basics · 63</button>
+    <button class="chip" onclick="openPage(71)">Kap. 5 Fotografieren · 71</button>
+    <button class="chip" onclick="openPage(125)">Kap. 6 Aufnahmemenüs · 125</button>
+    <button class="chip" onclick="openPage(142)">Custom Settings · 142</button>
+    <button class="chip" onclick="openPage(157)">Motiverkennung · 157</button>
+    <button class="chip" onclick="openPage(213)">Kap. 7 Wiedergabe · 213</button>
+    <button class="chip" onclick="openPage(243)">Kap. 9 Setup · 243</button>
+    <button class="chip" onclick="openPage(268)">Tasten/Räder · 268</button>
+    <button class="chip" onclick="openPage(285)">Kap. 10 Shortcuts · 285</button>
+  </div>
+
+  <div id="pageview" style="display:none" class="pageview">
+    <div class="pagenav">
+      <button onclick="stepPage(-1)" aria-label="Vorherige Seite">‹</button>
+      <div class="pg" id="pglabel"></div>
+      <button onclick="stepPage(1)" aria-label="Nächste Seite">›</button>
+      <button onclick="closePage()" aria-label="Schließen">✕</button>
+    </div>
+    <div class="pagetext" id="pgtext"></div>
+    <p class="mut" style="margin:10px 0 0">Nur-Text-Ansicht (ohne Abbildungen) · <a id="pdfdeep" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf" target="_blank" rel="noopener">diese Seite im PDF öffnen</a></p>
+  </div>
+</section>
+</main>
+
+  <script src="assets/data/manual-de.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/handbuch.js"></script>
+</body>
+</html>
