@@ -188,3 +188,50 @@
   .quicknav button:active{background:var(--panel2)}
   .dlbtns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
   a.btn{text-decoration:none;text-align:center}
+
+/* ================================================================
+   App-Shell & Overflow-Fixes (v2)
+   ================================================================ */
+html,body{overflow-x:hidden;max-width:100%}
+body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%;
+  -webkit-touch-callout:none;touch-action:pan-y pinch-zoom}
+main,section,.card,.jstep .tx,.lnk,.fact,details .body{min-width:0}
+p,li,b,span,a,td,summary,label{overflow-wrap:break-word}
+
+/* Menüpfade dürfen umbrechen — kein horizontales Scrollen mehr */
+.osd{white-space:normal;overflow-wrap:anywhere;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;line-height:1.9}
+
+/* Chips & Buttons mehrzeilig statt überbreit */
+.chip{white-space:normal;text-align:left;line-height:1.35}
+.quicknav button{white-space:normal}
+.dlbtns{flex-direction:column}
+.dlbtns .btn{white-space:normal;text-align:center}
+
+/* Menüwege-Tabelle: erste Spalte darf umbrechen */
+table.mini{table-layout:fixed}
+table.mini td:first-child{white-space:normal;width:31%;overflow-wrap:anywhere}
+
+/* Modusrad: umbrechen statt horizontal scrollen */
+.dial{flex-wrap:wrap;overflow:visible;row-gap:26px;padding-bottom:18px}
+
+/* Handbuch-Textansicht: lange Zeichenketten umbrechen */
+.pagetext{overflow-wrap:anywhere}
+.search input{min-width:0}
+
+/* Header wie eine App-Titelleiste (Notch-sicher) */
+header{padding-top:calc(12px + env(safe-area-inset-top));
+  padding-left:calc(16px + env(safe-area-inset-left));
+  padding-right:calc(16px + env(safe-area-inset-right))}
+
+/* Kompakte, garantiert passende Tab-Leiste (6 Tabs) */
+nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+nav a,nav button{flex:1 1 0;min-width:0;padding:7px 0 6px;font-size:.56rem;
+  letter-spacing:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+nav a .ic,nav button .ic{font-size:1.12rem}
+nav a{transition:color .15s}
+nav a.on .ic{transform:translateY(-1px)}
+
+/* App-Gefühl: Tap-Feedback */
+.card:active,.res:active,.lnk:active,.jstep:active{background:var(--panel2)}
+@media (prefers-reduced-motion:reduce){nav a{transition:none}}
