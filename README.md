@@ -17,6 +17,9 @@ assets/css/style.css      zentrales Stylesheet (Design-Tokens in :root)
 assets/js/ui.js           Header/Navigation, go(), openPage()-Weiterleitung, Storage-Helfer
 assets/js/<seite>.js      Logik der jeweiligen Seite
 assets/data/manual-de.js  Volltext des dt. Handbuchs als JS-Array (404 Seiten, ~450 KB)
+assets/icons/             App-Icons (192/512/maskable/apple-touch)
+manifest.webmanifest      PWA-Manifest (Name, Icons, Standalone-Modus)
+sw.js                     Service Worker (Precache + Offline-Betrieb)
 ```
 
 ## Konventionen
@@ -27,6 +30,18 @@ assets/data/manual-de.js  Volltext des dt. Handbuchs als JS-Array (404 Seiten, ~
 - **Speicher:** localStorage mit Präfix `xh2s_` (Übungen: `xh2s_ex`, Belegung: `xh2s_fields`).
   Funktioniert erst, wenn die Seiten über http(s) oder file:// im Browser laufen.
 - **Design-Tokens** (Farben, Fonts) stehen in `:root` in style.css.
+
+## Als App installieren (PWA)
+
+Die Site ist eine installierbare Web-App (Manifest + Service Worker, komplett offline-fähig):
+
+- **Android (Chrome):** Seite öffnen → Menü ⋮ → „App installieren" / „Zum Startbildschirm hinzufügen".
+- **iPhone (Safari):** Seite öffnen → Teilen-Symbol → „Zum Home-Bildschirm".
+
+Voraussetzung: Auslieferung über **https** (GitHub Pages erfüllt das). Der Service Worker
+(`sw.js`) precached alle Seiten und Assets — nach dem ersten Besuch funktioniert alles offline.
+**Wichtig beim Deployen:** die `CACHE`-Version in `sw.js` hochzählen (z. B. `xh2s-v2`),
+sonst sehen installierte Apps alte Inhalte.
 
 ## Veröffentlichen (GitHub Pages)
 
