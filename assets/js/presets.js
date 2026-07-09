@@ -37,7 +37,7 @@ PRESETS.forEach(p=>{
 
 function pick(id){
   document.querySelectorAll(".stop").forEach(s=>s.classList.remove("sel"));
-  const st=document.getElementById("stop-"+id); if(st){st.classList.add("sel"); st.scrollIntoView && st.scrollIntoView({inline:"center",block:"nearest",behavior:"smooth"});}
+  const st=document.getElementById("stop-"+id); if(st){st.classList.add("sel"); }
   render(id);
 }
 function render(sel){

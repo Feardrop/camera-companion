@@ -3,7 +3,7 @@ const PAGES = [
   ["index.html",    "start",    "\u2691", "Start"],
   ["presets.html",  "presets",  "\u25CE", "Presets"],
   ["sos.html",      "sos",      "\u271A", "SOS"],
-  ["handbuch.html", "handbuch", "\uD83D\uDD6E", "Handbuch"],
+  ["handbuch.html", "handbuch", "\uD83D\uDCD6", "Handbuch"],
   ["uebungen.html", "uebungen", "\u2713", "\u00DCbungen"],
   ["mehr.html",     "mehr",     "\u2630", "Mehr"]
 ];
@@ -33,3 +33,9 @@ const store = {
 };
 
 
+
+// PWA: Service Worker registrieren (Offline-Betrieb & Installierbarkeit)
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () =>
+    navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
