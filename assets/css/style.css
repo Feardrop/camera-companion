@@ -34,8 +34,14 @@ header{position:sticky;top:0;z-index:20;background:linear-gradient(var(--body) 7
 header h1{margin:0;font-size:1.05rem;letter-spacing:.14em;font-weight:800}
 header h1 b{color:var(--green)}
 header p{margin:2px 0 0;font-size:.72rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
-.search-btn{position:absolute;top:12px;right:14px;background:none;border:0;color:var(--muted);
-  font-size:1.25rem;line-height:1;padding:6px;cursor:pointer;border-radius:var(--radius-sm)}
+/* top/right must include the safe-area insets like the rest of the header —
+   without them this sits under the notch/status-bar dead zone on real phones
+   (invisible in desktop-emulated testing, since there's no inset there).
+   width/height:44px matches Apple's minimum recommended tap target. */
+.search-btn{position:absolute;top:calc(4px + env(safe-area-inset-top));right:calc(4px + env(safe-area-inset-right));
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  background:none;border:0;color:var(--muted);font-size:1.25rem;line-height:1;cursor:pointer;
+  border-radius:var(--radius-sm);z-index:1}
 .search-btn:active{color:var(--green)}
 .search-btn:focus-visible{outline:2px solid var(--green);outline-offset:1px}
 
@@ -190,6 +196,17 @@ table.mini td:first-child{font-family:var(--mono);color:#4be08c;font-weight:700;
   max-height:60vh;overflow-y:auto;border-top:1px dashed var(--line);padding-top:10px}
 .pagetext mark{background:var(--green);color:var(--body);border-radius:3px;padding:0 2px}
 .mut{color:#aeb8bf;font-size:.82rem}
+
+/* ---- PDF-Ansicht (Canvas + Text-Layer aus assets/js/pdf-viewer.js) ----
+   Nur die JS-Bibliothek von PDF.js ist vendored, nicht ihr Stylesheet — die
+   Basis-Regeln, die die Text-Layer-Positionierung braucht, stehen hier. */
+.pdfpage{position:relative;margin:0 auto;max-width:100%;overflow:auto;border-radius:var(--radius-md);background:#fff}
+#pdfCanvas{display:block}
+.pdf-text-layer{position:absolute;top:0;left:0;overflow:hidden;line-height:1;text-align:initial;
+  transform-origin:0 0}
+.pdf-text-layer span,.pdf-text-layer br{color:transparent;position:absolute;white-space:pre;
+  cursor:text;transform-origin:0 0}
+.pdf-text-layer mark{background:rgba(62,207,125,.5);color:transparent}
 
 /* ---- Tabbar (5 Tabs — SOS ist per Schnellzugriff/App-Shortcut erreichbar) ---- */
 nav{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(24,28,32,.97);

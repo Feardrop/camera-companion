@@ -83,7 +83,7 @@ function searchAll(query, { types = null, manual = null, limit = 30 } = {}) {
         doc: {
           id: `manual-${pdf}`, type: "manual",
           title: printed >= 1 ? "S. " + printed : "Vorspann " + pdf,
-          target: `handbuch.html?page=${printed}`,
+          target: `handbuch.html?page=${printed}&q=${encodeURIComponent(q)}`,
           text,
         },
         score, snippet: snippetFor(text, needleLower),

@@ -4,7 +4,7 @@ export function render() {
   return `<section id="tab-handbuch">
   <h2>Offizielles Handbuch (deutsch)</h2>
   <div class="card">
-    <p style="margin-top:0">Der komplette <b>Text</b> aller 404 Seiten ist in dieser App eingebaut und <b>offline durchsuchbar</b>. Für die Abbildungen lade dir einmal (im WLAN) das Original-PDF herunter — es lässt sich dann jederzeit offline in der Dateien-App öffnen.</p>
+    <p style="margin-top:0">Der komplette <b>Text</b> aller 404 Seiten ist in dieser App eingebaut und <b>offline durchsuchbar</b> — die Suche funktioniert immer, auch ohne Netz. Beim Öffnen einer Seite zeigt die App zusätzlich die <b>echte PDF-Seite mit Abbildungen</b> an (braucht dafür einmal Netzverbindung); ohne Netz springt sie automatisch auf die eingebaute Text-Ansicht zurück.</p>
     <div class="dlbtns">
       <a class="btn" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf" target="_blank" rel="noopener">📥 Handbuch-PDF herunterladen (deutsch, 7 MB)</a>
       <a class="btn ghost" href="https://fujifilm-dsc.com/en/manual/x-h2s/" target="_blank" rel="noopener">🌐 Online-Handbuch (Web)</a>
@@ -43,8 +43,13 @@ export function render() {
       <button onclick="stepPage(1)" aria-label="Nächste Seite">›</button>
       <button onclick="closePage()" aria-label="Schließen">✕</button>
     </div>
-    <div class="pagetext" id="pgtext"></div>
-    <p class="mut" style="margin:10px 0 0">Nur-Text-Ansicht (ohne Abbildungen) · <a id="pdfdeep" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf" target="_blank" rel="noopener">diese Seite im PDF öffnen</a></p>
+    <p class="mut" id="pdfstatus" style="display:none">PDF-Seite wird geladen …</p>
+    <div class="pdfpage" id="pdfpage" style="display:none">
+      <canvas id="pdfCanvas"></canvas>
+      <div id="pdfTextLayer" class="pdf-text-layer"></div>
+    </div>
+    <div class="pagetext" id="pgtext" style="display:none"></div>
+    <p class="mut" style="margin:10px 0 0" id="pdffallbacknote">Nur-Text-Ansicht (ohne Abbildungen, PDF nicht verfügbar) · <a id="pdfdeep" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf" target="_blank" rel="noopener">PDF stattdessen extern öffnen</a></p>
   </div>
 </section>`;
 }
