@@ -56,18 +56,18 @@ const T = {
   allSettingsSummary: { de: "Alle RAW-Konvertierungs-Einstellungen erklärt", en: "Every RAW-conversion setting explained" },
   notAllAvailable: { de: "Nicht jede Einstellung steht immer zur Verfügung — abhängig davon, wie das Bild aufgenommen wurde.",
                       en: "Not every setting is always available — it depends on how the image was shot." },
-  chipRawConv: { de: "📖 Handbuch: RAW-Konvertierung · S. 220", en: "📖 Manual: RAW conversion" },
-  chipJpegHeif: { de: "📖 Handbuch: JPEG/HEIF · S. 129", en: "📖 Manual: JPEG/HEIF" },
+  chipRawConv: { de: "📖 Handbuch: RAW-Konvertierung · S. 220", en: "📖 Manual: RAW conversion · p. 220" },
+  chipJpegHeif: { de: "📖 Handbuch: JPEG/HEIF · S. 129", en: "📖 Manual: JPEG/HEIF · p. 129" },
   chipExercise: { de: "✓ Übung: RAW-Konvertierung üben", en: "✓ Exercise: practice RAW conversion" },
   chipSos: { de: "✚ SOS: Bilder plötzlich schwarzweiß", en: "✚ SOS: shots suddenly black &amp; white" },
   manualsHeading: { de: "Handbücher", en: "Manuals" },
-  officialManualTag: { de: "PDF · DEUTSCH", en: "PDF" },
-  officialManualTitle: { de: "Offizielles Handbuch (deutsch)", en: "Official manual" },
-  officialManualDesc: { de: "Download, 7 MB — mit allen Abbildungen, offline nutzbar", en: "Download — with every illustration, works offline (page numbers not yet verified against this app)" },
-  webManualTag: { de: "WEB · EN", en: "WEB" },
+  officialManualTag: { de: "PDF", en: "PDF" },
+  officialManualTitle: { de: "Offizielles Handbuch", en: "Official manual" },
+  officialManualDesc: { de: "Download, 7 MB — mit allen Abbildungen, offline nutzbar (in der App enthalten)", en: "Download, 7 MB — with every illustration, works offline (ships with the app)" },
+  webManualTag: { de: "WEB", en: "WEB" },
   webManualTitle: { de: "Online-Handbuch X-H2S", en: "Online manual, X-H2S" },
-  webManualDesc: { de: "Durchsuchbar, handyfreundlich", en: "Searchable, phone-friendly" },
-  manualNote: { de: "Der Volltext des deutschen Handbuchs steckt auf der Seite „Handbuch“ (Suche funktioniert offline); das PDF mit Abbildungen gibt es dort per Download-Button.",
+  webManualDesc: { de: "Durchsuchbar, handyfreundlich (Fujifilm-Website)", en: "Searchable, phone-friendly (Fujifilm's website)" },
+  manualNote: { de: "Der Volltext des Handbuchs steckt auf der Seite „Handbuch“ (Suche funktioniert offline); das PDF mit Abbildungen gibt es dort per Download-Button.",
                 en: "The manual text lives on the “Manual” page (search works offline); the PDF with illustrations is available there via the download button." },
   introPdfTag: { de: "PDF · DEUTSCH", en: "PDF · GERMAN" },
   introPdfTitle: { de: "Einführung &amp; Lernpfad (16 Seiten)", en: "Introduction &amp; Learning Path (16 pages)" },
@@ -99,15 +99,11 @@ export function render(locale) {
   const menuRows = localize(MENU_PATHS, locale).map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("\n    ");
   const rawSettingRows = localize(RAW_SETTINGS, locale).map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("\n        ");
   const formatLine = t.formatLine.replace("${jpegHeif}", facts.jpegHeifPath);
-  const manualPdfUrl = MANUAL_PDF_URL[locale];
 
-  // Manual chapter chips carry printed-PDF page numbers from the German
-  // manual; the English PDF's real pagination hasn't been confirmed yet (see
-  // CLAUDE.md), so those two chips are German-only for now.
-  const pageChips = locale === "de"
-    ? `<button class="chip" onclick="openPage(220)">${t.chipRawConv}</button>
-    <button class="chip" onclick="openPage(129)">${t.chipJpegHeif}</button>`
-    : "";
+  // Both language editions of the manual share identical pagination (see
+  // CLAUDE.md), so these page numbers are valid in both locales.
+  const pageChips = `<button class="chip" onclick="openPage(220)">${t.chipRawConv}</button>
+    <button class="chip" onclick="openPage(129)">${t.chipJpegHeif}</button>`;
 
   const videosDe = `<h2>${t.videosDeHeading}</h2>
   <a class="lnk" href="https://www.youtube.com/watch?v=2gh4e6giFfQ"><em>${t.ytMust}</em><b>${t.vid1title}</b><span>${t.vid1desc}</span></a>
@@ -170,7 +166,7 @@ export function render(locale) {
   </div>
 
   <h2>${t.manualsHeading}</h2>
-  <a class="lnk" href="${manualPdfUrl}"><em>${t.officialManualTag}</em><b>${t.officialManualTitle}</b><span>${t.officialManualDesc}</span></a>
+  <a class="lnk" href="${MANUAL_PDF_URL}"><em>${t.officialManualTag}</em><b>${t.officialManualTitle}</b><span>${t.officialManualDesc}</span></a>
   <a class="lnk" href="https://fujifilm-dsc.com/en/manual/x-h2s/"><em>${t.webManualTag}</em><b>${t.webManualTitle}</b><span>${t.webManualDesc}</span></a>
   <p class="mut">${t.manualNote}</p>
 

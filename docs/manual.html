@@ -24,10 +24,10 @@
 <section id="tab-manual">
   <h2>Official manual</h2>
   <div class="card">
-    <p style="margin-top:0">The complete German <b>text</b> of all 404 pages is built into this app and <b>searchable offline</b> — search always works, even with no network. Opening a page also shows the <b>real PDF page with illustrations</b> (needs a network connection for that); with no network it automatically falls back to the built-in text view. The English offline text isn't extracted yet — see the note below.</p>
+    <p style="margin-top:0">The complete <b>text</b> of all 404 pages is built into this app and <b>searchable offline</b> — search always works, even with no network. Opening a page also shows the <b>real PDF page with illustrations</b> (the PDF ships with the app, no network needed); if it hasn't been cached locally yet for some reason, the app automatically falls back to the built-in text view.</p>
     <div class="dlbtns">
-      <a class="btn" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_en_s_f.pdf" target="_blank" rel="noopener">📥 Download the manual PDF</a>
-      <a class="btn ghost" href="https://fujifilm-dsc.com/en/manual/x-h2s/" target="_blank" rel="noopener">🌐 Online manual (web)</a>
+      <a class="btn" href="manual.pdf" target="_blank" rel="noopener">📥 Download the manual PDF (7 MB)</a>
+      <a class="btn ghost" href="https://fujifilm-dsc.com/en/manual/x-h2s/" target="_blank" rel="noopener">🌐 Online manual (web, Fujifilm)</a>
     </div>
   </div>
 
@@ -37,7 +37,24 @@
   <div id="mres"></div>
 
   <h2>Jump straight to a chapter</h2>
-  <p class="mut">Chapter shortcuts below use page numbers from the German PDF and aren't available here yet — the English PDF's real page numbers haven't been confirmed. Full-text search above covers the German manual for now; use the PDF/online links to browse the English manual directly.</p>
+  <div class="chips">
+    <button class="chip" onclick="openPage(358)">🚑 Troubleshooting · 358</button>
+    <button class="chip" onclick="openPage(365)">⚠️ Warning messages · 365</button>
+    <button class="chip" onclick="openPage(220)">🎞️ RAW conversion · 220</button>
+    <button class="chip" onclick="openPage(129)">🖼️ JPEG/HEIF · 129</button>
+    <button class="chip" onclick="openPage(1)">Ch. 1 Before You Begin · 1</button>
+    <button class="chip" onclick="openPage(37)">Ch. 2 First Steps · 37</button>
+    <button class="chip" onclick="openPage(55)">Ch. 3 Photography Basics · 55</button>
+    <button class="chip" onclick="openPage(63)">Ch. 4 Movie Basics · 63</button>
+    <button class="chip" onclick="openPage(71)">Ch. 5 Taking Photographs · 71</button>
+    <button class="chip" onclick="openPage(125)">Ch. 6 The Shooting Menus · 125</button>
+    <button class="chip" onclick="openPage(142)">Custom Settings · 142</button>
+    <button class="chip" onclick="openPage(157)">Subject Detection · 157</button>
+    <button class="chip" onclick="openPage(213)">Ch. 7 Playback · 213</button>
+    <button class="chip" onclick="openPage(243)">Ch. 9 Setup · 243</button>
+    <button class="chip" onclick="openPage(268)">Buttons/Dials · 268</button>
+    <button class="chip" onclick="openPage(285)">Ch. 10 Shortcuts · 285</button>
+  </div>
 
   <div id="pageview" style="display:none" class="pageview">
     <div class="pagenav">
@@ -52,7 +69,7 @@
       <div id="pdfTextLayer" class="pdf-text-layer"></div>
     </div>
     <div class="pagetext" id="pgtext" style="display:none"></div>
-    <p class="mut" style="margin:10px 0 0" id="pdffallbacknote">Text-only view (no illustrations, PDF unavailable) · <a id="pdfdeep" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_en_s_f.pdf" target="_blank" rel="noopener">Open the PDF externally instead</a></p>
+    <p class="mut" style="margin:10px 0 0" id="pdffallbacknote">Text-only view (no illustrations, PDF unavailable) · <a id="pdfdeep" href="manual.pdf" target="_blank" rel="noopener">Open the PDF externally instead</a></p>
   </div>
 </section>
 </main>

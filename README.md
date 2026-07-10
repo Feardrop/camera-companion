@@ -23,8 +23,10 @@ src/css/style.css             zentrales Stylesheet (Design-Tokens in :root, für
 src/js/ui.js                   Storage-Helfer, openPage()-Weiterleitung, Sprach-Umschaltung, Service-Worker-Registrierung
 src/js/<seite>.js              Interaktions-Logik der jeweiligen Seite
 src/js/vendor/pdfjs/            vendorte PDF.js-Bibliothek (In-App-PDF-Ansicht im Handbuch)
+src/manual-de.pdf               vendorte offizielle Handbuch-PDF (deutsch)
+src/manual-en.pdf               vendorte offizielle Handbuch-PDF (englisch)
 src/data/manual-de.js           Volltext des dt. Handbuchs als JS-Array (404 Seiten, ~450 KB)
-src/data/manual-en.js           Platzhalter — engl. Handbuchtext noch nicht extrahiert (siehe unten)
+src/data/manual-en.js           Volltext des engl. Handbuchs als JS-Array (404 Seiten, ~410 KB)
 src/icons/                      App-Icons (192/512/maskable/apple-touch)
 content/data/manifest.js         PWA-Manifest-Inhalt (Name, Icons, Standalone-Modus), zweisprachig
 docs/                             GENERIERT — nicht von Hand bearbeiten, wird bei jedem Build überschrieben
@@ -35,8 +37,8 @@ docs/                             GENERIERT — nicht von Hand bearbeiten, wird 
 - **Seiten-Deep-Link ins Handbuch:** `manual.html?page=220` öffnet gedruckte Seite 220 (optional
   `&q=Suchwort` markiert und scrollt zum Treffer in der PDF-Ansicht). Von anderen Seiten aus einfach
   `openPage(220)` aufrufen (ui.js leitet weiter).
-- **Seitenzahlen:** gedruckte Seite = PDF-Seite − 24 (`OFFSET` in `manual-de.js`; für Englisch noch nicht
-  bekannt, siehe unten).
+- **Seitenzahlen:** gedruckte Seite = PDF-Seite − 24 (`OFFSET`, identisch in beiden Sprachen — verifiziert
+  gegen beide vendorten PDFs, siehe unten).
 - **Speicher:** localStorage mit Präfix `xh2s_` (Übungen: `xh2s_ex`, Notizen: `xh2s_fields`, Sprachwahl:
   `xh2s_lang`). Beide Sprach-Bäume teilen sich dieselbe Domain/denselben Origin und damit denselben
   localStorage. Funktioniert erst, wenn die Seiten über http(s) oder file:// im Browser laufen.
@@ -53,9 +55,9 @@ mit `de` beginnt und noch keine Präferenz gespeichert ist (`xh2s_lang`) — fal
 `docs/de/`. Auf der About-Seite gibt es außerdem einen manuellen Umschalter. Details und der komplette
 Übersetzungsmechanismus (`{de,en}`-Paare + `localize()`) stehen in `CLAUDE.md`.
 
-**Bekannte Lücke:** Der volle Handbuch-Text ist bisher nur auf Deutsch extrahiert (`src/data/manual-de.js`).
-Die englische Version zeigt stattdessen einen kurzen Platzhaltertext; die echte PDF-Ansicht (mit
-Netzverbindung) funktioniert für Englisch aber bereits. Siehe "Handbuch-Text aktualisieren" unten.
+Das Handbuch (Text **und** PDF) ist vollständig zweisprachig und komplett offline nutzbar — beide offiziellen
+PDFs (`src/manual-de.pdf`, `src/manual-en.pdf`) liegen direkt im Repo, keine Netzverbindung zu Fujifilm mehr
+nötig. Siehe "Handbuch-Text aktualisieren" unten.
 
 ## Als App installieren (PWA)
 
@@ -80,12 +82,17 @@ lokal per Doppelklick auf `docs/index.html` bzw. `docs/de/index.html`.
 
 ## Handbuch-Text aktualisieren
 
-**Deutsch** (bereits vorhanden): `pdftotext -layout x-h2s_manual_de_s_f.pdf -` je Seite splitten (Form Feed
-`\f`) und als JS-Array in `src/data/manual-de.js` schreiben (`const MANUAL = [...]; const OFFSET = 24;`),
-dann `node build/build.js` laufen lassen.
+Beide PDFs sind im Repo vendort (`src/manual-de.pdf`, `src/manual-en.pdf` — offizielle Fujifilm-Dokumente,
+nicht generiert). Bei einer neuen PDF-Version (z. B. nach einem Firmware-Update) die passende Datei ersetzen
+und den Text neu extrahieren:
 
-**Englisch** (noch offen): dieselbe Prozedur mit der offiziellen englischen PDF
-(`content/data/facts.js`'s `MANUAL_PDF_URL.en` — URL vorher verifizieren, ist aktuell nur eine Vermutung) auf
-`src/data/manual-en.js` anwenden, den echten `OFFSET` für die englische Paginierung ermitteln, danach in
-`content/pages/manual.js` die (aktuell nur für Deutsch vorhandenen) nummerierten Kapitel-Schnellzugriffe um
-die englischen Seitenzahlen ergänzen.
+```
+pdftotext -layout src/manual-de.pdf -   # bzw. src/manual-en.pdf
+```
+
+Pro Seite (getrennt durch Form Feed `\f`) jede Zeile auf einzelne Leerzeichen normalisieren (mehrfache
+Leerzeichen zu einem zusammenfassen, leere Zeilen verwerfen) und als JS-Array in `src/data/manual-de.js` bzw.
+`manual-en.js` schreiben (`const MANUAL = [...]; const OFFSET = 24;`), dann `node build/build.js` laufen
+lassen. `OFFSET` ist für beide aktuellen PDF-Ausgaben identisch (24, seitengenau verifiziert) — nach einem PDF-
+Austausch sicherheitshalber neu prüfen, bevor man sich auf die gemeinsame Seitenzahlen-Liste in
+`content/pages/manual.js`/`reference.js`/`connection.js` verlässt.

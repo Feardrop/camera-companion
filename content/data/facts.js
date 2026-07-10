@@ -38,14 +38,11 @@ export const FACTS = {
   },
 };
 
-// Official manual PDF, fetched by the visitor's own browser (see
-// src/js/manual.js) — never redistributed by this repo. The English URL is
-// a best-guess (swapping "de" for "en" in Fujifilm's URL pattern) and has
-// not been verified from this environment; see CLAUDE.md.
-export const MANUAL_PDF_URL = {
-  de: "https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf",
-  en: "https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_en_s_f.pdf",
-};
+// Official manual PDF — vendored locally (src/manual-de.pdf / src/manual-en.pdf,
+// see CLAUDE.md) rather than fetched from Fujifilm's site, so this is a
+// locale-invariant relative path: build.js copies the locale-matching source
+// PDF to this same destination name in each tree (like manual.js's data).
+export const MANUAL_PDF_URL = "manual.pdf";
 
 // The RAW-conversion deep-dive lives on reference.html; every page that
 // links to it does so through this one constant, so a future page move is a

@@ -28,8 +28,8 @@ const T = {
           en: `<b>Way 3 · With the FUJIFILM XApp:</b> pair the camera (see the card above), then select images and transfer them. To save space, turn on the <b>resize</b> feature: <span class="osd">MENU → Network/USB → Image Transfer/Resize ON</span>, or the size option in the XApp — sends smaller, phone-friendly files.` },
   hiccupHint: { de: "Wenn die Übertragung mal hakt: nicht ärgern, einfach nochmal probieren — Verbindung trennen, App neu öffnen, ggf. Bluetooth aus/an. Das löst es fast immer.",
                 en: "If a transfer ever hiccups: don't worry, just try again — disconnect, reopen the app, toggle Bluetooth off/on if needed. That fixes it almost every time." },
-  chipTransferResize: { de: "📖 Handbuch: Übertragung/Verkleinern · S. 314", en: "📖 Manual: transfer/resize" },
-  chipTransferPhone: { de: "📖 Handbuch: Bild auf Smartphone übertragen · S. 232", en: "📖 Manual: transfer images to phone" },
+  chipResize: { de: "📖 Handbuch: Größe ändern · S. 226", en: "📖 Manual: resize · p. 226" },
+  chipTransferPhone: { de: "📖 Handbuch: Bild auf Smartphone übertragen · S. 232", en: "📖 Manual: transfer images to phone · p. 232" },
   cardsHeading: { de: "Speicherkarten: Backup auf beide Karten", en: "Memory cards: backup to both cards" },
   cardsIntro: { de: "Diese Kamera ist auf <b>SICHERUNG (Backup)</b> für beide Steckplätze eingestellt — Steckplatz&nbsp;1 = CFexpress, Steckplatz&nbsp;2 = SD. Das bedeutet:",
                 en: "This camera is set to <b>BACKUP</b> across both card slots — slot&nbsp;1 = CFexpress, slot&nbsp;2 = SD. That means:" },
@@ -41,28 +41,22 @@ const T = {
                en: "⚠️ Both cards fill up in parallel with photos; whichever is smaller or fuller becomes the limit. If the camera says “full”, swap or clear the affected card — then you're good to keep shooting." },
   cardsSettingHint: { de: `Einstellung ansehen/ändern: <span class="osd">MENU → Schraubenschlüssel → DATENSPEICHER-EINSTELLUNG</span>`,
                       en: `View/change this setting: <span class="osd">MENU → wrench icon → DATA STORAGE SETTING</span>` },
-  chipDataStorage: { de: "📖 Handbuch: Datenspeicher-Einstellung · S. 281", en: "📖 Manual: data storage setting" },
+  chipDataStorage: { de: "📖 Handbuch: Datenspeicher-Einstellung · S. 281", en: "📖 Manual: data storage setting · p. 281" },
 };
 
 export function render(locale) {
   const t = localize(T, locale);
   const facts = localize(FACTS, locale);
   const stepGeo = t.stepGeo.replace("${geo}", facts.geotaggingPath);
-  // Manual chapter chips carry printed-PDF page numbers from the German
-  // manual; the English PDF's real pagination hasn't been confirmed yet (see
-  // CLAUDE.md), so those chips are German-only for now — English still gets
-  // the surrounding explanation, just without an unverified page number.
-  const chips = locale === "de"
-    ? `<div class="chips" style="margin-bottom:0">
-      <button class="chip" onclick="openPage(314)">${t.chipTransferResize}</button>
+  // Both language editions of the manual share identical pagination (see
+  // CLAUDE.md), so these page numbers are valid in both locales.
+  const chips = `<div class="chips" style="margin-bottom:0">
+      <button class="chip" onclick="openPage(226)">${t.chipResize}</button>
       <button class="chip" onclick="openPage(232)">${t.chipTransferPhone}</button>
-    </div>`
-    : "";
-  const dataStorageChip = locale === "de"
-    ? `<div class="chips" style="margin-bottom:0">
+    </div>`;
+  const dataStorageChip = `<div class="chips" style="margin-bottom:0">
       <button class="chip" onclick="openPage(281)">${t.chipDataStorage}</button>
-    </div>`
-    : "";
+    </div>`;
 
   return `<section id="tab-connection">
   <h2>${t.phoneHeading}</h2>

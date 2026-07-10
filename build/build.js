@@ -68,7 +68,12 @@ const PAGE_MODULES = {
 // shell — hand-maintained here since they don't come from content/pages.js.
 // assets/data/manual.js and strings.js are locale-invariant *paths* (each
 // tree copies/generates its own localized content to the same relative
-// name) so this list doesn't need to vary per locale.
+// name) so this list doesn't need to vary per locale. manual.pdf (~7MB) is
+// deliberately NOT in this mandatory install-time list, same as the vendored
+// PDF.js library files — it's same-origin now (see src/manual-de.pdf /
+// src/manual-en.pdf) so sw.js's normal stale-while-revalidate fetch handler
+// still caches it opportunistically the first time someone actually opens
+// the manual page, without forcing every visitor to download it on install.
 const STATIC_SHELL_ASSETS = [
   "./manifest.webmanifest",
   "./assets/css/style.css",
@@ -104,6 +109,7 @@ function copyStaticAssets(locale) {
   cpSync(join(SRC_DIR, "js"), join(outDir, "assets/js"), { recursive: true });
   cpSync(join(SRC_DIR, "icons"), join(outDir, "assets/icons"), { recursive: true });
   cpSync(join(SRC_DIR, `data/manual-${locale}.js`), join(outDir, "assets/data/manual.js"));
+  cpSync(join(SRC_DIR, `manual-${locale}.pdf`), join(outDir, "manual.pdf"));
   writeFileSync(join(outDir, "manifest.webmanifest"), generateManifest(MANIFEST, locale), "utf8");
   cpSync(join(SRC_DIR, "X-H2S_Einfuehrung_und_Lernpfad.pdf"), join(outDir, "X-H2S_Einfuehrung_und_Lernpfad.pdf"));
 }
@@ -145,7 +151,7 @@ function buildSearchIndexFile(locale) {
 
 function buildStringsFile(locale) {
   const outDir = outDirFor(locale);
-  const extra = { manualPdfUrl: MANUAL_PDF_URL[locale] };
+  const extra = { manualPdfUrl: MANUAL_PDF_URL };
   writeFileSync(join(outDir, "assets/data/strings.js"), generateStringsFile(STRINGS, locale, extra), "utf8");
 }
 
