@@ -1,12 +1,12 @@
 <!-- GENERATED FILE — edit content/pages/presets.js (and/or content/data/*.js), then run `node build/build.js`. Do not hand-edit. -->
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#14171a">
 <meta name="color-scheme" content="dark">
-<title>Presets · X-H2S Reisebegleiter</title>
+<title>Presets · X-H2S Companion</title>
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
@@ -17,93 +17,93 @@
 <meta name="apple-mobile-web-app-title" content="X-H2S">
 </head>
 <body data-page="presets">
-<header><button class="search-btn" type="button" aria-label="Suche" onclick="openSearch()">🔍</button><h1>X-H2S <b>REISEBEGLEITER</b></h1><p>Tutorial · Presets · SOS · Handbuch · Übungen</p></header>
+<script>window.__LOCALE__="en";window.__OTHER_LOCALE_URL__="de/presets.html";</script>
+<header><button class="search-btn" type="button" aria-label="Search" onclick="openSearch()">🔍</button><h1>X-H2S <b>COMPANION</b></h1><p>Tutorial · Presets · SOS · Manual · Exercises</p></header>
 <main>
 
 <section id="tab-presets">
   <div class="card" style="border-left:4px solid var(--amber)">
-    <p style="margin:0"><b>⚠️ Reihenfolge prüfen:</b> Die Speicherplätze können in Wirklichkeit anders verteilt sein als hier gezeigt (z.&nbsp;B. C4/C5 getauscht oder zusätzliche Plätze belegt). Einmal das Rad durchdrehen, mit <span class="osd">Q</span> vergleichen und die echte Belegung auf der Seite „Belegung“ notieren.</p>
+    <p style="margin:0"><b>⚠️ Check the real order:</b> your dial's slots may actually be arranged differently than shown here (e.g. C4/C5 swapped, or extra slots reassigned). Turn the dial through once, compare with <span class="osd">Q</span>, and note the real setup on the “My Setup” page.</p>
   </div>
 
-  <h2>Was willst du aufnehmen?</h2>
+  <h2>What do you want to shoot?</h2>
   <div class="chips">
-    <button class="chip" onclick="pick('C3')">🧑 Menschen</button>
-    <button class="chip" onclick="pick('C4')">🦅 Tiere &amp; Action</button>
-    <button class="chip" onclick="pick('C2')">🌇 Urlaubsstimmung</button>
-    <button class="chip" onclick="pick('C1')">⬛ Schwarzweiß</button>
-    <button class="chip" onclick="pick('VID')">🎬 Video normal</button>
-    <button class="chip" onclick="pick('C6')">🐌 Zeitlupe</button>
+    <button class="chip" onclick="pick('C3')">🧑 People</button>
+    <button class="chip" onclick="pick('C4')">🦅 Animals &amp; action</button>
+    <button class="chip" onclick="pick('C2')">🌇 Vacation mood</button>
+    <button class="chip" onclick="pick('C1')">⬛ Black & white</button>
+    <button class="chip" onclick="pick('VID')">🎬 Video, normal</button>
+    <button class="chip" onclick="pick('C6')">🐌 Slow motion</button>
   </div>
 
-  <h2>Das Modusrad</h2>
+  <h2>The mode dial</h2>
   <div class="dialwrap">
-    <div class="dial" id="dial"><button class="stop" id="stop-C1" data-preset="C1" aria-label="Kräftiges Schwarzweiß">C1<small>FOTO</small></button><button class="stop" id="stop-C2" data-preset="C2" aria-label="„Cuban“ — warmer Analog-Look">C2<small>FOTO</small></button><button class="stop" id="stop-C3" data-preset="C3" aria-label="Porträts &amp; Allrounder">C3<small>FOTO</small></button><button class="stop" id="stop-C4" data-preset="C4" aria-label="Tiere, Vögel &amp; Action">C4<small>FOTO</small></button><button class="stop" id="stop-C5" data-preset="C5" aria-label="Tiere &amp; Action (zweite Variante)">C5<small>FOTO</small></button><button class="stop video" id="stop-C6" data-preset="C6" aria-label="Zeitlupe (4×)">C6<small>MOVIE</small></button><button class="stop video" id="stop-C7" data-preset="C7" aria-label="Video für Bewegung">C7<small>MOVIE</small></button><button class="stop video" id="stop-VID" data-preset="VID" aria-label="Standard-Video">▶<small>MOVIE</small></button></div>
+    <div class="dial" id="dial"><button class="stop" id="stop-C1" data-preset="C1" aria-label="Bold black & white">C1<small>PHOTO</small></button><button class="stop" id="stop-C2" data-preset="C2" aria-label="“Cuban” — warm analog look">C2<small>PHOTO</small></button><button class="stop" id="stop-C3" data-preset="C3" aria-label="Portraits &amp; all-rounder">C3<small>PHOTO</small></button><button class="stop" id="stop-C4" data-preset="C4" aria-label="Animals, birds &amp; action">C4<small>PHOTO</small></button><button class="stop" id="stop-C5" data-preset="C5" aria-label="Animals &amp; action (second variant)">C5<small>PHOTO</small></button><button class="stop video" id="stop-C6" data-preset="C6" aria-label="Slow motion (4×)">C6<small>MOVIE</small></button><button class="stop video" id="stop-C7" data-preset="C7" aria-label="Video for motion">C7<small>MOVIE</small></button><button class="stop video" id="stop-VID" data-preset="VID" aria-label="Standard video">▶<small>MOVIE</small></button></div>
   </div>
   <div id="presetCards">
     <div class="card" data-preset="C1">
-      <h3><span class="badge">C1</span>Kräftiges Schwarzweiß</h3>
-      <p class="look">ACROS · Schwarzweiß</p>
-      <p><b>Wofür:</b> Architektur, Straßenszenen, ausdrucksstarke Porträts, dramatisches Licht.</p>
-      <p class="hint">Nicht wundern: Sucherbild ist absichtlich schwarzweiß. RAW behält die Farben — <a href='referenz.html#raw-konvertierung'>nachträglich in der Kamera zurückholen</a>.</p>
+      <h3><span class="badge">C1</span>Bold black & white</h3>
+      <p class="look">ACROS · black & white</p>
+      <p><b>For:</b> Architecture, street scenes, expressive portraits, dramatic light.</p>
+      <p class="hint">Don't worry — the viewfinder image is deliberately black & white on purpose. The RAW file keeps all the colors — <a href='reference.html#raw-conversion'>bring them back in-camera afterwards</a>.</p>
     </div>
     <div class="card" data-preset="C2">
-      <h3><span class="badge">C2</span>„Cuban“ — warmer Analog-Look</h3>
+      <h3><span class="badge">C2</span>“Cuban” — warm analog look</h3>
       <p class="look">CLASSIC NEG. · warm · +1 EV</p>
-      <p><b>Wofür:</b> Urlaubsstimmung, Straßen, Cafés, goldenes Abendlicht.</p>
-      <p class="hint">Belichtet bewusst +1 heller. Wirkt das Bild ZU hell: Korrektur Richtung 0 drehen (und wegen Auto-Update später wieder auf +1 zurück).</p>
+      <p><b>For:</b> Vacation mood, streets, cafés, golden-hour light.</p>
+      <p class="hint">Deliberately exposed +1 brighter. If a shot looks TOO bright, dial the correction back toward 0 (and remember to set it back to +1 afterwards — Auto Update keeps whatever you last dialed in).</p>
     </div>
     <div class="card" data-preset="C3">
-      <h3><span class="badge">C3</span>Porträts &amp; Allrounder</h3>
+      <h3><span class="badge">C3</span>Portraits &amp; all-rounder</h3>
       <p class="look">PRO NEG. HI · neutral</p>
-      <p><b>Wofür:</b> Menschen, Gruppen — und der sichere Startpunkt, wenn du unsicher bist.</p>
-      <p class="hint">Natürliche Hauttöne. Fokusfeld mit dem Joystick aufs Gesicht schieben.</p>
+      <p><b>For:</b> People, groups — and the safe default whenever you're not sure what to pick.</p>
+      <p class="hint">Natural skin tones. Nudge the focus point onto the face with the joystick.</p>
     </div>
     <div class="card" data-preset="C4">
-      <h3><span class="badge">C4</span>Tiere, Vögel &amp; Action</h3>
-      <p class="look">ASTIA · Serie ~30 B/s · Pre-Shot · Tier/Vogel-AF</p>
-      <p><b>Wofür:</b> Wildtiere, Vögel im Flug, spielende Kinder, Sport.</p>
-      <p class="hint">Halb drücken &amp; Motiv verfolgen — die Kamera puffert schon Bilder VOR dem Durchdrücken. Erzeugt viele Fotos: Karte im Blick behalten! Fn1 schaltet die Tiererkennung an/aus; die Motiv-Art (Tier/Vogel) wählst du im Q-Menü.</p>
+      <h3><span class="badge">C4</span>Animals, birds &amp; action</h3>
+      <p class="look">ASTIA · ~30 fps burst · pre-shot · animal/bird AF</p>
+      <p><b>For:</b> Wildlife, birds in flight, kids playing, sports.</p>
+      <p class="hint">Half-press and track the subject — the camera buffers frames BEFORE you fully press the shutter. This produces a lot of photos, so keep an eye on your card. Fn1 toggles animal detection on/off; pick the subject type (animal/bird) in the Q menu.</p>
     </div>
     <div class="card" data-preset="C5">
-      <h3><span class="badge">C5</span>Tiere &amp; Action (zweite Variante)</h3>
-      <p class="look">vermutlich ähnlich C4 · Tier/Vogel-AF</p>
-      <p><b>Wofür:</b> Zweite Action-Belegung — oft eine Variante von C4 (z. B. andere Serienbild-Geschwindigkeit oder Verschlusszeit), Werksbelegung ist aber nicht einheitlich.</p>
-      <p class="hint">Diese Kamera liefert C4 und C5 oft mit ähnlicher, ergänzender Belegung aus. Rad auf C5 drehen, <span class="osd">Q</span> drücken und die echte Belegung prüfen — dann auf der Seite „Belegung“ eintragen.</p>
+      <h3><span class="badge">C5</span>Animals &amp; action (second variant)</h3>
+      <p class="look">likely similar to C4 · animal/bird AF</p>
+      <p><b>For:</b> A second action slot — often a variant of C4 (e.g. a different burst speed or shutter speed), though the factory default isn't consistent across cameras.</p>
+      <p class="hint">This camera often ships C4 and C5 with similar, complementary settings. Turn the dial to C5, press <span class="osd">Q</span> and check the real settings — then note them down on the “My Setup” page.</p>
     </div>
     <div class="card" data-preset="C6">
-      <h3><span class="badge v">C6</span>Zeitlupe (4×)</h3>
+      <h3><span class="badge v">C6</span>Slow motion (4×)</h3>
       <p class="look">4K 100p · ETERNA</p>
-      <p><b>Wofür:</b> Wasser, Tiere in Bewegung, Sport — alles, was in Zeitlupe magisch wird.</p>
-      <p class="hint">Nur im MOVIE-Modus. Braucht viel Licht, Speicher und Akku; bei Hitze Pausen machen.</p>
+      <p><b>For:</b> Water, animals in motion, sports — anything that turns magical in slow motion.</p>
+      <p class="hint">MOVIE mode only. Needs plenty of light, storage and battery — take breaks if the camera gets hot.</p>
     </div>
     <div class="card" data-preset="C7">
-      <h3><span class="badge v">C7</span>Video für Bewegung</h3>
+      <h3><span class="badge v">C7</span>Video for motion</h3>
       <p class="look">4K 50p · ETERNA</p>
-      <p><b>Wofür:</b> Bewegte Szenen; lässt sich im Schnitt auf halbe Geschwindigkeit bremsen.</p>
-      <p class="hint">Nur im MOVIE-Modus.</p>
+      <p><b>For:</b> Scenes with motion; can be slowed to half speed in editing.</p>
+      <p class="hint">MOVIE mode only.</p>
     </div>
     <div class="card" data-preset="VID">
-      <h3><span class="badge v">▶ VIDEO</span>Standard-Video</h3>
+      <h3><span class="badge v">▶ VIDEO</span>Standard video</h3>
       <p class="look">4K 25p · ETERNA</p>
-      <p><b>Wofür:</b> Ruhige Szenen, Schwenks, Erzählendes — der normale filmische Look.</p>
-      <p class="hint">Ruhige, langsame Kamerabewegungen sehen am besten aus.</p>
+      <p><b>For:</b> Calm scenes, pans, narrative shots — the everyday cinematic look.</p>
+      <p class="hint">Slow, steady camera movement looks best.</p>
     </div>
-    <button class="btn ghost" id="presetBack" style="display:none" onclick="showAllPresets()">Alle Presets zeigen</button>
+    <button class="btn ghost" id="presetBack" style="display:none" onclick="showAllPresets()">Show all presets</button>
   </div>
 
   <div class="card">
-    <h3>⚠️ Wichtig: Presets merken sich Änderungen!</h3>
-    <p>Diese Kamera ist auf <b>AUTO-UPDATE</b> eingestellt: Was du in einem C-Preset veränderst (Filmsimulation, Korrektur, …), wird <b>automatisch dauerhaft ins Preset gespeichert</b>. Rad wegdrehen und zurück setzt also NICHTS zurück.</p>
-    <p>Du hast zwei Möglichkeiten:</p>
-    <p><b>A — bewusst nutzen:</b> Du weißt, dass Änderungen bleiben, und stellst gewünschte Werte selbst zurück (Q-Menü zeigt alles auf einen Blick).</p>
-    <p><b>B — Schutzmodus:</b> Auto-Update abschalten, dann springt jedes Preset beim Radwechsel auf den gespeicherten Stand zurück:<br>
-    <span class="osd">MENU → IQ → AUTOM. AKT. BEN.-EINST. → DEAKT.</span><br>
-    <span class="mut">(englisch: AUTO UPDATE CUSTOM SETTING → DISABLE)</span></p>
-    <p class="hint">Sicherheitsnetz für beide Fälle: einmal ein Einstellungs-Backup mit der XApp machen — siehe Seite „Verbindung“.</p>
+    <h3>⚠️ Important: presets remember changes!</h3>
+    <p>This camera has <b>AUTO UPDATE</b> turned on: whatever you change in a C preset (film simulation, exposure correction, …) gets <b>saved into the preset automatically and permanently</b>. Turning the dial away and back resets NOTHING.</p>
+    <p>You have two options:</p>
+    <p><b>A — use it deliberately:</b> know that changes stick, and reset the values you want yourself (the Q menu shows everything at a glance).</p>
+    <p><b>B — protected mode:</b> turn Auto Update off, and every preset snaps back to its saved state when you switch the dial away and back:<br><span class="osd">MENU → IQ → AUTO UPDATE CUSTOM SETTING → DISABLE</span></p>
+    <p class="hint">A safety net either way: make a settings backup with the XApp once — see the “Connection” page.</p>
   </div>
 </section>
 </main>
-<nav><a href="index.html" class="" data-t="start"><span class="ic">⚑</span>Start</a><a href="presets.html" class="on" aria-current="page" data-t="presets"><span class="ic">◎</span>Presets</a><a href="handbuch.html" class="" data-t="handbuch"><span class="ic">📖</span>Handbuch</a><a href="uebungen.html" class="" data-t="uebungen"><span class="ic">✓</span>Übungen</a><a href="mehr.html" class="" data-t="mehr"><span class="ic">☰</span>Mehr</a></nav>
+<nav><a href="index.html" class="" data-t="start"><span class="ic">⚑</span>Start</a><a href="presets.html" class="on" aria-current="page" data-t="presets"><span class="ic">◎</span>Presets</a><a href="manual.html" class="" data-t="manual"><span class="ic">📖</span>Manual</a><a href="exercises.html" class="" data-t="exercises"><span class="ic">✓</span>Exercises</a><a href="more.html" class="" data-t="more"><span class="ic">☰</span>More</a></nav>
+  <script src="assets/data/strings.js"></script>
   <script src="assets/js/ui.js"></script>
   <script src="assets/js/search.js"></script>
   <script src="assets/js/presets.js"></script>

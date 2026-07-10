@@ -1,11 +1,11 @@
-// Gemeinsame Such-Engine (searchAll) + globale Such-Oberfläche (Header-Icon,
-// <dialog>-Overlay). searchAll() wird auch von handbuch.js für die
-// Inline-Handbuchsuche verwendet — eine Engine, zwei Einstiegspunkte.
-const TYPE_LABELS = {
-  sos: "SOS", preset: "Presets", tutorial: "Tutorial", exercise: "Übungen",
-  "raw-setting": "RAW-Einstellungen", menupath: "Menüwege", manual: "Handbuch",
-};
+// Shared search engine (searchAll) + global search UI (header icon,
+// <dialog> overlay). searchAll() is also used by manual.js for the inline
+// manual search — one engine, two entry points.
 const TYPE_ORDER = ["sos", "preset", "tutorial", "exercise", "raw-setting", "menupath", "manual"];
+const typeLabel = type => t({
+  sos: "typeSos", preset: "typePreset", tutorial: "typeTutorial", exercise: "typeExercise",
+  "raw-setting": "typeRawSetting", menupath: "typeMenupath", manual: "typeManual",
+}[type]);
 
 const WORD_CHAR = /[a-z0-9äöüß]/i;
 function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
@@ -82,8 +82,8 @@ function searchAll(query, { types = null, manual = null, limit = 30 } = {}) {
       hits.push({
         doc: {
           id: `manual-${pdf}`, type: "manual",
-          title: printed >= 1 ? "S. " + printed : "Vorspann " + pdf,
-          target: `handbuch.html?page=${printed}&q=${encodeURIComponent(q)}`,
+          title: printed >= 1 ? t("manualPagePrefix") + " " + printed : t("manualFrontMatter", { n: pdf }),
+          target: `manual.html?page=${printed}&q=${encodeURIComponent(q)}`,
           text,
         },
         score, snippet: snippetFor(text, needleLower),
@@ -144,15 +144,15 @@ function loadScriptOnce(src, isLoaded) {
   });
 }
 const ensureSearchIndexLoaded = () => loadScriptOnce("assets/data/search-index.js", () => typeof SEARCH_INDEX !== "undefined");
-const ensureManualLoaded = () => loadScriptOnce("assets/data/manual-de.js", () => typeof MANUAL !== "undefined");
+const ensureManualLoaded = () => loadScriptOnce("assets/data/manual.js", () => typeof MANUAL !== "undefined");
 
 let _dialogEl = null;
 function buildDialog() {
   const dlg = document.createElement("dialog");
   dlg.className = "search-dialog";
   dlg.innerHTML = `<div class="search-dialog-head">
-      <input type="search" id="globalQ" placeholder="Suche in der ganzen App … z. B. RAW, Q, Blende" autocomplete="off">
-      <button type="button" class="search-close" aria-label="Schließen">✕</button>
+      <input type="search" id="globalQ" placeholder="${t("searchPlaceholder")}" autocomplete="off">
+      <button type="button" class="search-close" aria-label="${t("close")}">✕</button>
     </div>
     <div id="globalRes"></div>`;
   document.body.appendChild(dlg);
@@ -173,8 +173,8 @@ function renderGlobalResults(hits, query) {
   if (!hits.length) {
     const suggestion = suggestTypo(query);
     container.innerHTML = suggestion
-      ? `<p class="mut">Keine Treffer für „${esc(query)}“. Meintest du <button class="chip" type="button" data-retry="${esc(suggestion)}">${esc(suggestion)}</button>?</p>`
-      : `<p class="mut">Keine Treffer für „${esc(query)}“.</p>`;
+      ? `<p class="mut">${t("noResultsForSuggest", { q: esc(query), suggestion: `<button class="chip" type="button" data-retry="${esc(suggestion)}">${esc(suggestion)}</button>` })}</p>`
+      : `<p class="mut">${t("noResultsFor", { q: esc(query) })}</p>`;
     const retryBtn = container.querySelector("[data-retry]");
     if (retryBtn) retryBtn.addEventListener("click", () => {
       const input = document.getElementById("globalQ");
@@ -185,9 +185,9 @@ function renderGlobalResults(hits, query) {
   }
   const groups = {};
   hits.forEach(h => { (groups[h.doc.type] = groups[h.doc.type] || []).push(h); });
-  container.innerHTML = TYPE_ORDER.filter(t => groups[t]).map(t => `
-    <p class="mut" style="margin:14px 0 4px">${TYPE_LABELS[t]}</p>
-    ${groups[t].map(h => `<a class="res" href="${h.doc.target}">
+  container.innerHTML = TYPE_ORDER.filter(ty => groups[ty]).map(ty => `
+    <p class="mut" style="margin:14px 0 4px">${typeLabel(ty)}</p>
+    ${groups[ty].map(h => `<a class="res" href="${h.doc.target}">
       <span class="pg">${esc(h.doc.title)}</span>
       <div class="snip">…${highlightHtml(h.snippet, query)}…</div>
     </a>`).join("")}`).join("");
@@ -197,8 +197,8 @@ async function runGlobalSearch(query) {
   const container = document.getElementById("globalRes");
   if (!query.trim()) { container.innerHTML = ""; return; }
   if (typeof SEARCH_INDEX === "undefined") {
-    container.innerHTML = '<p class="mut">Suchindex wird geladen …</p>';
-    try { await ensureSearchIndexLoaded(); } catch (e) { container.innerHTML = '<p class="mut">Suchindex konnte nicht geladen werden.</p>'; return; }
+    container.innerHTML = `<p class="mut">${t("indexLoading")}</p>`;
+    try { await ensureSearchIndexLoaded(); } catch (e) { container.innerHTML = `<p class="mut">${t("indexLoadFailed")}</p>`; return; }
   }
   if (typeof MANUAL === "undefined") { await ensureManualLoaded().catch(() => {}); }
   const manual = (typeof MANUAL !== "undefined") ? { list: MANUAL, offset: OFFSET } : null;

@@ -1,9 +1,11 @@
-export function renderHead(page) {
+const BRAND_SUFFIX = { de: "X-H2S Reisebegleiter", en: "X-H2S Companion" };
+
+export function renderHead(page, locale) {
   return `<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#14171a">
 <meta name="color-scheme" content="dark">
-<title>${page.title} · X-H2S Reisebegleiter</title>
+<title>${page.title} · ${BRAND_SUFFIX[locale]}</title>
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">

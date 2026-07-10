@@ -140,7 +140,7 @@ details .body li{margin:5px 0}
 .progress{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-bottom:12px}
 .progress b{color:var(--green)}
 
-/* ---- Belegung ---- */
+/* ---- My Setup ---- */
 .fld{margin-bottom:10px}
 .fld label{display:block;font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-bottom:4px;letter-spacing:.04em}
 .fld input,.fld textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius-sm);
@@ -153,7 +153,7 @@ details .body li{margin:5px 0}
 a.btn{text-decoration:none;text-align:center}
 .saved{font-size:.8rem;color:var(--green);margin-left:10px}
 
-/* ---- Referenz / Links (Kontrast erhöht) ---- */
+/* ---- Reference & links (higher contrast) ---- */
 .fact{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--green);
   border-radius:var(--radius-md);padding:12px 14px;margin:0 0 10px;font-size:.92rem;color:#f7f9f8}
 .fact b{color:#4be08c}
@@ -174,7 +174,7 @@ table.mini tr:last-child td{border-bottom:0}
 table.mini td:first-child{font-family:var(--mono);color:#4be08c;font-weight:700;font-size:.78rem;
   background:var(--panel2);white-space:normal;width:31%;overflow-wrap:anywhere;padding-right:10px}
 
-/* ---- Handbuch ---- */
+/* ---- Manual ---- */
 .search{display:flex;gap:8px;margin-bottom:12px}
 .search input{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius-sm);
   color:var(--text);padding:11px 13px;font-size:.95rem;min-width:0}
