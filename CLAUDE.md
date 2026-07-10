@@ -84,6 +84,32 @@ normally; every other page lazy-loads it only if the user opens search there. Se
 `target` URLs (`sos.html#id`, `presets.html?preset=C1`, `uebungen.html#ex-N`, `handbuch.html?page=N`,
 `referenz.html#raw-konvertierung`) — clicking one is a normal navigation, not JS-managed state.
 
+### In-app PDF viewer (`handbuch.html`)
+
+Opening a manual page renders the **actual PDF page** (canvas + a positioned text-layer overlay for
+selection/highlighting), not just the extracted `MANUAL[]` text — `assets/js/pdf-viewer.js` (dynamically
+`import()`-ed by `assets/js/handbuch.js` on first use, so the ~1.8 MB PDF.js library never loads unless
+someone actually opens a manual page). `assets/js/vendor/pdfjs/` is a vendored, unmodified copy of Mozilla's
+PDF.js (Apache-2.0; see its own `README.md` for the exact version and how to update it) — **not** an npm
+dependency, consistent with this repo having none; update by replacing those two files directly.
+
+The manual PDF itself is **not** vendored — it stays fetched from Fujifilm's own site (same URL the "download"
+button always used) since it's a third-party copyrighted document, not something to redistribute in this repo.
+That means the in-app PDF view needs network access on first load per session; if it fails for any reason
+(offline, first visit with no connection, the remote host unreachable), `renderPdfPage()` calls `onFallback()`
+and `handbuch.js` falls back to the original all-offline `MANUAL[]` text view automatically — the text search
+and text view must keep working with zero network access, full stop, regardless of what happens to the PDF
+feature. Once a device has loaded the PDF/worker JS once, the service worker's normal same-origin
+stale-while-revalidate caching (`sw.js`) picks them up like any other asset — they're deliberately **not** in
+the mandatory install-time precache list, only cached opportunistically after first real use.
+
+`?page=N&q=term` on `handbuch.html` (used by both the inline search and global-search manual results, via
+`search.js`'s manual target) drives which PDF page renders and which text gets highlighted + scrolled into
+view in the text layer. The text layer requires `--scale-factor` to be set as a CSS custom property on its
+container (`renderPdfPage()` does this) — PDF.js's own text-layer spans size themselves via
+`calc(var(--scale-factor)*Npx)`, and without it every span silently falls back to the browser default font
+size, which desyncs the highlight rectangles from the actual rendered glyphs.
+
 ### Design tokens & the `.steplist` component
 
 `assets/css/style.css`'s `:root` has a spacing scale (`--space-1..5`) and a radius scale (`--radius-xs/sm/md/lg/pill`)

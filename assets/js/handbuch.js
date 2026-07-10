@@ -1,8 +1,12 @@
-// Handbuch-Seite: Volltextsuche, Textansicht, PDF-Deep-Links.
+// Handbuch-Seite: Volltextsuche, echte PDF-Ansicht, Text-Fallback.
 // Die Treffer-Suche/-Bewertung kommt aus assets/js/search.js (searchAll) —
-// dieses Skript rendert nur noch die handbuchspezifische Text-Ansicht.
+// dieses Skript rendert die handbuchspezifische Seiten-Ansicht: standardmäßig
+// die echte PDF-Seite (assets/js/pdf-viewer.js, per Lazy-Import nachgeladen),
+// mit Fallback auf den eingebauten Text, falls das PDF nicht geladen werden
+// kann (offline, kein Netz beim ersten Besuch, o. ä.).
 const PDF_URL = "https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf";
 let curPdf = null, curQuery = "";
+let renderToken = 0; // verwirft veraltete Renders, wenn schnell weitergeblättert wird
 const printedLabel = pdf => { const pr = pdf - OFFSET; return pr >= 1 ? "S. " + pr : "Vorspann " + pdf; };
 
 function doSearch(){
@@ -20,24 +24,60 @@ function doSearch(){
   }).join("");
 }
 function openPage(printed){ openPdfPage(printed + OFFSET); }
-// Deep-Link: handbuch.html?page=220 öffnet direkt die gedruckte Seite
+// Deep-Link: handbuch.html?page=220&q=Suchwort öffnet direkt die gedruckte
+// Seite und markiert/scrollt zum Suchwort (auch aus der globalen Suche).
 window.addEventListener("DOMContentLoaded", ()=>{
-  const p = parseInt(new URLSearchParams(location.search).get("page"), 10);
+  const params = new URLSearchParams(location.search);
+  const p = parseInt(params.get("page"), 10);
+  const q = params.get("q");
+  if(q) curQuery = q;
   if(!isNaN(p)) openPage(p);
 });
-function openPdfPage(pdf){
-  if(pdf < 1) pdf = 1; if(pdf > MANUAL.length) pdf = MANUAL.length;
-  curPdf = pdf;
-  const pv = document.getElementById("pageview");
-  pv.style.display = "block";
-  document.getElementById("pglabel").textContent = "Handbuch " + printedLabel(pdf);
+function showTextFallback(pdf){
+  document.getElementById("pdfstatus").style.display = "none";
+  document.getElementById("pdfpage").style.display = "none";
+  document.getElementById("pdffallbacknote").style.display = "block";
+  const pg = document.getElementById("pgtext");
+  pg.style.display = "block";
   let t = esc(MANUAL[pdf-1] || "(leere Seite)");
   if(curQuery.length >= 1){
     t = highlightHtml(MANUAL[pdf-1] || "(leere Seite)", curQuery);
   }
-  document.getElementById("pgtext").innerHTML = t;
+  pg.innerHTML = t;
+}
+function openPdfPage(pdf){
+  if(pdf < 1) pdf = 1; if(pdf > MANUAL.length) pdf = MANUAL.length;
+  curPdf = pdf;
+  const myToken = ++renderToken;
+  const pv = document.getElementById("pageview");
+  pv.style.display = "block";
+  document.getElementById("pglabel").textContent = "Handbuch " + printedLabel(pdf);
   const dl = document.getElementById("pdfdeep");
   dl.href = PDF_URL + "#page=" + pdf;
+
+  document.getElementById("pgtext").style.display = "none";
+  document.getElementById("pdffallbacknote").style.display = "none";
+  document.getElementById("pdfpage").style.display = "none";
+  document.getElementById("pdfstatus").style.display = "block";
+  document.getElementById("pdfstatus").textContent = "PDF-Seite wird geladen …";
+
+  import("./pdf-viewer.js").then(({ renderPdfPage }) => {
+    const container = document.getElementById("pageview");
+    renderPdfPage({
+      pdfUrl: PDF_URL,
+      pdfPageNum: pdf,
+      canvasEl: document.getElementById("pdfCanvas"),
+      textLayerEl: document.getElementById("pdfTextLayer"),
+      containerWidth: container.clientWidth,
+      query: curQuery,
+      onFallback: () => { if (myToken === renderToken) showTextFallback(pdf); },
+    }).then(ok => {
+      if (!ok || myToken !== renderToken) return; // Fallback bereits gezeigt, oder Nutzer hat inzwischen weitergeblättert
+      document.getElementById("pdfstatus").style.display = "none";
+      document.getElementById("pdfpage").style.display = "block";
+    });
+  }).catch(() => showTextFallback(pdf));
+
   setTimeout(()=>{ if(pv.scrollIntoView) pv.scrollIntoView({behavior:"smooth", block:"start"}); }, 60);
 }
 function stepPage(d){ if(curPdf) openPdfPage(curPdf + d); }
