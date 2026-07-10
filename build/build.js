@@ -1,13 +1,18 @@
 #!/usr/bin/env node
 // Build entrypoint: reads content/pages.js + content/pages/*.js, renders each
-// page through build/lib/shell.js, writes the generated HTML into the repo
-// root (the exact files GitHub Pages already serves), then regenerates
-// sw.js's precache list + cache-version from the resulting file set.
-import { writeFileSync } from "node:fs";
+// page through build/lib/shell.js, and writes the generated HTML into docs/
+// — the folder GitHub Pages actually publishes from (Settings → Pages →
+// Deploy from a branch → folder "/docs"; GitHub Pages only supports "/" or
+// "/docs" without a separate deploy workflow, which this project doesn't
+// have). Hand-written static assets live in src/ and get copied into
+// docs/assets/ on every build; only src/ and content/ are meant to be
+// hand-edited — docs/ is entirely build output.
+import { cpSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { PAGES } from "../content/pages.js";
+import { VERSION } from "../content/data/app-meta.js";
 import { renderShell } from "./lib/shell.js";
 import { generateServiceWorker } from "./lib/sw-gen.js";
 import { buildSearchIndex } from "./lib/search-index.js";
@@ -28,8 +33,11 @@ import * as mehrPage from "../content/pages/mehr.js";
 import * as belegungPage from "../content/pages/belegung.js";
 import * as verbindungPage from "../content/pages/verbindung.js";
 import * as referenzPage from "../content/pages/referenz.js";
+import * as ueberPage from "../content/pages/ueber.js";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const SRC_DIR = join(REPO_ROOT, "src");
+const DOCS_DIR = join(REPO_ROOT, "docs");
 
 const PAGE_MODULES = {
   start: startPage,
@@ -41,6 +49,7 @@ const PAGE_MODULES = {
   belegung: belegungPage,
   verbindung: verbindungPage,
   referenz: referenzPage,
+  ueber: ueberPage,
 };
 
 // Static assets that aren't build output but still belong in the offline
@@ -62,6 +71,21 @@ const STATIC_SHELL_ASSETS = [
   "./X-H2S_Einfuehrung_und_Lernpfad.pdf",
 ];
 
+// Copies hand-written source assets from src/ into docs/, mirroring the
+// relative paths every generated page's <link>/<script src> already expects
+// (docs/assets/css/..., docs/assets/js/..., docs/manifest.webmanifest, ...).
+function copyStaticAssets() {
+  mkdirSync(DOCS_DIR, { recursive: true });
+  mkdirSync(join(DOCS_DIR, "assets"), { recursive: true });
+  mkdirSync(join(DOCS_DIR, "assets/data"), { recursive: true });
+  cpSync(join(SRC_DIR, "css"), join(DOCS_DIR, "assets/css"), { recursive: true });
+  cpSync(join(SRC_DIR, "js"), join(DOCS_DIR, "assets/js"), { recursive: true });
+  cpSync(join(SRC_DIR, "icons"), join(DOCS_DIR, "assets/icons"), { recursive: true });
+  cpSync(join(SRC_DIR, "data/manual-de.js"), join(DOCS_DIR, "assets/data/manual-de.js"));
+  cpSync(join(SRC_DIR, "manifest.webmanifest"), join(DOCS_DIR, "manifest.webmanifest"));
+  cpSync(join(SRC_DIR, "X-H2S_Einfuehrung_und_Lernpfad.pdf"), join(DOCS_DIR, "X-H2S_Einfuehrung_und_Lernpfad.pdf"));
+}
+
 function buildPages() {
   const written = [];
   for (const page of PAGES) {
@@ -73,7 +97,7 @@ function buildPages() {
       bodyHtml: mod.render(),
       scripts: mod.scripts || [],
     });
-    const outPath = join(REPO_ROOT, page.file);
+    const outPath = join(DOCS_DIR, page.file);
     writeFileSync(outPath, html, "utf8");
     written.push(page.file);
   }
@@ -82,7 +106,7 @@ function buildPages() {
 
 function buildSearchIndexFile() {
   const source = buildSearchIndex({ SOS, PRESETS, EX, TUTORIAL, MENU_PATHS, RAW_SETTINGS });
-  writeFileSync(join(REPO_ROOT, "assets/data/search-index.js"), source, "utf8");
+  writeFileSync(join(DOCS_DIR, "assets/data/search-index.js"), source, "utf8");
 }
 
 function buildServiceWorker(pageFiles) {
@@ -91,15 +115,16 @@ function buildServiceWorker(pageFiles) {
     "./assets/data/search-index.js",
     ...STATIC_SHELL_ASSETS,
   ];
-  const swSource = generateServiceWorker({ repoRoot: REPO_ROOT, shellPaths });
-  writeFileSync(join(REPO_ROOT, "sw.js"), swSource, "utf8");
+  const swSource = generateServiceWorker({ repoRoot: DOCS_DIR, shellPaths, version: VERSION });
+  writeFileSync(join(DOCS_DIR, "sw.js"), swSource, "utf8");
 }
 
+copyStaticAssets();
 const pageFiles = buildPages();
 buildSearchIndexFile();
 buildServiceWorker(pageFiles);
 
-console.log(`Built ${pageFiles.length} pages + sw.js + search-index.js:`);
-for (const f of pageFiles) console.log(`  ${f}`);
-console.log(`  assets/data/search-index.js`);
-console.log(`  sw.js`);
+console.log(`Built ${pageFiles.length} pages + sw.js + search-index.js into docs/ (v${VERSION}):`);
+for (const f of pageFiles) console.log(`  docs/${f}`);
+console.log(`  docs/assets/data/search-index.js`);
+console.log(`  docs/sw.js`);

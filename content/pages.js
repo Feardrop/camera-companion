@@ -18,4 +18,5 @@ export const PAGES = [
   { file: "belegung.html",    slug: "belegung",   icon: "📝", label: "Belegung",   title: "Meine Belegung",      tab: false, parent: "mehr" },
   { file: "verbindung.html",  slug: "verbindung", icon: "📶", label: "Verbindung", title: "Verbindung & Backup", tab: false, parent: "mehr" },
   { file: "referenz.html",    slug: "referenz",   icon: "📚", label: "Referenz",   title: "Referenz",            tab: false, parent: "mehr" },
+  { file: "ueber.html",       slug: "ueber",      icon: "ℹ️", label: "Über",       title: "Über",                tab: false, parent: "mehr" },
 ];
