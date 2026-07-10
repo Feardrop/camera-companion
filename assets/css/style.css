@@ -38,7 +38,7 @@
 
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
   .chip{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:999px;
-    padding:8px 13px;font-size:.84rem;cursor:pointer}
+    padding:8px 13px;font-size:.84rem;cursor:pointer;text-decoration:none;display:inline-block}
   .chip:active{background:var(--panel2)}
 
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:12px}
@@ -125,7 +125,7 @@
   .pagenav{display:flex;align-items:center;gap:8px;margin-bottom:10px}
   .pagenav .pg{font-family:var(--mono);color:var(--green);font-weight:700;font-size:.9rem;flex:1}
   .pagenav a{text-decoration:none;}
-  nav a,nav button{background:var(--panel2);border:1px solid var(--line);color:var(--text);
+  .pagenav a,.pagenav button{background:var(--panel2);border:1px solid var(--line);color:var(--text);
     border-radius:9px;padding:8px 14px;font-size:.9rem;cursor:pointer}
   .pagetext{white-space:pre-wrap;font-size:.86rem;line-height:1.55;color:var(--text);
     max-height:60vh;overflow-y:auto;border-top:1px dashed var(--line);padding-top:10px}
@@ -164,7 +164,7 @@
   .pdfnav{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
   .pdfnav .pg{font-family:var(--mono);color:var(--green);font-weight:700;font-size:.85rem;flex:1;min-width:110px}
   .pdfnav a{text-decoration:none;}
-  nav a,nav button{background:var(--panel2);border:1px solid var(--line);color:var(--text);
+  .pdfnav a,.pdfnav button{background:var(--panel2);border:1px solid var(--line);color:var(--text);
     border-radius:9px;padding:8px 13px;font-size:.95rem;cursor:pointer}
   .pdfnav input{width:64px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;
     color:var(--text);padding:8px;font-size:.9rem;text-align:center}
@@ -174,7 +174,7 @@
 
   /* ---- Startseite: geführter Weg ---- */
   .journey{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:6px 0;margin-bottom:12px}
-  .jstep{display:flex;gap:12px;align-items:flex-start;padding:12px 15px;border-bottom:1px dashed var(--line);cursor:pointer}
+  .jstep{display:flex;gap:12px;align-items:flex-start;padding:12px 15px;border-bottom:1px dashed var(--line);cursor:pointer;text-decoration:none;color:inherit}
   .jstep:last-child{border-bottom:0}
   .jstep .no{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--green-dk);
     color:var(--green);font-family:var(--mono);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.85rem}
@@ -184,7 +184,7 @@
   .jstep .go{flex:0 0 auto;color:var(--green);font-size:1.1rem;align-self:center}
   .quicknav{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 14px}
   .quicknav a{text-decoration:none;}
-  nav a,nav button{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:12px;
+  .quicknav a,.quicknav button{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:12px;
     padding:13px 10px;font-size:.88rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;justify-content:center}
   .quicknav button:active{background:var(--panel2)}
   .dlbtns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
@@ -193,7 +193,11 @@
 /* ================================================================
    App-Shell & Overflow-Fixes (v2)
    ================================================================ */
-html,body{overflow-x:hidden;max-width:100%}
+/* overflow-x:clip (not hidden) on html only — hidden on both html+body forces
+   overflow-y to compute to auto (turning body into a real scroll container),
+   which desyncs position:sticky from the viewport and breaks the header. */
+html{overflow-x:clip;max-width:100%}
+body{max-width:100%}
 body{overscroll-behavior-y:contain;-webkit-text-size-adjust:100%;
   -webkit-touch-callout:none;touch-action:pan-y pinch-zoom}
 main,section,.card,.jstep .tx,.lnk,.fact,details .body{min-width:0}

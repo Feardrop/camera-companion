@@ -1,3 +1,4 @@
+<!-- GENERATED FILE — edit content/pages/presets.js (and/or content/data/*.js), then run `node build/build.js`. Do not hand-edit. -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -14,14 +15,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="X-H2S">
-
 </head>
 <body data-page="presets">
-
+<header><h1>X-H2S <b>REISEBEGLEITER</b></h1><p>Tutorial · Presets · SOS · Handbuch · Übungen</p></header>
 <main>
 <section id="tab-presets">
   <div class="card" style="border-left:4px solid var(--amber)">
-    <p style="margin:0"><b>⚠️ Reihenfolge prüfen:</b> Die Speicherplätze können in Wirklichkeit anders verteilt sein als hier gezeigt (z.&nbsp;B. C4/C5 getauscht oder zusätzliche Plätze belegt). Einmal das Rad durchdrehen, mit <span class="osd">Q</span> vergleichen und die echte Belegung im Seite „Mehr“ notieren.</p>
+    <p style="margin:0"><b>⚠️ Reihenfolge prüfen:</b> Die Speicherplätze können in Wirklichkeit anders verteilt sein als hier gezeigt (z.&nbsp;B. C4/C5 getauscht oder zusätzliche Plätze belegt). Einmal das Rad durchdrehen, mit <span class="osd">Q</span> vergleichen und die echte Belegung auf der Seite „Mehr“ notieren.</p>
   </div>
 
   <h2>Was willst du aufnehmen?</h2>
@@ -36,9 +36,59 @@
 
   <h2>Das Modusrad</h2>
   <div class="dialwrap">
-    <div class="dial" id="dial"></div>
+    <div class="dial" id="dial"><button class="stop" id="stop-C1" data-preset="C1" aria-label="Kräftiges Schwarzweiß">C1<small>FOTO</small></button><button class="stop" id="stop-C2" data-preset="C2" aria-label="„Cuban“ — warmer Analog-Look">C2<small>FOTO</small></button><button class="stop" id="stop-C3" data-preset="C3" aria-label="Porträts &amp; Allrounder">C3<small>FOTO</small></button><button class="stop" id="stop-C4" data-preset="C4" aria-label="Tiere, Vögel &amp; Action">C4<small>FOTO</small></button><button class="stop" id="stop-C5" data-preset="C5" aria-label="Tiere &amp; Action (zweite Variante)">C5<small>FOTO</small></button><button class="stop video" id="stop-C6" data-preset="C6" aria-label="Zeitlupe (4×)">C6<small>MOVIE</small></button><button class="stop video" id="stop-C7" data-preset="C7" aria-label="Video für Bewegung">C7<small>MOVIE</small></button><button class="stop video" id="stop-VID" data-preset="VID" aria-label="Standard-Video">▶<small>MOVIE</small></button></div>
   </div>
-  <div id="presetCards"></div>
+  <div id="presetCards">
+    <div class="card" data-preset="C1">
+      <h3><span class="badge">C1</span>Kräftiges Schwarzweiß</h3>
+      <p class="look">ACROS · Schwarzweiß</p>
+      <p><b>Wofür:</b> Architektur, Straßenszenen, ausdrucksstarke Porträts, dramatisches Licht.</p>
+      <p class="hint">Nicht wundern: Sucherbild ist absichtlich schwarzweiß. RAW behält die Farben — <a href='mehr.html#raw-konvertierung'>nachträglich in der Kamera zurückholen</a>.</p>
+    </div>
+    <div class="card" data-preset="C2">
+      <h3><span class="badge">C2</span>„Cuban“ — warmer Analog-Look</h3>
+      <p class="look">CLASSIC NEG. · warm · +1 EV</p>
+      <p><b>Wofür:</b> Urlaubsstimmung, Straßen, Cafés, goldenes Abendlicht.</p>
+      <p class="hint">Belichtet bewusst +1 heller. Wirkt das Bild ZU hell: Korrektur Richtung 0 drehen (und wegen Auto-Update später wieder auf +1 zurück).</p>
+    </div>
+    <div class="card" data-preset="C3">
+      <h3><span class="badge">C3</span>Porträts &amp; Allrounder</h3>
+      <p class="look">PRO NEG. HI · neutral</p>
+      <p><b>Wofür:</b> Menschen, Gruppen — und der sichere Startpunkt, wenn du unsicher bist.</p>
+      <p class="hint">Natürliche Hauttöne. Fokusfeld mit dem Joystick aufs Gesicht schieben.</p>
+    </div>
+    <div class="card" data-preset="C4">
+      <h3><span class="badge">C4</span>Tiere, Vögel &amp; Action</h3>
+      <p class="look">ASTIA · Serie ~30 B/s · Pre-Shot · Tier/Vogel-AF</p>
+      <p><b>Wofür:</b> Wildtiere, Vögel im Flug, spielende Kinder, Sport.</p>
+      <p class="hint">Halb drücken &amp; Motiv verfolgen — die Kamera puffert schon Bilder VOR dem Durchdrücken. Erzeugt viele Fotos: Karte im Blick behalten! Fn1 schaltet die Tiererkennung an/aus; die Motiv-Art (Tier/Vogel) wählst du im Q-Menü.</p>
+    </div>
+    <div class="card" data-preset="C5">
+      <h3><span class="badge">C5</span>Tiere &amp; Action (zweite Variante)</h3>
+      <p class="look">vermutlich ähnlich C4 · Tier/Vogel-AF</p>
+      <p><b>Wofür:</b> Zweite Action-Belegung — oft eine Variante von C4 (z. B. andere Serienbild-Geschwindigkeit oder Verschlusszeit), Werksbelegung ist aber nicht einheitlich.</p>
+      <p class="hint">Diese Kamera liefert C4 und C5 oft mit ähnlicher, ergänzender Belegung aus. Rad auf C5 drehen, <span class="osd">Q</span> drücken und die echte Belegung prüfen — dann auf der Seite „Mehr“ eintragen.</p>
+    </div>
+    <div class="card" data-preset="C6">
+      <h3><span class="badge v">C6</span>Zeitlupe (4×)</h3>
+      <p class="look">4K 100p · ETERNA</p>
+      <p><b>Wofür:</b> Wasser, Tiere in Bewegung, Sport — alles, was in Zeitlupe magisch wird.</p>
+      <p class="hint">Nur im MOVIE-Modus. Braucht viel Licht, Speicher und Akku; bei Hitze Pausen machen.</p>
+    </div>
+    <div class="card" data-preset="C7">
+      <h3><span class="badge v">C7</span>Video für Bewegung</h3>
+      <p class="look">4K 50p · ETERNA</p>
+      <p><b>Wofür:</b> Bewegte Szenen; lässt sich im Schnitt auf halbe Geschwindigkeit bremsen.</p>
+      <p class="hint">Nur im MOVIE-Modus.</p>
+    </div>
+    <div class="card" data-preset="VID">
+      <h3><span class="badge v">▶ VIDEO</span>Standard-Video</h3>
+      <p class="look">4K 25p · ETERNA</p>
+      <p><b>Wofür:</b> Ruhige Szenen, Schwenks, Erzählendes — der normale filmische Look.</p>
+      <p class="hint">Ruhige, langsame Kamerabewegungen sehen am besten aus.</p>
+    </div>
+    <button class="btn ghost" id="presetBack" style="display:none" onclick="showAllPresets()">Alle Presets zeigen</button>
+  </div>
 
   <div class="card">
     <h3>⚠️ Wichtig: Presets merken sich Änderungen!</h3>
@@ -52,7 +102,7 @@
   </div>
 </section>
 </main>
-
+<nav><a href="index.html" class="" data-t="start"><span class="ic">⚑</span>Start</a><a href="presets.html" class="on" aria-current="page" data-t="presets"><span class="ic">◎</span>Presets</a><a href="sos.html" class="" data-t="sos"><span class="ic">✚</span>SOS</a><a href="handbuch.html" class="" data-t="handbuch"><span class="ic">📖</span>Handbuch</a><a href="uebungen.html" class="" data-t="uebungen"><span class="ic">✓</span>Übungen</a><a href="mehr.html" class="" data-t="mehr"><span class="ic">☰</span>Mehr</a></nav>
   <script src="assets/js/ui.js"></script>
   <script src="assets/js/presets.js"></script>
 </body>

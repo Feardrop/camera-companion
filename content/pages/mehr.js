@@ -1,25 +1,29 @@
-<!-- GENERATED FILE — edit content/pages/mehr.js (and/or content/data/*.js), then run `node build/build.js`. Do not hand-edit. -->
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#14171a">
-<meta name="color-scheme" content="dark">
-<title>Mehr · X-H2S Reisebegleiter</title>
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="X-H2S">
-</head>
-<body data-page="mehr">
-<header><h1>X-H2S <b>REISEBEGLEITER</b></h1><p>Tutorial · Presets · SOS · Handbuch · Übungen</p></header>
-<main>
-<section id="tab-mehr">
+import { PAGES } from "../pages.js";
+import { FACTS } from "../data/facts.js";
+import { FIELDS } from "../data/belegung-fields.js";
+import { MENU_PATHS } from "../data/menu-paths.js";
+
+const hrefFor = slug => PAGES.find(p => p.slug === slug).file;
+
+export const scripts = ["assets/js/ui.js", "assets/js/mehr.js"];
+
+function renderField(f) {
+  const [key, label, placeholder, hint] = f;
+  const multi = ["fn", "dial2", "notes"].includes(key);
+  const defaultValue = hint || "";
+  return `<div class="fld">
+      <label for="f-${key}">${label}</label>
+      ${multi
+        ? `<textarea id="f-${key}" data-field="${key}" rows="2" placeholder="${placeholder}">${defaultValue}</textarea>`
+        : `<input id="f-${key}" data-field="${key}" placeholder="${placeholder}" value="${defaultValue}">`}
+    </div>`;
+}
+
+export function render() {
+  const fieldsHtml = FIELDS.map(renderField).join("\n    ");
+  const menuRows = MENU_PATHS.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("\n    ");
+
+  return `<section id="tab-mehr">
   <h2>Meine Kamera-Belegung</h2>
   <div class="card">
     <p style="margin-top:0"><b>So findest du sie heraus:</b></p>
@@ -29,58 +33,7 @@
     <p class="hint">Nur anschauen ändert nichts. Trage hier den SOLL-Zustand ein — wegen Auto-Update ist das deine Referenz, falls sich ein Preset verändert hat.</p>
   </div>
   <div id="fields">
-    <div class="fld">
-      <label for="f-c1">C1 (Foto)</label>
-      <input id="f-c1" data-field="c1" placeholder="Acros Schwarzweiß?" value="">
-    </div>
-    <div class="fld">
-      <label for="f-c2">C2 (Foto)</label>
-      <input id="f-c2" data-field="c2" placeholder="Classic Neg. warm +1?" value="">
-    </div>
-    <div class="fld">
-      <label for="f-c3">C3 (Foto)</label>
-      <input id="f-c3" data-field="c3" placeholder="Pro Neg. Hi Porträt?" value="">
-    </div>
-    <div class="fld">
-      <label for="f-c4">C4 (Foto)</label>
-      <input id="f-c4" data-field="c4" placeholder="Astia Serie Tier/Vogel?" value="">
-    </div>
-    <div class="fld">
-      <label for="f-c5">C5 (Foto)</label>
-      <input id="f-c5" data-field="c5" placeholder="unbekannt — nachschauen!" value="">
-    </div>
-    <div class="fld">
-      <label for="f-c6">C6 (Video)</label>
-      <input id="f-c6" data-field="c6" placeholder="4K 100p Eterna Zeitlupe?" value="">
-    </div>
-    <div class="fld">
-      <label for="f-c7">C7 (Video)</label>
-      <input id="f-c7" data-field="c7" placeholder="4K 50p Eterna?" value="">
-    </div>
-    <div class="fld">
-      <label for="f-vid">Video-Standard</label>
-      <input id="f-vid" data-field="vid" placeholder="4K 25p Eterna?" value="">
-    </div>
-    <div class="fld">
-      <label for="f-autoupd">Auto-Update-Status</label>
-      <input id="f-autoupd" data-field="autoupd" placeholder="AN (Werksvorgabe dieser Kamera) oder DEAKT.?" value="">
-    </div>
-    <div class="fld">
-      <label for="f-backup">XApp-Backup gemacht am</label>
-      <input id="f-backup" data-field="backup" placeholder="Datum eintragen" value="">
-    </div>
-    <div class="fld">
-      <label for="f-fn">Fn-Tasten (DISP/BACK lang drücken)</label>
-      <textarea id="f-fn" data-field="fn" rows="2" placeholder="weitere Tasten ergänzen …">Fn1 = Motiverkennung Tiere AN/AUS · Fn2 = Augen-/Gesichtserkennung Menschen AN/AUS · Motiv-Art (Tier/Vogel/…): im Q-Menü wählen</textarea>
-    </div>
-    <div class="fld">
-      <label for="f-dial2">Einstellräder / Touch-Gesten</label>
-      <textarea id="f-dial2" data-field="dial2" rows="2" placeholder=""></textarea>
-    </div>
-    <div class="fld">
-      <label for="f-notes">Sonstige Notizen</label>
-      <textarea id="f-notes" data-field="notes" rows="2" placeholder=""></textarea>
-    </div>
+    ${fieldsHtml}
   </div>
   <button class="btn" onclick="saveFields()">Belegung speichern</button>
   <span class="saved" id="savedMsg"></span>
@@ -91,7 +44,7 @@
     <p style="margin-top:0">Einmal einrichten, dreifach profitieren — <b>am besten noch vor der Reise:</b></p>
     <p><b>1 · Koppeln:</b> App „FUJIFILM XApp“ installieren (App Store / Play Store), Bluetooth an, in der App „Kamera koppeln“ und den Anweisungen folgen.</p>
     <p><b>2 · Einstellungs-Backup:</b> In der XApp die Funktion zum <b>Sichern/Wiederherstellen der Kameraeinstellungen</b> nutzen („Registrierung/Wiederherstellung der Kameraeinstellungen“). Damit lassen sich alle Presets und Menüs im Notfall mit einem Fingertipp zurückspielen — das Sicherheitsnetz gegen versehentlich veränderte Presets (Auto-Update!). Nach dem Verifizieren der Belegung einmal sichern.</p>
-    <p><b>3 · Geo-Tagging:</b> Standortsync in der App erlauben und an der Kamera <span class="osd">MENU → Netzwerk/USB → GEOTAGGING → AN</span>. Dann steht in jedem Foto automatisch der Aufnahmeort.</p>
+    <p><b>3 · Geo-Tagging:</b> Standortsync in der App erlauben und an der Kamera <span class="osd">${FACTS.geotaggingPath}</span>. Dann steht in jedem Foto automatisch der Aufnahmeort.</p>
     <p><b>4 · Bilder übertragen:</b> in der Wiedergabe auswählen &amp; senden — oder Auto-Übertragung aktivieren.</p>
     <p class="hint">Bluetooth kostet kaum Akku; WLAN wird nur während der Übertragung aktiviert.</p>
   </div>
@@ -123,26 +76,16 @@
   </div>
 
   <h2>Spickzettel</h2>
-  <div class="fact"><b>Auslöser:</b> halb drücken = scharfstellen · ganz durchdrücken = Foto.</div>
-  <div class="fact"><b>Verirrt im Menü?</b> <span class="osd">DISP/BACK</span> mehrmals drücken.</div>
-  <div class="fact"><b>Presets speichern Änderungen automatisch</b> (Auto-Update AN). Q-Menü zeigt den Ist-Zustand; Soll-Zustand steht auf der Seite „Mehr“ (Meine Belegung). Schutzmodus: MENU → IQ → AUTOM. AKT. BEN.-EINST. → DEAKT.</div>
+  <div class="fact">${FACTS.shutter}</div>
+  <div class="fact">${FACTS.lostInMenu}</div>
+  <div class="fact"><b>Presets speichern Änderungen automatisch</b> (Auto-Update AN). Q-Menü zeigt den Ist-Zustand; Soll-Zustand steht auf der Seite „Mehr“ (Meine Belegung). Schutzmodus: ${FACTS.autoUpdateDisablePath}</div>
   <div class="fact"><b>Belichtungsdreieck:</b> Blende (klein = unscharfer Hintergrund) · Zeit (kurz = Bewegung einfrieren) · ISO (hoch = heller, aber körniger).</div>
   <div class="fact"><b>Bild zu hell/dunkel:</b> zuerst Belichtungskorrektur (±) prüfen.</div>
   <div class="fact"><b>Modus A</b> = du wählst die Blende, Kamera den Rest. Der beste erste Schritt aus den Presets.</div>
 
   <h2>Wichtige Menüwege</h2>
   <table class="mini">
-    <tr><td>Q</td><td>Schnellmenü: die 16 wichtigsten Einstellungen auf einen Blick</td></tr>
-    <tr><td>AUTO-UPDATE</td><td>MENU → IQ → AUTOM. AKT. BEN.-EINST. — AN: Presets merken sich Änderungen · DEAKT.: Presets springen zurück</td></tr>
-    <tr><td>FORMATIEREN</td><td>MENU → Schraubenschlüssel → BEN.-EINSTELLUNG → FORMATIEREN (löscht alles!)</td></tr>
-    <tr><td>FILMSIMULATION</td><td>MENU → IQ (Kamera 1) → FILMSIMULATION — oder im Q-Menü</td></tr>
-    <tr><td>MOTIVERKENNUNG</td><td>MENU → AF/MF → MOTIVERKENNUNGS-EINST. (Tier, Vogel, …)</td></tr>
-    <tr><td>Fn-TASTEN</td><td>DISP/BACK lange drücken — oder MENU → Schraubenschlüssel → TASTEN/RAD-EINSTELLUNG</td></tr>
-    <tr><td>JPEG/HEIF</td><td>MENU → IQ → JPEG/HEIF AUSWAHL — Empfehlung: HEIF (bessere Qualität, kleinere Datei)</td></tr>
-    <tr><td>RAW-KONVERT.</td><td>Wiedergabe → MENU → RAW-KONVERTIERUNG — RAW direkt in der Kamera entwickeln (S. 220)</td></tr>
-    <tr><td>KARTEN-BACKUP</td><td>MENU → Schraubenschlüssel → DATENSPEICHER-EINSTELLUNG — Fotos auf beide Karten (S. 281)</td></tr>
-    <tr><td>GEOTAGGING</td><td>MENU → Netzwerk/USB → GEOTAGGING → AN (XApp gekoppelt)</td></tr>
-    <tr><td>WELTZEIT</td><td>MENU → Schraubenschlüssel → BEN.-EINSTELLUNG → WELTZEIT</td></tr>
+    ${menuRows}
   </table>
 
 
@@ -154,7 +97,7 @@
     <p><b>HEIF</b> — der moderne JPEG-Nachfolger (10&nbsp;Bit Farbtiefe): sichtbar mehr Qualitätsreserven bei kleineren Dateien. iPhone, Mac und aktuelles Windows zeigen HEIF direkt an.</p>
     <p><b>Wie nutzt du was?</b> Alltag: <b>HEIF</b>. Wichtige Motive / kniffliges Licht: <b>RAW&nbsp;+&nbsp;HEIF</b> (beides wird gespeichert). JPEG nur, falls ein altes Gerät oder ein Webdienst HEIF nicht annimmt — oder per RAW-Konvertierung nachträglich erzeugen.</p>
     <p><b>Wo einstellen?</b><br>
-      Format: <span class="osd">MENU → IQ → JPEG/HEIF AUSWAHL</span> (S.&nbsp;129)<br>
+      Format: <span class="osd">${FACTS.jpegHeifPath}</span> (S.&nbsp;129)<br>
       RAW dazu: <span class="osd">MENU → IQ → BILDQUALITÄT → z.&nbsp;B. RAW+</span> (S.&nbsp;127)<br>
       RAW-Kompression: <span class="osd">MENU → IQ → RAW-AUFNAHME</span> (S.&nbsp;128, „verlustfrei komprimiert“ ist ein guter Standard)</p>
   </div>
@@ -204,8 +147,8 @@
   <div class="chips" style="margin:10px 0 20px">
     <button class="chip" onclick="openPage(220)">📖 Handbuch: RAW-Konvertierung · S. 220</button>
     <button class="chip" onclick="openPage(129)">📖 Handbuch: JPEG/HEIF · S. 129</button>
-    <a class="chip" href="uebungen.html">✓ Übung: RAW-Konvertierung üben</a>
-    <a class="chip" href="sos.html">✚ SOS: Bilder plötzlich schwarzweiß</a>
+    <a class="chip" href="${hrefFor("uebungen")}">✓ Übung: RAW-Konvertierung üben</a>
+    <a class="chip" href="${hrefFor("sos")}">✚ SOS: Bilder plötzlich schwarzweiß</a>
   </div>
 
   <h2>Handbücher</h2>
@@ -225,10 +168,5 @@
   <a class="lnk" href="https://pal2tech.com/videos/2022/10/14/2022-fujifilm-xh2s-and-xh2-recommended-settings-for-setup"><em>VIDEO · EN</em><b>pal2tech: Recommended Settings</b><span>Der beste Fuji-Erklärkanal, ruhiges Englisch</span></a>
   <a class="lnk" href="https://pal2tech.com/guides/"><em>TEXT · EN</em><b>pal2tech: alle Schritt-für-Schritt-Guides</b><span>PASM-Rad, Zonen-AF, Back-Button-Fokus u.v.m.</span></a>
   <a class="lnk" href="https://www.peltierphotocourses.com/courses/fujifilm-xh2-xh2s-tutorial"><em>KURS · DE-UNTERTITEL</em><b>Peltier: X-H2/X-H2S Komplettkurs</b><span>Strukturierter Videokurs mit deutschen Untertiteln</span></a>
-</section>
-</main>
-<nav><a href="index.html" class="" data-t="start"><span class="ic">⚑</span>Start</a><a href="presets.html" class="" data-t="presets"><span class="ic">◎</span>Presets</a><a href="sos.html" class="" data-t="sos"><span class="ic">✚</span>SOS</a><a href="handbuch.html" class="" data-t="handbuch"><span class="ic">📖</span>Handbuch</a><a href="uebungen.html" class="" data-t="uebungen"><span class="ic">✓</span>Übungen</a><a href="mehr.html" class="on" aria-current="page" data-t="mehr"><span class="ic">☰</span>Mehr</a></nav>
-  <script src="assets/js/ui.js"></script>
-  <script src="assets/js/mehr.js"></script>
-</body>
-</html>
+</section>`;
+}
