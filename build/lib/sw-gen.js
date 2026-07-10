@@ -1,33 +1,24 @@
-// GENERATED FILE — computed by build/lib/sw-gen.js from build/build.js's shell file
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+// Computes the SHELL precache list and a content-hash CACHE name from the
+// actual files on disk (post-build), so a renamed/added/removed page can
+// never desync sw.js's precache list, and "forgot to bump the version" is
+// no longer possible — the hash changes whenever any shell file's bytes do.
+export function generateServiceWorker({ repoRoot, shellPaths }) {
+  const hash = createHash("sha256");
+  for (const p of shellPaths) {
+    if (p.endsWith("/")) continue; // e.g. "./" — a directory entry, not a hashable file
+    hash.update(readFileSync(join(repoRoot, p.replace(/^\.\//, ""))));
+  }
+  const cache = `xh2s-${hash.digest("hex").slice(0, 10)}`;
+  const shellJson = JSON.stringify(shellPaths, null, 2).replace(/^/gm, "  ").trim();
+
+  return `// GENERATED FILE — computed by build/lib/sw-gen.js from build/build.js's shell file
 // list. Do not hand-edit; SHELL and CACHE regenerate automatically on every build.
-const CACHE = "xh2s-484f42ca60";
-const SHELL = [
-    "./",
-    "./index.html",
-    "./presets.html",
-    "./handbuch.html",
-    "./uebungen.html",
-    "./mehr.html",
-    "./sos.html",
-    "./belegung.html",
-    "./verbindung.html",
-    "./referenz.html",
-    "./assets/data/search-index.js",
-    "./manifest.webmanifest",
-    "./assets/css/style.css",
-    "./assets/js/ui.js",
-    "./assets/js/presets.js",
-    "./assets/js/handbuch.js",
-    "./assets/js/uebungen.js",
-    "./assets/js/belegung.js",
-    "./assets/js/search.js",
-    "./assets/data/manual-de.js",
-    "./assets/icons/icon-192.png",
-    "./assets/icons/icon-512.png",
-    "./assets/icons/icon-maskable-512.png",
-    "./assets/icons/apple-touch-icon.png",
-    "./X-H2S_Einfuehrung_und_Lernpfad.pdf"
-  ];
+const CACHE = "${cache}";
+const SHELL = ${shellJson};
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -57,3 +48,5 @@ self.addEventListener("fetch", e => {
     })
   );
 });
+`;
+}

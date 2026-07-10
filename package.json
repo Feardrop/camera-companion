@@ -1,0 +1,8 @@
+{
+  "name": "x-h2s-reisebegleiter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build/build.js"
+  }
+}

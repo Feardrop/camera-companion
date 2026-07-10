@@ -1,26 +1,7 @@
-<!-- GENERATED FILE — edit content/pages/handbuch.js (and/or content/data/*.js), then run `node build/build.js`. Do not hand-edit. -->
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#14171a">
-<meta name="color-scheme" content="dark">
-<title>Handbuch · X-H2S Reisebegleiter</title>
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="X-H2S">
-</head>
-<body data-page="handbuch">
-<header><button class="search-btn" type="button" aria-label="Suche" onclick="openSearch()">🔍</button><h1>X-H2S <b>REISEBEGLEITER</b></h1><p>Tutorial · Presets · SOS · Handbuch · Übungen</p></header>
-<main>
+export const scripts = ["assets/data/manual-de.js", "assets/js/ui.js", "assets/js/search.js", "assets/js/handbuch.js"];
 
-<section id="tab-handbuch">
+export function render() {
+  return `<section id="tab-handbuch">
   <h2>Offizielles Handbuch (deutsch)</h2>
   <div class="card">
     <p style="margin-top:0">Der komplette <b>Text</b> aller 404 Seiten ist in dieser App eingebaut und <b>offline durchsuchbar</b>. Für die Abbildungen lade dir einmal (im WLAN) das Original-PDF herunter — es lässt sich dann jederzeit offline in der Dateien-App öffnen.</p>
@@ -65,12 +46,5 @@
     <div class="pagetext" id="pgtext"></div>
     <p class="mut" style="margin:10px 0 0">Nur-Text-Ansicht (ohne Abbildungen) · <a id="pdfdeep" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf" target="_blank" rel="noopener">diese Seite im PDF öffnen</a></p>
   </div>
-</section>
-</main>
-<nav><a href="index.html" class="" data-t="start"><span class="ic">⚑</span>Start</a><a href="presets.html" class="" data-t="presets"><span class="ic">◎</span>Presets</a><a href="handbuch.html" class="on" aria-current="page" data-t="handbuch"><span class="ic">📖</span>Handbuch</a><a href="uebungen.html" class="" data-t="uebungen"><span class="ic">✓</span>Übungen</a><a href="mehr.html" class="" data-t="mehr"><span class="ic">☰</span>Mehr</a></nav>
-  <script src="assets/data/manual-de.js"></script>
-  <script src="assets/js/ui.js"></script>
-  <script src="assets/js/search.js"></script>
-  <script src="assets/js/handbuch.js"></script>
-</body>
-</html>
+</section>`;
+}
