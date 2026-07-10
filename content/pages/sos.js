@@ -1,7 +1,7 @@
 import { SOS } from "../data/sos.js";
 import { renderBody, renderDetails } from "../../build/lib/content-helpers.js";
 
-export const scripts = ["assets/js/ui.js"];
+export const scripts = ["assets/js/ui.js", "assets/js/search.js"];
 
 export function render() {
   const entries = SOS.map(s => renderDetails({

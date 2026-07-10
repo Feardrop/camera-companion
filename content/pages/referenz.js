@@ -1,13 +1,15 @@
 import { PAGES } from "../pages.js";
 import { FACTS } from "../data/facts.js";
 import { MENU_PATHS } from "../data/menu-paths.js";
+import { RAW_SETTINGS } from "../data/raw-settings.js";
 
 const hrefFor = slug => PAGES.find(p => p.slug === slug).file;
 
-export const scripts = ["assets/js/ui.js"];
+export const scripts = ["assets/js/ui.js", "assets/js/search.js"];
 
 export function render() {
   const menuRows = MENU_PATHS.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("\n    ");
+  const rawSettingRows = RAW_SETTINGS.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("\n        ");
 
   return `<section id="tab-referenz">
   <h2>Spickzettel</h2>
@@ -52,28 +54,7 @@ export function render() {
     <summary>Alle RAW-Konvertierungs-Einstellungen erklärt</summary>
     <div class="body">
       <table class="mini">
-        <tr><td>AUFN.BED. BERÜCKS.</td><td>Kopie exakt mit den Einstellungen von der Aufnahme erzeugen — der schnelle Reset auf den Originalzustand.</td></tr>
-        <tr><td>DATEITYP</td><td><b>Immer zuerst auf HEIF stellen.</b> Ausgabeformat der Kopie — HEIF bessere Qualität (10 Bit) bei kleinerer Datei, JPEG nur für alte Geräte/Webdienste.</td></tr>
-        <tr><td>BILDGRÖSSE</td><td>Auflösung der Kopie (L/M/S) — kleiner zum schnellen Teilen unterwegs, L zum Aufbewahren/Drucken.</td></tr>
-        <tr><td>BILDQUALITÄT</td><td>Kompressionsgrad (Fein/Normal) — bei wichtigen Bildern Fein wählen.</td></tr>
-        <tr><td>PUSH/PULL-VERARB.</td><td>Belichtung nachträglich heller/dunkler ziehen. In kleinen Schritten arbeiten — große Sprünge erzeugen sichtbares Rauschen.</td></tr>
-        <tr><td>DYNAMIKBEREICH</td><td>Zeichnung in hellen Bildbereichen verbessern — hilfreich bei kontrastreichem Licht (Himmel, Strand).</td></tr>
-        <tr><td>D-BEREICHSPRIORITÄT</td><td>Reduziert Detailverlust in Lichtern <b>und</b> Schatten gleichzeitig — die stärkere Variante für harte Kontraste.</td></tr>
-        <tr><td>FILMSIMULATION</td><td>Bildlook nachträglich wechseln — z.&nbsp;B. aus einem C1-Schwarzweiß-RAW mit PROVIA ein Farbbild erzeugen.</td></tr>
-        <tr><td>MONOCHROME FARBE</td><td>Farbstich für Schwarzweißbilder (nur bei ACROS/MONOCHROME) — z.&nbsp;B. leicht warm oder kühl einfärben.</td></tr>
-        <tr><td>KÖRNUNGSEFFEKT</td><td>Filmkorn nachträglich hinzufügen — analoger Look.</td></tr>
-        <tr><td>FARBE CHROME-EFFEKT</td><td>Mehr Zeichnung in kräftig gesättigten Rot-/Gelb-/Grüntönen.</td></tr>
-        <tr><td>FARBE CHROM FX BLAU</td><td>Dasselbe für Blautöne — z.&nbsp;B. für Himmel und Wasser.</td></tr>
-        <tr><td>WEISSABGLEICH</td><td>Farbstich korrigieren, falls beim Fotografieren falsch eingestellt.</td></tr>
-        <tr><td>WA VERSCHIEBEN</td><td>Weißabgleich feinjustieren (Richtung Amber/Blau bzw. Grün/Magenta).</td></tr>
-        <tr><td>TONKURVE</td><td>Kontrast in Lichtern und Schatten getrennt anpassen.</td></tr>
-        <tr><td>FARBE</td><td>Farbsättigung erhöhen oder verringern.</td></tr>
-        <tr><td>SCHÄRFE</td><td>Konturen schärfen oder weicher zeichnen.</td></tr>
-        <tr><td>RAUSCHREDUKTION HIGH-ISO</td><td>Bildrauschen reduzieren — nützlich bei Nacht-/Innenaufnahmen mit hohem ISO.</td></tr>
-        <tr><td>KLARHEIT</td><td>Feinkontrast erhöhen, ohne hart nachzuschärfen.</td></tr>
-        <tr><td>OBJEKTIVMOD.-OPT.</td><td>Korrigiert Beugung und Randunschärfe des Objektivs — am besten AN lassen.</td></tr>
-        <tr><td>FARBRAUM</td><td>Farbraum wählen — sRGB für Web/Teilen (Empfehlung für unterwegs), Adobe RGB für professionellen Druck.</td></tr>
-        <tr><td>HDR-MODUS</td><td>Verringert Detailverluste in Lichtern und Schatten gleichzeitig, ähnlich D-Bereichspriorität.</td></tr>
+        ${rawSettingRows}
       </table>
       <p class="hint">Nicht jede Einstellung steht immer zur Verfügung — abhängig davon, wie das Bild aufgenommen wurde.</p>
     </div>

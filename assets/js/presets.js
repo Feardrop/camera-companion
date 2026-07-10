@@ -21,3 +21,10 @@ document.getElementById("dial").addEventListener("click", e => {
   const btn = e.target.closest(".stop");
   if (btn) pick(btn.dataset.preset);
 });
+
+// Deep-Link: presets.html?preset=C1 wählt das Preset direkt an (z. B. aus der Suche)
+const presetParam = new URLSearchParams(location.search).get("preset");
+if (presetParam && document.getElementById("stop-" + presetParam)) {
+  pick(presetParam);
+  document.getElementById("presetCards").scrollIntoView({ behavior: "smooth", block: "start" });
+}

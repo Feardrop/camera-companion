@@ -1,4 +1,4 @@
-export const scripts = ["assets/data/manual-de.js", "assets/js/ui.js", "assets/js/handbuch.js"];
+export const scripts = ["assets/data/manual-de.js", "assets/js/ui.js", "assets/js/search.js", "assets/js/handbuch.js"];
 
 export function render() {
   return `<section id="tab-handbuch">

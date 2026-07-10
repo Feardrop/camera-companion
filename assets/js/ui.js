@@ -20,3 +20,11 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", () =>
     navigator.serviceWorker.register("sw.js").catch(() => {}));
 }
+
+// Fragment-Deep-Link auf ein <details> (z. B. aus einem Suchergebnis oder
+// einem Cross-Link): automatisch aufklappen, statt nur zum geschlossenen
+// Summary zu scrollen.
+if (location.hash) {
+  const target = document.querySelector(location.hash);
+  if (target && target.tagName === "DETAILS") target.open = true;
+}

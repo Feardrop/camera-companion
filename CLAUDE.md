@@ -37,11 +37,12 @@ repo root** (the exact files GitHub Pages serves):
 | Source | Generates |
 |---|---|
 | `content/pages.js` | Single source of truth for the page list: file name, nav slug, icon, label, `<title>`, and whether it's a bottom-tab page (`tab: true`) or belongs under one (`parent: "mehr"`). Drives the generated `<nav>` (real `<a href>` tags — no client-side `go(slug)` lookup, so a typo'd page reference is a build-time issue, not a silently-dead link), the parent-tab highlighting + "‹ back" breadcrumb for sub-pages (`build/lib/shell.js`), and `sw.js`'s precache list. |
-| `content/data/*.js` | Structured content, one file per content type: `presets.js` (mode-dial C1–C7 cards, `PRESETS`), `sos.js` (troubleshooting entries, `SOS`), `exercises.js` (checkable training plan, `EX`), `tutorial.js` (the 8-chapter start-page tutorial, `TUTORIAL`), `belegung-fields.js` (the "Meine Belegung" notes-form fields, `FIELDS`), `menu-paths.js` (the "Wichtige Menüwege" reference table), `facts.js` (short strings/menu paths repeated verbatim across multiple pages — e.g. the Auto-Update menu path, the shutter-button explanation — consolidated here so wording can't drift page-to-page, plus `RAW_KONV_LINK`, the one place the RAW-Konvertierung deep-dive's location is written down). |
+| `content/data/*.js` | Structured content, one file per content type: `presets.js` (mode-dial C1–C7 cards, `PRESETS`), `sos.js` (troubleshooting entries, `SOS`), `exercises.js` (checkable training plan, `EX`), `tutorial.js` (the 8-chapter start-page tutorial, `TUTORIAL`), `belegung-fields.js` (the "Meine Belegung" notes-form fields, `FIELDS`), `menu-paths.js` (the "Wichtige Menüwege" reference table), `raw-settings.js` (the RAW-Konvertierung settings table, `RAW_SETTINGS`), `facts.js` (short strings/menu paths repeated verbatim across multiple pages — e.g. the Auto-Update menu path, the shutter-button explanation — consolidated here so wording can't drift page-to-page, plus `RAW_KONV_LINK`, the one place the RAW-Konvertierung deep-dive's location is written down). |
 | `content/pages/*.js` | One file per output page (`start.js` → `index.html`, plus `presets.js`, `handbuch.js`, `uebungen.js`, `sos.js`, and the "Mehr" hub + its three sub-pages: `mehr.js`, `belegung.js`, `verbindung.js`, `referenz.js`). Each exports `render()` (returns the page's inner `<main>` HTML, usually assembled from the `content/data/*` arrays above) and `scripts` (the list of `<script src>` tags the page needs). |
-| `build/lib/shell.js` + `build/lib/partials/{head,header,nav}.js` | The shared `<head>`/`<header>`/`<nav>` wrapper — this is what used to be ~100 duplicated lines per HTML file plus runtime-injected header/nav; now written once and reused for every page. |
+| `build/lib/shell.js` + `build/lib/partials/{head,header,nav}.js` | The shared `<head>`/`<header>`/`<nav>` wrapper — this is what used to be ~100 duplicated lines per HTML file plus runtime-injected header/nav; now written once and reused for every page. The header partial also renders the global-search button. |
 | `build/lib/content-helpers.js` | Shared renderers for the "static `<details>` accordion" content shape used by both SOS entries and tutorial chapters (`renderBody`/`renderDetails`). |
 | `build/lib/sw-gen.js` | Computes `sw.js`'s `SHELL` precache array from the build's actual output file list (plus a hand-maintained static-asset list for CSS/JS/icons/manual/PDF in `build/build.js`) and a content-hash `CACHE` version — both regenerate automatically on every build, so a renamed page or a forgotten version bump can no longer desync the offline cache. |
+| `build/lib/search-index.js` | Assembles `assets/data/search-index.js` (a `const SEARCH_INDEX=[...]` script, like `manual-de.js`'s format — script-tag-loadable, not JSON, so it still works under `file://`) from every `content/data/*` array **except** the manual — see Search below for why. |
 
 Client-side JS (`assets/js/*.js`) is **not** generated — it's hand-edited, but now much thinner: since the
 build renders all content-derived markup statically, each page script only handles *interaction* against
@@ -50,13 +51,38 @@ click; `assets/js/uebungen.js` toggles checkboxes and reads/writes `localStorage
 from a data array at runtime.
 
 - `assets/js/ui.js` — shared across every page: the fallback `openPage(printed)` handbook-deep-link helper
-  (overridden by `handbuch.js` on that page), the `store` localStorage wrapper, and service worker
-  registration. Header/nav injection and the old `go(slug)` helper are gone — the build renders real links.
+  (overridden by `handbuch.js` on that page), the `store` localStorage wrapper, service worker registration,
+  and auto-opening a `<details>` when its `id` matches the URL fragment (so a search result or cross-link
+  into a closed accordion lands expanded, not just scrolled-to-and-collapsed). Header/nav injection and the
+  old `go(slug)` helper are gone — the build renders real links.
+- `assets/js/search.js` — shared on every page: the search engine (`searchAll(query, opts)`, weighted
+  title/whole-word/substring scoring, edit-distance-1 typo suggestions via `suggestTypo`) plus the global
+  search UI (header button → `openSearch()` → a native `<dialog>`, built and populated lazily on first open).
+  `handbuch.js`'s inline manual search also calls `searchAll` (pre-filtered to `types: ["manual"]`) instead of
+  duplicating ranking logic — one engine, two entry points.
 - `assets/css/style.css` — single shared stylesheet; design tokens (colors, fonts) live in `:root`. No CSS
   build/preprocessor — edit the file directly; it is not generated.
 - `assets/data/manual-de.js` — the full German manual text as a JS array `MANUAL` (404 pages, ~450 KB) plus
   `const OFFSET = 24`. `handbuch.js` searches/renders this in-browser (no server-side search). Hand-edited,
   not generated (see "Updating the manual text" below).
+
+### Search
+
+Global search (header 🔍 button, every page) and the Handbuch page's inline search share one engine
+(`assets/js/search.js`) but two data sources, loaded lazily and independently:
+
+- **Everything except the manual** — SOS entries, presets, exercises, tutorial chapters, menu paths, RAW
+  settings — lives in `assets/data/search-index.js`, generated by `build/lib/search-index.js` from the
+  `content/data/*` arrays. It's deliberately small (tens of KB).
+- **The manual** is searched directly against the already-existing `MANUAL` array in `manual-de.js` — it is
+  **not** duplicated into the search index, since that would double the app's largest asset (~450 KB) for no
+  benefit. `searchAll()` accepts an optional `manual: {list, offset}` argument for this.
+
+Both files are fetched on demand (injected as `<script>` tags, not `fetch()`+JSON, so this keeps working under
+`file://`) the first time a search actually needs them — `handbuch.html` already has `manual-de.js` loaded
+normally; every other page lazy-loads it only if the user opens search there. Search results are real
+`target` URLs (`sos.html#id`, `presets.html?preset=C1`, `uebungen.html#ex-N`, `handbuch.html?page=N`,
+`referenz.html#raw-konvertierung`) — clicking one is a normal navigation, not JS-managed state.
 
 ### Conventions to preserve
 

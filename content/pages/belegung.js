@@ -1,6 +1,6 @@
 import { FIELDS } from "../data/belegung-fields.js";
 
-export const scripts = ["assets/js/ui.js", "assets/js/belegung.js"];
+export const scripts = ["assets/js/ui.js", "assets/js/search.js", "assets/js/belegung.js"];
 
 function renderField(f) {
   const [key, label, placeholder, hint] = f;

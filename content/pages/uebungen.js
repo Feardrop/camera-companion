@@ -1,9 +1,9 @@
 import { EX } from "../data/exercises.js";
 
-export const scripts = ["assets/js/ui.js", "assets/js/uebungen.js"];
+export const scripts = ["assets/js/ui.js", "assets/js/search.js", "assets/js/uebungen.js"];
 
 function renderExercise(e, i) {
-  return `<div class="ex" data-i="${i}">
+  return `<div class="ex" id="ex-${i}" data-i="${i}">
       <label class="head"><input type="checkbox" data-i="${i}">
         <span><span class="phase">${e.ph}</span><br><span class="t">${e.t}</span></span></label>
       <ol class="steps">${e.steps.map(s => `<li>${s}</li>`).join("")}</ol>

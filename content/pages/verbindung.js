@@ -1,6 +1,6 @@
 import { FACTS } from "../data/facts.js";
 
-export const scripts = ["assets/js/ui.js"];
+export const scripts = ["assets/js/ui.js", "assets/js/search.js"];
 
 export function render() {
   return `<section id="tab-verbindung">

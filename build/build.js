@@ -10,6 +10,14 @@ import { fileURLToPath } from "node:url";
 import { PAGES } from "../content/pages.js";
 import { renderShell } from "./lib/shell.js";
 import { generateServiceWorker } from "./lib/sw-gen.js";
+import { buildSearchIndex } from "./lib/search-index.js";
+
+import { SOS } from "../content/data/sos.js";
+import { PRESETS } from "../content/data/presets.js";
+import { EX } from "../content/data/exercises.js";
+import { TUTORIAL } from "../content/data/tutorial.js";
+import { MENU_PATHS } from "../content/data/menu-paths.js";
+import { RAW_SETTINGS } from "../content/data/raw-settings.js";
 
 import * as startPage from "../content/pages/start.js";
 import * as presetsPage from "../content/pages/presets.js";
@@ -45,6 +53,7 @@ const STATIC_SHELL_ASSETS = [
   "./assets/js/handbuch.js",
   "./assets/js/uebungen.js",
   "./assets/js/belegung.js",
+  "./assets/js/search.js",
   "./assets/data/manual-de.js",
   "./assets/icons/icon-192.png",
   "./assets/icons/icon-512.png",
@@ -71,15 +80,26 @@ function buildPages() {
   return written;
 }
 
+function buildSearchIndexFile() {
+  const source = buildSearchIndex({ SOS, PRESETS, EX, TUTORIAL, MENU_PATHS, RAW_SETTINGS });
+  writeFileSync(join(REPO_ROOT, "assets/data/search-index.js"), source, "utf8");
+}
+
 function buildServiceWorker(pageFiles) {
-  const shellPaths = ["./", ...pageFiles.map(f => `./${f}`), ...STATIC_SHELL_ASSETS];
+  const shellPaths = [
+    "./", ...pageFiles.map(f => `./${f}`),
+    "./assets/data/search-index.js",
+    ...STATIC_SHELL_ASSETS,
+  ];
   const swSource = generateServiceWorker({ repoRoot: REPO_ROOT, shellPaths });
   writeFileSync(join(REPO_ROOT, "sw.js"), swSource, "utf8");
 }
 
 const pageFiles = buildPages();
+buildSearchIndexFile();
 buildServiceWorker(pageFiles);
 
-console.log(`Built ${pageFiles.length} pages + sw.js:`);
+console.log(`Built ${pageFiles.length} pages + sw.js + search-index.js:`);
 for (const f of pageFiles) console.log(`  ${f}`);
+console.log(`  assets/data/search-index.js`);
 console.log(`  sw.js`);

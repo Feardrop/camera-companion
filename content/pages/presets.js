@@ -1,6 +1,6 @@
 import { PRESETS } from "../data/presets.js";
 
-export const scripts = ["assets/js/ui.js", "assets/js/presets.js"];
+export const scripts = ["assets/js/ui.js", "assets/js/search.js", "assets/js/presets.js"];
 
 function renderDialButton(p) {
   return `<button class="stop${p.v ? " video" : ""}" id="stop-${p.id}" data-preset="${p.id}" aria-label="${p.title}">${p.id === "VID" ? "▶" : p.id}<small>${p.v ? "MOVIE" : "FOTO"}</small></button>`;
