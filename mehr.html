@@ -94,9 +94,8 @@
   </table>
 
 
-  <h2>Bildformate &amp; RAW-Entwicklung</h2>
+  <h2 id="raw-konvertierung">Bildformate &amp; RAW-Entwicklung</h2>
   <div class="card">
-    
     <p style="margin-top:0"><b>Was ist was?</b></p>
     <p><b>RAW</b> — das digitale Negativ: alle Sensordaten, riesige Reserven für die Nachbearbeitung, muss aber „entwickelt“ werden (in der Kamera, s.&nbsp;u., oder am Rechner). Für wichtige Bilder und schwieriges Licht.</p>
     <p><b>JPEG</b> — das klassische fertige Bild (8&nbsp;Bit). Überall kompatibel, aber technisch überholt.</p>
@@ -106,17 +105,55 @@
       Format: <span class="osd">MENU → IQ → JPEG/HEIF AUSWAHL</span> (S.&nbsp;129)<br>
       RAW dazu: <span class="osd">MENU → IQ → BILDQUALITÄT → z.&nbsp;B. RAW+</span> (S.&nbsp;127)<br>
       RAW-Kompression: <span class="osd">MENU → IQ → RAW-AUFNAHME</span> (S.&nbsp;128, „verlustfrei komprimiert“ ist ein guter Standard)</p>
-    <hr style="border:0;border-top:1px dashed var(--line);margin:12px 0">
-    <p><b>Empfehlung: Bilder immer als HEIF erstellen.</b> HEIF ist der moderne JPEG-Nachfolger — bessere Qualität (10 Bit) bei kleinerer Datei. Umstellen: <span class="osd">MENU → IQ → JPEG/HEIF AUSWAHL → HEIF</span>. iPhone/Mac/aktuelles Windows zeigen HEIF problemlos an.</p>
-    <p><b>RAW in der Kamera entwickeln</b> — ohne Computer, direkt auf der Reise:</p>
-    <p>① Bild in der Wiedergabe anzeigen → <span class="osd">MENU → RAW-KONVERTIERUNG</span><br>
-       ② Parameter anpassen (andere Filmsimulation, Belichtung ±, Weißabgleich …)<br>
-       ③ Mit <span class="osd">Q</span> speichern — das Original-RAW bleibt erhalten, das Ergebnis wird als neues HEIF/JPEG abgelegt.</p>
-    <p class="hint">So wird aus einem C1-Schwarzweiß-RAW nachträglich doch ein Farbbild.</p>
-    <div class="chips" style="margin-bottom:0">
-      <button class="chip" onclick="openPage(220)">📖 Handbuch: RAW-Konvertierung · S. 220</button>
-      <button class="chip" onclick="openPage(129)">📖 Handbuch: JPEG/HEIF · S. 129</button>
+  </div>
+
+  <div class="card">
+    <p style="margin-top:0"><b>RAW in der Kamera entwickeln</b> — ohne Computer, direkt auf der Reise:</p>
+    <p>① Bild in der Wiedergabe anzeigen (RAW-Symbol) → <span class="osd">MENU/OK → RAW-KONVERTIERUNG</span><br>
+       ② <b>Zuerst DATEITYP auf HEIF stellen</b> — legt das Ausgabeformat der Kopie fest.<br>
+       ③ Weitere Einstellungen nach Bedarf anpassen (Fokushebel: markieren → rechts öffnet Optionen → wählen → MENU/OK bestätigt; Liste aller Einstellungen unten).<br>
+       ④ Taste <span class="osd">Q</span> zeigt eine Vorschau der Kopie.<br>
+       ⑤ <span class="osd">MENU/OK</span> speichert die Kopie als neue Datei — das Original-RAW bleibt unverändert erhalten.</p>
+    <p class="hint"><b>Wichtig: Schritt ② immer zuerst.</b> Wird DATEITYP nicht umgestellt, entsteht aus Versehen ein altes JPEG statt eines hochwertigen HEIF — unabhängig davon, was du sonst noch änderst.</p>
+    <p class="hint">So wird z.&nbsp;B. aus einem C1-Schwarzweiß-RAW nachträglich doch ein Farbbild: FILMSIMULATION in Schritt ③ auf PROVIA o.&nbsp;ä. wechseln.</p>
+  </div>
+
+  <details>
+    <summary>Alle RAW-Konvertierungs-Einstellungen erklärt</summary>
+    <div class="body">
+      <table class="mini">
+        <tr><td>AUFN.BED. BERÜCKS.</td><td>Kopie exakt mit den Einstellungen von der Aufnahme erzeugen — der schnelle Reset auf den Originalzustand.</td></tr>
+        <tr><td>DATEITYP</td><td><b>Immer zuerst auf HEIF stellen.</b> Ausgabeformat der Kopie — HEIF bessere Qualität (10 Bit) bei kleinerer Datei, JPEG nur für alte Geräte/Webdienste.</td></tr>
+        <tr><td>BILDGRÖSSE</td><td>Auflösung der Kopie (L/M/S) — kleiner zum schnellen Teilen unterwegs, L zum Aufbewahren/Drucken.</td></tr>
+        <tr><td>BILDQUALITÄT</td><td>Kompressionsgrad (Fein/Normal) — bei wichtigen Bildern Fein wählen.</td></tr>
+        <tr><td>PUSH/PULL-VERARB.</td><td>Belichtung nachträglich heller/dunkler ziehen. In kleinen Schritten arbeiten — große Sprünge erzeugen sichtbares Rauschen.</td></tr>
+        <tr><td>DYNAMIKBEREICH</td><td>Zeichnung in hellen Bildbereichen verbessern — hilfreich bei kontrastreichem Licht (Himmel, Strand).</td></tr>
+        <tr><td>D-BEREICHSPRIORITÄT</td><td>Reduziert Detailverlust in Lichtern <b>und</b> Schatten gleichzeitig — die stärkere Variante für harte Kontraste.</td></tr>
+        <tr><td>FILMSIMULATION</td><td>Bildlook nachträglich wechseln — z.&nbsp;B. aus einem C1-Schwarzweiß-RAW mit PROVIA ein Farbbild erzeugen.</td></tr>
+        <tr><td>MONOCHROME FARBE</td><td>Farbstich für Schwarzweißbilder (nur bei ACROS/MONOCHROME) — z.&nbsp;B. leicht warm oder kühl einfärben.</td></tr>
+        <tr><td>KÖRNUNGSEFFEKT</td><td>Filmkorn nachträglich hinzufügen — analoger Look.</td></tr>
+        <tr><td>FARBE CHROME-EFFEKT</td><td>Mehr Zeichnung in kräftig gesättigten Rot-/Gelb-/Grüntönen.</td></tr>
+        <tr><td>FARBE CHROM FX BLAU</td><td>Dasselbe für Blautöne — z.&nbsp;B. für Himmel und Wasser.</td></tr>
+        <tr><td>WEISSABGLEICH</td><td>Farbstich korrigieren, falls beim Fotografieren falsch eingestellt.</td></tr>
+        <tr><td>WA VERSCHIEBEN</td><td>Weißabgleich feinjustieren (Richtung Amber/Blau bzw. Grün/Magenta).</td></tr>
+        <tr><td>TONKURVE</td><td>Kontrast in Lichtern und Schatten getrennt anpassen.</td></tr>
+        <tr><td>FARBE</td><td>Farbsättigung erhöhen oder verringern.</td></tr>
+        <tr><td>SCHÄRFE</td><td>Konturen schärfen oder weicher zeichnen.</td></tr>
+        <tr><td>RAUSCHREDUKTION HIGH-ISO</td><td>Bildrauschen reduzieren — nützlich bei Nacht-/Innenaufnahmen mit hohem ISO.</td></tr>
+        <tr><td>KLARHEIT</td><td>Feinkontrast erhöhen, ohne hart nachzuschärfen.</td></tr>
+        <tr><td>OBJEKTIVMOD.-OPT.</td><td>Korrigiert Beugung und Randunschärfe des Objektivs — am besten AN lassen.</td></tr>
+        <tr><td>FARBRAUM</td><td>Farbraum wählen — sRGB für Web/Teilen (Empfehlung für unterwegs), Adobe RGB für professionellen Druck.</td></tr>
+        <tr><td>HDR-MODUS</td><td>Verringert Detailverluste in Lichtern und Schatten gleichzeitig, ähnlich D-Bereichspriorität.</td></tr>
+      </table>
+      <p class="hint">Nicht jede Einstellung steht immer zur Verfügung — abhängig davon, wie das Bild aufgenommen wurde.</p>
     </div>
+  </details>
+
+  <div class="chips" style="margin:10px 0 20px">
+    <button class="chip" onclick="openPage(220)">📖 Handbuch: RAW-Konvertierung · S. 220</button>
+    <button class="chip" onclick="openPage(129)">📖 Handbuch: JPEG/HEIF · S. 129</button>
+    <button class="chip" onclick="go('uebungen')">✓ Übung: RAW-Konvertierung üben</button>
+    <button class="chip" onclick="go('sos')">✚ SOS: Bilder plötzlich schwarzweiß</button>
   </div>
 
   <h2>Handbücher</h2>

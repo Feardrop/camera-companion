@@ -22,6 +22,7 @@
   h2{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);
      margin:26px 0 10px;font-weight:700}
   h2:first-child{margin-top:4px}
+  h2[id]{scroll-margin-top:90px}
 
   /* ---- Modusrad (Signatur) ---- */
   .dial{display:flex;gap:8px;overflow-x:auto;padding:6px 2px 12px;scrollbar-width:none}

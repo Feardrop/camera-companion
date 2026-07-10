@@ -1,6 +1,6 @@
 /* X-H2S Reisebegleiter — Service Worker
    Precached App-Shell + Stale-While-Revalidate. Version bei jedem Deploy erhöhen! */
-const CACHE = "xh2s-v1";
+const CACHE = "xh2s-v2";
 const SHELL = [
   "./",
   "./index.html",

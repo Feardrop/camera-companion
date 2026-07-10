@@ -34,7 +34,15 @@ const EX=[
    "DISP/BACK drücken, bis das Histogramm eingeblendet ist.",
    "Beim Fotografieren darauf achten: Der „Berg“ darf rechts anlehnen, aber nicht anstoßen.",
    "Bonus: dieselbe Szene einmal in Modus A mit Blende f/2.8 und einmal f/8 — Hintergrund vergleichen."],
-  goal:"Ziel: Erste bewusste Belichtungs- und Blendenentscheidungen — Enthusiasten-Level in Sicht."}
+  goal:"Ziel: Erste bewusste Belichtungs- und Blendenentscheidungen — Enthusiasten-Level in Sicht."},
+ {t:"7 · RAW-Konvertierung üben", ph:"DANACH · 10 MIN", steps:[
+   "Ein RAW-Bild (RAW+HEIF muss beim Fotografieren aktiv gewesen sein) in der Wiedergabe auswählen.",
+   "MENU/OK → RAW-KONVERTIERUNG öffnen.",
+   "Zuerst DATEITYP auf HEIF stellen — immer als erster Schritt!",
+   "Eine weitere Einstellung ausprobieren, z. B. FILMSIMULATION wechseln oder PUSH/PULL-VERARB. für die Belichtung.",
+   "Mit Q die Vorschau ansehen, mit MENU/OK speichern.",
+   "Original und neue Kopie in der Wiedergabe vergleichen — das RAW bleibt unverändert erhalten."],
+  goal:"Ziel: Du traust dich, ein RAW-Bild direkt in der Kamera zu „entwickeln“ — inklusive dem wichtigen ersten Schritt DATEITYP → HEIF. Alle Einstellungen erklärt: <a href=\"mehr.html#raw-konvertierung\">Seite „Mehr“</a>."}
 ];
 const exList=document.getElementById("exList");
 let done = store.get("ex") || {};

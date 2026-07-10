@@ -3,7 +3,7 @@
 const PRESETS = [
  {id:"C1", v:false, look:"ACROS · Schwarzweiß", title:"Kräftiges Schwarzweiß",
   use:"Architektur, Straßenszenen, ausdrucksstarke Porträts, dramatisches Licht.",
-  note:"Nicht wundern: Sucherbild ist absichtlich schwarzweiß. RAW behält die Farben."},
+  note:"Nicht wundern: Sucherbild ist absichtlich schwarzweiß. RAW behält die Farben — <a href='mehr.html#raw-konvertierung'>nachträglich in der Kamera zurückholen</a>."},
  {id:"C2", v:false, look:"CLASSIC NEG. · warm · +1 EV", title:"„Cuban“ — warmer Analog-Look",
   use:"Urlaubsstimmung, Straßen, Cafés, goldenes Abendlicht.",
   note:"Belichtet bewusst +1 heller. Wirkt das Bild ZU hell: Korrektur Richtung 0 drehen (und wegen Auto-Update später wieder auf +1 zurück)."},
