@@ -1,0 +1,66 @@
+<!-- GENERATED FILE — edit content/pages/manual.js (and/or content/data/*.js), then run `node build/build.js`. Do not hand-edit. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#14171a">
+<meta name="color-scheme" content="dark">
+<title>Manual · X-H2S Companion</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="X-H2S">
+</head>
+<body data-page="manual">
+<script>window.__LOCALE__="en";window.__OTHER_LOCALE_URL__="de/manual.html";</script>
+<header><button class="search-btn" type="button" aria-label="Search" onclick="openSearch()">🔍</button><h1>X-H2S <b>COMPANION</b></h1><p>Tutorial · Presets · SOS · Manual · Exercises</p></header>
+<main>
+
+<section id="tab-manual">
+  <h2>Official manual</h2>
+  <div class="card">
+    <p style="margin-top:0">The complete German <b>text</b> of all 404 pages is built into this app and <b>searchable offline</b> — search always works, even with no network. Opening a page also shows the <b>real PDF page with illustrations</b> (needs a network connection for that); with no network it automatically falls back to the built-in text view. The English offline text isn't extracted yet — see the note below.</p>
+    <div class="dlbtns">
+      <a class="btn" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_en_s_f.pdf" target="_blank" rel="noopener">📥 Download the manual PDF</a>
+      <a class="btn ghost" href="https://fujifilm-dsc.com/en/manual/x-h2s/" target="_blank" rel="noopener">🌐 Online manual (web)</a>
+    </div>
+  </div>
+
+  <div class="search">
+    <input id="q" type="search" placeholder="Search the manual … e.g. self-timer" oninput="doSearch()">
+  </div>
+  <div id="mres"></div>
+
+  <h2>Jump straight to a chapter</h2>
+  <p class="mut">Chapter shortcuts below use page numbers from the German PDF and aren't available here yet — the English PDF's real page numbers haven't been confirmed. Full-text search above covers the German manual for now; use the PDF/online links to browse the English manual directly.</p>
+
+  <div id="pageview" style="display:none" class="pageview">
+    <div class="pagenav">
+      <button onclick="stepPage(-1)" aria-label="Previous page">‹</button>
+      <div class="pg" id="pglabel"></div>
+      <button onclick="stepPage(1)" aria-label="Next page">›</button>
+      <button onclick="closePage()" aria-label="Close">✕</button>
+    </div>
+    <p class="mut" id="pdfstatus" style="display:none">Loading PDF page …</p>
+    <div class="pdfpage" id="pdfpage" style="display:none">
+      <canvas id="pdfCanvas"></canvas>
+      <div id="pdfTextLayer" class="pdf-text-layer"></div>
+    </div>
+    <div class="pagetext" id="pgtext" style="display:none"></div>
+    <p class="mut" style="margin:10px 0 0" id="pdffallbacknote">Text-only view (no illustrations, PDF unavailable) · <a id="pdfdeep" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_en_s_f.pdf" target="_blank" rel="noopener">Open the PDF externally instead</a></p>
+  </div>
+</section>
+</main>
+<nav><a href="index.html" class="" data-t="start"><span class="ic">⚑</span>Start</a><a href="presets.html" class="" data-t="presets"><span class="ic">◎</span>Presets</a><a href="manual.html" class="on" aria-current="page" data-t="manual"><span class="ic">📖</span>Manual</a><a href="exercises.html" class="" data-t="exercises"><span class="ic">✓</span>Exercises</a><a href="more.html" class="" data-t="more"><span class="ic">☰</span>More</a></nav>
+  <script src="assets/data/strings.js"></script>
+  <script src="assets/data/manual.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/search.js"></script>
+  <script src="assets/js/manual.js"></script>
+</body>
+</html>

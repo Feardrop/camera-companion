@@ -1,17 +1,55 @@
 // Facts/menu-paths repeated verbatim across multiple pages, consolidated to a
 // single source so wording can no longer drift page-to-page (was previously
-// hand-copied with slightly different wording in up to 6 files).
+// hand-copied with slightly different wording in up to 6 files). Every value
+// is {de,en}; for menu paths the English variant shows the camera's actual
+// English-language menu labels as primary (not a literal translation of the
+// German menu wording) — `autoUpdateOtherLang` mirrors this: on the German
+// tree it shows the English menu wording as a cross-reference aside, and on
+// the English tree it shows the German wording, for travelers who might run
+// into a camera set to the other language.
 export const FACTS = {
-  shutter: "<b>Auslöser:</b> halb drücken = scharfstellen · ganz durchdrücken = Foto.",
-  lostInMenu: "<b>Verirrt im Menü?</b> <span class=\"osd\">DISP/BACK</span> mehrmals drücken.",
-  autoUpdateDisablePath: "MENU → IQ → AUTOM. AKT. BEN.-EINST. → DEAKT.",
-  autoUpdateEnablePath: "MENU → IQ → AUTOM. AKT. BEN.-EINST. → AN",
-  autoUpdateEnglish: "AUTO UPDATE CUSTOM SETTING → DISABLE/ENABLE",
-  geotaggingPath: "MENU → Netzwerk/USB → GEOTAGGING → AN",
-  jpegHeifPath: "MENU → IQ → JPEG/HEIF AUSWAHL",
+  shutter: {
+    de: "<b>Auslöser:</b> halb drücken = scharfstellen · ganz durchdrücken = Foto.",
+    en: "<b>Shutter button:</b> half-press to focus · press all the way for the shot.",
+  },
+  lostInMenu: {
+    de: "<b>Verirrt im Menü?</b> <span class=\"osd\">DISP/BACK</span> mehrmals drücken.",
+    en: "<b>Lost in the menu?</b> Press <span class=\"osd\">DISP/BACK</span> a few times.",
+  },
+  autoUpdateDisablePath: {
+    de: "MENU → IQ → AUTOM. AKT. BEN.-EINST. → DEAKT.",
+    en: "MENU → IQ → AUTO UPDATE CUSTOM SETTING → OFF",
+  },
+  autoUpdateEnablePath: {
+    de: "MENU → IQ → AUTOM. AKT. BEN.-EINST. → AN",
+    en: "MENU → IQ → AUTO UPDATE CUSTOM SETTING → ON",
+  },
+  autoUpdateOtherLang: {
+    de: "(englisch: AUTO UPDATE CUSTOM SETTING → DISABLE/ENABLE)",
+    en: "(German: AUTOM. AKT. BEN.-EINST. → DEAKT./AN)",
+  },
+  geotaggingPath: {
+    de: "MENU → Netzwerk/USB → GEOTAGGING → AN",
+    en: "MENU → Network/USB → GEOTAGGING → ON",
+  },
+  jpegHeifPath: {
+    de: "MENU → IQ → JPEG/HEIF AUSWAHL",
+    en: "MENU → IQ → JPEG/HEIF SETTING",
+  },
 };
 
-// The RAW-Konvertierung deep-dive lives on referenz.html; every page that
+// Official manual PDF, fetched by the visitor's own browser (see
+// src/js/manual.js) — never redistributed by this repo. The English URL is
+// a best-guess (swapping "de" for "en" in Fujifilm's URL pattern) and has
+// not been verified from this environment; see CLAUDE.md.
+export const MANUAL_PDF_URL = {
+  de: "https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf",
+  en: "https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_en_s_f.pdf",
+};
+
+// The RAW-conversion deep-dive lives on reference.html; every page that
 // links to it does so through this one constant, so a future page move is a
-// one-line change here instead of a find-and-replace across files.
-export const RAW_KONV_LINK = "referenz.html#raw-konvertierung";
+// one-line change here instead of a find-and-replace across files. The file
+// name is locale-invariant (both trees use "reference.html"); only the
+// anchor id needed a one-time rename from the old German "raw-konvertierung".
+export const RAW_KONV_LINK = "reference.html#raw-conversion";

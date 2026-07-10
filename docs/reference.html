@@ -1,0 +1,130 @@
+<!-- GENERATED FILE — edit content/pages/reference.js (and/or content/data/*.js), then run `node build/build.js`. Do not hand-edit. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#14171a">
+<meta name="color-scheme" content="dark">
+<title>Reference · X-H2S Companion</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="X-H2S">
+</head>
+<body data-page="reference">
+<script>window.__LOCALE__="en";window.__OTHER_LOCALE_URL__="de/reference.html";</script>
+<header><button class="search-btn" type="button" aria-label="Search" onclick="openSearch()">🔍</button><h1>X-H2S <b>COMPANION</b></h1><p>Tutorial · Presets · SOS · Manual · Exercises</p></header>
+<main>
+<a class="back" href="more.html">‹ More</a>
+<section id="tab-reference">
+  <h2>Cheat sheet</h2>
+  <div class="fact"><b>Shutter button:</b> half-press to focus · press all the way for the shot.</div>
+  <div class="fact"><b>Lost in the menu?</b> Press <span class="osd">DISP/BACK</span> a few times.</div>
+  <div class="fact"><b>Presets save changes automatically</b> (Auto Update ON). The Q menu shows the current state; the intended state lives on the “My Setup” page. Protected mode: MENU → IQ → AUTO UPDATE CUSTOM SETTING → OFF</div>
+  <div class="fact"><b>Exposure triangle:</b> aperture (small number = blurry background) · shutter speed (fast = freezes motion) · ISO (higher = brighter but grainier).</div>
+  <div class="fact"><b>Shot too bright/dark:</b> check exposure correction (±) first.</div>
+  <div class="fact"><b>Mode A</b> = you choose the aperture, the camera handles the rest. The best first step away from the presets.</div>
+
+  <h2>Key menu paths</h2>
+  <table class="mini">
+    <tr><td>Q</td><td>Quick menu: the 16 most important settings at a glance</td></tr>
+    <tr><td>AUTO UPDATE</td><td>MENU → IQ → AUTO UPDATE CUSTOM SETTING — ON: presets remember changes · OFF: presets snap back</td></tr>
+    <tr><td>FORMAT</td><td>MENU → wrench icon → USER SETTING → FORMAT (erases everything!)</td></tr>
+    <tr><td>FILM SIMULATION</td><td>MENU → IQ (camera 1) → FILM SIMULATION — or in the Q menu</td></tr>
+    <tr><td>SUBJECT DETECTION</td><td>MENU → AF/MF → SUBJECT DETECTION SETTING (animal, bird, …)</td></tr>
+    <tr><td>Fn BUTTONS</td><td>Long-press DISP/BACK — or MENU → wrench icon → BUTTON/DIAL SETTING</td></tr>
+    <tr><td>JPEG/HEIF</td><td>MENU → IQ → JPEG/HEIF SETTING — recommendation: HEIF (better quality, smaller file)</td></tr>
+    <tr><td>RAW CONVERSION</td><td>Playback → MENU → RAW CONVERSION — develop RAW files right in the camera (p. 220)</td></tr>
+    <tr><td>CARD BACKUP</td><td>MENU → wrench icon → DATA STORAGE SETTING — photos written to both cards (p. 281)</td></tr>
+    <tr><td>GEOTAGGING</td><td>MENU → Network/USB → GEOTAGGING → ON (XApp paired)</td></tr>
+    <tr><td>TIME DIFFERENCE</td><td>MENU → wrench icon → USER SETTING → TIME DIFFERENCE</td></tr>
+  </table>
+
+
+  <h2 id="raw-conversion">Image formats &amp; RAW development</h2>
+  <div class="card">
+    <p style="margin-top:0"><b>What's what?</b></p>
+    <p><b>RAW</b> — the digital negative: all the sensor data, huge headroom for editing, but it has to be “developed” (in the camera, see below, or on a computer). For images that matter and tricky light.</p>
+    <p><b>JPEG</b> — the classic finished image (8-bit). Compatible everywhere, but technically dated.</p>
+    <p><b>HEIF</b> — the modern JPEG successor (10-bit color depth): noticeably more quality headroom at smaller file sizes. iPhone, Mac and current Windows display HEIF natively.</p>
+    <p><b>How to use which?</b> Everyday: <b>HEIF</b>. Important subjects / tricky light: <b>RAW&nbsp;+&nbsp;HEIF</b> (both get saved). JPEG only if an old device or web service won't accept HEIF — or generate one afterwards via RAW conversion.</p>
+    <p><b>Where to set this?</b><br>
+      Format: <span class="osd">MENU → IQ → JPEG/HEIF SETTING</span><br>
+      RAW too: <span class="osd">MENU → IQ → IMAGE QUALITY → e.g. RAW+</span><br>
+      RAW compression: <span class="osd">MENU → IQ → RAW RECORDING</span> (“lossless compressed” is a good default)</p>
+  </div>
+
+  <div class="card">
+    <p style="margin-top:0"><b>Developing RAW in the camera</b> — no computer needed, right on the trip:</p>
+    <ol class="steplist"><li>Show the image in playback (RAW icon) → <span class="osd">MENU/OK → RAW CONVERSION</span></li><li><b>Set FILE FORMAT to HEIF first</b> — this decides the copy's output format.</li><li>Adjust any other settings you need (focus lever: highlight → right opens options → choose → MENU/OK confirms; full list of settings below).</li><li>The <span class="osd">Q</span> button shows a preview of the copy.</li><li><span class="osd">MENU/OK</span> saves the copy as a new file — the original RAW stays unchanged.</li></ol>
+    <p class="hint"><b>Important: always do step 2 first.</b> If FILE FORMAT isn't changed, you accidentally get an old-style JPEG instead of a high-quality HEIF — regardless of what else you change.</p>
+    <p class="hint">This is also how a C1 black &amp; white RAW can become a color image after the fact: switch FILM SIMULATION to PROVIA or similar in step 3.</p>
+  </div>
+
+  <details>
+    <summary>Every RAW-conversion setting explained</summary>
+    <div class="body">
+      <table class="mini">
+        <tr><td>REFLECT SHOOTING CONDITIONS</td><td>Creates a copy using exactly the settings from when you shot it — the fast way back to the original state.</td></tr>
+        <tr><td>FILE FORMAT</td><td><b>Always set this to HEIF first.</b> The copy's output format — HEIF gives better quality (10-bit) at a smaller file size, JPEG is only for old devices/web services.</td></tr>
+        <tr><td>IMAGE SIZE</td><td>The copy's resolution (L/M/S) — smaller for quick sharing on the road, L for keeping/printing.</td></tr>
+        <tr><td>IMAGE QUALITY</td><td>Compression level (Fine/Normal) — pick Fine for images that matter.</td></tr>
+        <tr><td>PUSH/PULL PROCESSING</td><td>Pull exposure brighter/darker after the fact. Work in small steps — big jumps produce visible noise.</td></tr>
+        <tr><td>DYNAMIC RANGE</td><td>Recovers more detail in bright areas of the image — helpful in high-contrast light (sky, beach).</td></tr>
+        <tr><td>D RANGE PRIORITY</td><td>Reduces lost detail in highlights <b>and</b> shadows at the same time — the stronger option for harsh contrast.</td></tr>
+        <tr><td>FILM SIMULATION</td><td>Change the image look after the fact — e.g. turn a C1 black &amp; white RAW into a color image with PROVIA.</td></tr>
+        <tr><td>MONOCHROMATIC COLOR</td><td>A color tint for black &amp; white images (ACROS/MONOCHROME only) — e.g. a slightly warm or cool cast.</td></tr>
+        <tr><td>GRAIN EFFECT</td><td>Adds film grain after the fact — an analog look.</td></tr>
+        <tr><td>COLOR CHROME EFFECT</td><td>More detail in strongly saturated reds, yellows and greens.</td></tr>
+        <tr><td>COLOR CHROME FX BLUE</td><td>The same, for blue tones — e.g. sky and water.</td></tr>
+        <tr><td>WHITE BALANCE</td><td>Correct a color cast if it was set wrong while shooting.</td></tr>
+        <tr><td>WHITE BALANCE SHIFT</td><td>Fine-tune white balance (toward amber/blue or green/magenta).</td></tr>
+        <tr><td>TONE CURVE</td><td>Adjust contrast in highlights and shadows separately.</td></tr>
+        <tr><td>COLOR</td><td>Increase or decrease color saturation.</td></tr>
+        <tr><td>SHARPNESS</td><td>Sharpen edges, or render them softer.</td></tr>
+        <tr><td>HIGH ISO NR</td><td>Reduces image noise — useful for night/indoor shots at high ISO.</td></tr>
+        <tr><td>CLARITY</td><td>Boosts fine contrast without harsh re-sharpening.</td></tr>
+        <tr><td>LENS MODULATION OPTIMIZER</td><td>Corrects lens diffraction and edge softness — best left ON.</td></tr>
+        <tr><td>COLOR SPACE</td><td>Choose the color space — sRGB for web/sharing (recommended while traveling), Adobe RGB for professional printing.</td></tr>
+        <tr><td>HDR MODE</td><td>Reduces lost detail in highlights and shadows at once, similar to D Range Priority.</td></tr>
+      </table>
+      <p class="hint">Not every setting is always available — it depends on how the image was shot.</p>
+    </div>
+  </details>
+
+  <div class="chips" style="margin:10px 0 20px">
+    
+    <a class="chip" href="exercises.html">✓ Exercise: practice RAW conversion</a>
+    <a class="chip" href="sos.html">✚ SOS: shots suddenly black &amp; white</a>
+  </div>
+
+  <h2>Manuals</h2>
+  <a class="lnk" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_en_s_f.pdf"><em>PDF</em><b>Official manual</b><span>Download — with every illustration, works offline (page numbers not yet verified against this app)</span></a>
+  <a class="lnk" href="https://fujifilm-dsc.com/en/manual/x-h2s/"><em>WEB</em><b>Online manual, X-H2S</b><span>Searchable, phone-friendly</span></a>
+  <p class="mut">The manual text lives on the “Manual” page (search works offline); the PDF with illustrations is available there via the download button.</p>
+
+  <a class="lnk" href="X-H2S_Einfuehrung_und_Lernpfad.pdf" target="_blank" rel="noopener"><em>PDF · GERMAN</em><b>Introduction &amp; Learning Path (16 pages)</b><span>The detailed companion document to this site (German only)</span></a>
+
+  <h2>Videos &amp; guides: English</h2>
+  <a class="lnk" href="https://pal2tech.com/videos/2022/10/14/2022-fujifilm-xh2s-and-xh2-recommended-settings-for-setup"><em>VIDEO · EN</em><b>pal2tech: Recommended Settings</b><span>The best Fuji explainer channel, calm and clear English</span></a>
+  <a class="lnk" href="https://pal2tech.com/guides/"><em>TEXT · EN</em><b>pal2tech: all step-by-step guides</b><span>PASM dial, zone AF, back-button focus and more</span></a>
+  <a class="lnk" href="https://www.peltierphotocourses.com/courses/fujifilm-xh2-xh2s-tutorial"><em>COURSE</em><b>Peltier: X-H2/X-H2S full course</b><span>A structured video course (German subtitles available)</span></a>
+
+  <h2>Videos: German</h2>
+  <a class="lnk" href="https://www.youtube.com/watch?v=2gh4e6giFfQ"><em>YOUTUBE · MUST-WATCH</em><b>The C1–C7 presets explained</b><span>Exactly this camera's preset system</span></a>
+  <a class="lnk" href="https://www.youtube.com/watch?v=IcCmSHWJ3VU"><em>YOUTUBE · MUST-WATCH</em><b>Autofocus tips, X-H2/X-H2S</b><span>Focus modes &amp; subject detection (Fujifilm Germany)</span></a>
+  <a class="lnk" href="https://www.youtube.com/watch?v=4VF3JrYjaPs"><em>YOUTUBE</em><b>Custom settings explained (fuji-store.de)</b><span>A deeper look at custom settings</span></a>
+  <a class="lnk" href="https://www.youtube.com/watch?v=fI3uVUQVMPI"><em>YOUTUBE</em><b>Settings course, X-T5/X-H2(s)</b><span>Menu item by menu item (Pixelcatcher)</span></a>
+</section>
+</main>
+<nav><a href="index.html" class="" data-t="start"><span class="ic">⚑</span>Start</a><a href="presets.html" class="" data-t="presets"><span class="ic">◎</span>Presets</a><a href="manual.html" class="" data-t="manual"><span class="ic">📖</span>Manual</a><a href="exercises.html" class="" data-t="exercises"><span class="ic">✓</span>Exercises</a><a href="more.html" class="on" aria-current="page" data-t="more"><span class="ic">☰</span>More</a></nav>
+  <script src="assets/data/strings.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/search.js"></script>
+</body>
+</html>
