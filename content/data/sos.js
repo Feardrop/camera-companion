@@ -44,7 +44,7 @@ export const SOS = [
     "<span class=\"osd\">Q</span>-Taste drücken und die Kacheln überfliegen — was sieht ungewöhnlich aus? Dort direkt korrigieren.",
     "<span class=\"warn\">Achtung: Rad weg- und zurückdrehen hilft NICHT — diese Kamera speichert Änderungen automatisch ins Preset (Auto-Update). Gewünschte Werte selbst zurückstellen.</span>",
     "Aus dem Menü verirrt? <span class=\"osd\">DISP/BACK</span> mehrmals drücken.",
-    "Größeres Chaos? Preset-Sollwerte stehen im Seite „Mehr“ (Meine Belegung); Einstellungs-Backup per XApp zurückspielen (Seite „Mehr“).",
+    "Größeres Chaos? Preset-Sollwerte stehen auf der Seite „Belegung“; Einstellungs-Backup per XApp zurückspielen (Seite „Verbindung“).",
     "Letzter Ausweg: Kamera aus, Akku 10 Sekunden raus, wieder rein.",
   ] },
   { id: "foto-oder-video", severity: null, summary: "Ich filme, wollte aber fotografieren (oder umgekehrt)", type: "p",
@@ -61,7 +61,7 @@ export const SOS = [
   { id: "zeitzone", severity: null, summary: "Datum/Uhrzeit falsch (Zeitzone der Reise)", type: "p",
     body: "<span class=\"osd\">MENU/OK → Schraubenschlüssel → BEN.-EINSTELLUNG → WELTZEIT</span> → <b>ORTSZEIT</b> wählen und Zielzone einstellen. Zurück zu Hause wieder auf HEIMATZEIT. (Mit gekoppelter XApp kann auch das Handy die Zeit setzen.)" },
   { id: "handy-transfer", severity: null, summary: "Bilder aufs Handy / Geo-Tagging fehlt", type: "mixed",
-    body: "<p>Beides läuft über die <b>FUJIFILM XApp</b> — Einrichtung siehe Seite „Mehr“ → „Handy-Setup“. Kurzfassung:</p><ol><li>Übertragen: In der Bild-Wiedergabe Bilder auswählen und senden, oder automatische Übertragung in der App aktivieren.</li><li>Geo-Tagging: In der XApp Standortsynchronisierung aktivieren + an der Kamera <span class=\"osd\">GEOTAGGING → AN</span> (im Netzwerk/USB-Menü). Bluetooth am Handy anlassen.</li></ol>" },
+    body: "<p>Beides läuft über die <b>FUJIFILM XApp</b> — Einrichtung siehe Seite „Verbindung“ → „Handy-Setup“. Kurzfassung:</p><ol><li>Übertragen: In der Bild-Wiedergabe Bilder auswählen und senden, oder automatische Übertragung in der App aktivieren.</li><li>Geo-Tagging: In der XApp Standortsynchronisierung aktivieren + an der Kamera <span class=\"osd\">GEOTAGGING → AN</span> (im Netzwerk/USB-Menü). Bluetooth am Handy anlassen.</li></ol>" },
   { id: "wetter", severity: null, summary: "Regen, Gischt, Staub", type: "p",
     body: "Das Gehäuse ist wettergeschützt — leichter Regen ist okay, <b>wenn auch das Objektiv WR-gedichtet ist</b> (steht „WR“ im Objektivnamen?). Tropfen zügig mit Mikrofasertuch abnehmen, Objektivwechsel nur im Trockenen, nie nasse Kamera in die verschlossene Tasche." },
 ];

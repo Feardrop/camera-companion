@@ -8,7 +8,7 @@ A German-language, installable PWA (progressive web app) that acts as a companio
 Fujifilm X-H2S camera: tutorial, custom-preset (C1–C7) guide, troubleshooting ("SOS"), full-text-searchable
 manual, checkable exercise plan, and a notes form. There is **no backend, no package manager beyond a
 dependency-free Node build script, and no test suite**. The site is still deployed as plain static
-HTML/CSS/JS to GitHub Pages — but the 6 top-level `.html` files and `sw.js` are now **generated output**,
+HTML/CSS/JS to GitHub Pages — but the top-level `.html` files and `sw.js` are now **generated output**,
 not hand-edited directly (see Architecture below). Content editing happens in `content/`; running the build
 regenerates the HTML.
 
@@ -16,7 +16,8 @@ regenerates the HTML.
 
 - **After editing anything under `content/`, `assets/css/style.css`, or `assets/js/*.js`, run `node
   build/build.js`** (or `npm run build`) from the repo root before committing. This regenerates
-  `index.html`, `presets.html`, `sos.html`, `handbuch.html`, `uebungen.html`, `mehr.html`, and `sw.js`. Node
+  `index.html`, `presets.html`, `handbuch.html`, `uebungen.html`, `sos.html`, `mehr.html`, `belegung.html`,
+  `verbindung.html`, `referenz.html`, and `sw.js`. Node
   ≥18 with ES module support is required (no other dependencies — `package.json` has none).
 - Every generated file starts with a `<!-- GENERATED FILE ... -->` / `// GENERATED FILE ...` comment pointing
   back at its real source. **Never hand-edit a generated file** — the next build silently overwrites it.
@@ -35,9 +36,9 @@ repo root** (the exact files GitHub Pages serves):
 
 | Source | Generates |
 |---|---|
-| `content/pages.js` | Single source of truth for the page list: file name, nav slug, icon, label, `<title>`. Drives the generated `<nav>` (real `<a href>` tags — no client-side `go(slug)` lookup, so a typo'd page reference is a build-time issue, not a silently-dead link) and `sw.js`'s precache list. |
-| `content/data/*.js` | Structured content, one file per content type: `presets.js` (mode-dial C1–C7 cards, `PRESETS`), `sos.js` (troubleshooting entries, `SOS`), `exercises.js` (checkable training plan, `EX`), `tutorial.js` (the 8-chapter start-page tutorial, `TUTORIAL`), `belegung-fields.js` (the "Meine Belegung" notes-form fields, `FIELDS`), `menu-paths.js` (the "Wichtige Menüwege" reference table), `facts.js` (short strings/menu paths repeated verbatim across multiple pages — e.g. the Auto-Update menu path, the shutter-button explanation — consolidated here so wording can't drift page-to-page). |
-| `content/pages/*.js` | One file per output page (`start.js` → `index.html`, plus `presets.js`, `sos.js`, `handbuch.js`, `uebungen.js`, `mehr.js`). Each exports `render()` (returns the page's inner `<main>` HTML, usually assembled from the `content/data/*` arrays above) and `scripts` (the list of `<script src>` tags the page needs). |
+| `content/pages.js` | Single source of truth for the page list: file name, nav slug, icon, label, `<title>`, and whether it's a bottom-tab page (`tab: true`) or belongs under one (`parent: "mehr"`). Drives the generated `<nav>` (real `<a href>` tags — no client-side `go(slug)` lookup, so a typo'd page reference is a build-time issue, not a silently-dead link), the parent-tab highlighting + "‹ back" breadcrumb for sub-pages (`build/lib/shell.js`), and `sw.js`'s precache list. |
+| `content/data/*.js` | Structured content, one file per content type: `presets.js` (mode-dial C1–C7 cards, `PRESETS`), `sos.js` (troubleshooting entries, `SOS`), `exercises.js` (checkable training plan, `EX`), `tutorial.js` (the 8-chapter start-page tutorial, `TUTORIAL`), `belegung-fields.js` (the "Meine Belegung" notes-form fields, `FIELDS`), `menu-paths.js` (the "Wichtige Menüwege" reference table), `facts.js` (short strings/menu paths repeated verbatim across multiple pages — e.g. the Auto-Update menu path, the shutter-button explanation — consolidated here so wording can't drift page-to-page, plus `RAW_KONV_LINK`, the one place the RAW-Konvertierung deep-dive's location is written down). |
+| `content/pages/*.js` | One file per output page (`start.js` → `index.html`, plus `presets.js`, `handbuch.js`, `uebungen.js`, `sos.js`, and the "Mehr" hub + its three sub-pages: `mehr.js`, `belegung.js`, `verbindung.js`, `referenz.js`). Each exports `render()` (returns the page's inner `<main>` HTML, usually assembled from the `content/data/*` arrays above) and `scripts` (the list of `<script src>` tags the page needs). |
 | `build/lib/shell.js` + `build/lib/partials/{head,header,nav}.js` | The shared `<head>`/`<header>`/`<nav>` wrapper — this is what used to be ~100 duplicated lines per HTML file plus runtime-injected header/nav; now written once and reused for every page. |
 | `build/lib/content-helpers.js` | Shared renderers for the "static `<details>` accordion" content shape used by both SOS entries and tutorial chapters (`renderBody`/`renderDetails`). |
 | `build/lib/sw-gen.js` | Computes `sw.js`'s `SHELL` precache array from the build's actual output file list (plus a hand-maintained static-asset list for CSS/JS/icons/manual/PDF in `build/build.js`) and a content-hash `CACHE` version — both regenerate automatically on every build, so a renamed page or a forgotten version bump can no longer desync the offline cache. |

@@ -11,7 +11,7 @@ export const FACTS = {
   jpegHeifPath: "MENU → IQ → JPEG/HEIF AUSWAHL",
 };
 
-// The RAW-Konvertierung deep-dive currently lives on mehr.html; every page that
-// links to it does so through this one constant so the Phase-2 page split only
-// requires updating this file, not every call site.
-export const RAW_KONV_LINK = "mehr.html#raw-konvertierung";
+// The RAW-Konvertierung deep-dive lives on referenz.html; every page that
+// links to it does so through this one constant, so a future page move is a
+// one-line change here instead of a find-and-replace across files.
+export const RAW_KONV_LINK = "referenz.html#raw-konvertierung";

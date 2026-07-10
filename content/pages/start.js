@@ -40,10 +40,10 @@ export function render() {
     <a class="jstep" href="${hrefFor("presets")}">
       <div class="no">2</div><div class="tx"><b>Presets kennenlernen</b><span>Welche Rad-Position wofür da ist — und die Auto-Update-Falle verstehen.</span></div><div class="go">›</div>
     </a>
-    <a class="jstep" href="${hrefFor("mehr")}">
-      <div class="no">3</div><div class="tx"><b>Kamera prüfen &amp; eintragen</b><span>Tatsächliche Belegung von C1–C7 und Tasten verifizieren, auf der Seite „Mehr“ notieren, Auto-Update AN/AUS entscheiden.</span></div><div class="go">›</div>
+    <a class="jstep" href="${hrefFor("belegung")}">
+      <div class="no">3</div><div class="tx"><b>Kamera prüfen &amp; eintragen</b><span>Tatsächliche Belegung von C1–C7 und Tasten verifizieren, auf der Seite „Belegung“ notieren, Auto-Update AN/AUS entscheiden.</span></div><div class="go">›</div>
     </a>
-    <a class="jstep" href="${hrefFor("mehr")}">
+    <a class="jstep" href="${hrefFor("verbindung")}">
       <div class="no">4</div><div class="tx"><b>XApp koppeln + Backup</b><span>Einstellungs-Backup als Sicherheitsnetz, Bildübertragung, Geo-Tagging.</span></div><div class="go">›</div>
     </a>
     <a class="jstep" href="${hrefFor("uebungen")}">

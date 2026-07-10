@@ -1,6 +1,6 @@
 // "Meine Kamera-Belegung" notes-form fields. [key, label, placeholder, hint?]
 // Rendered as static <input>/<textarea> markup at build time;
-// assets/js/mehr.js only reads/writes localStorage (key "fields") against
+// assets/js/belegung.js only reads/writes localStorage (key "fields") against
 // the already-rendered elements — it no longer builds this list.
 export const FIELDS = [
   ["c1", "C1 (Foto)", "Acros Schwarzweiß?"],

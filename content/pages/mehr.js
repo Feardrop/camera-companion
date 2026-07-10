@@ -1,172 +1,20 @@
 import { PAGES } from "../pages.js";
-import { FACTS } from "../data/facts.js";
-import { FIELDS } from "../data/belegung-fields.js";
-import { MENU_PATHS } from "../data/menu-paths.js";
 
 const hrefFor = slug => PAGES.find(p => p.slug === slug).file;
 
-export const scripts = ["assets/js/ui.js", "assets/js/mehr.js"];
-
-function renderField(f) {
-  const [key, label, placeholder, hint] = f;
-  const multi = ["fn", "dial2", "notes"].includes(key);
-  const defaultValue = hint || "";
-  return `<div class="fld">
-      <label for="f-${key}">${label}</label>
-      ${multi
-        ? `<textarea id="f-${key}" data-field="${key}" rows="2" placeholder="${placeholder}">${defaultValue}</textarea>`
-        : `<input id="f-${key}" data-field="${key}" placeholder="${placeholder}" value="${defaultValue}">`}
-    </div>`;
-}
+export const scripts = ["assets/js/ui.js"];
 
 export function render() {
-  const fieldsHtml = FIELDS.map(renderField).join("\n    ");
-  const menuRows = MENU_PATHS.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("\n    ");
-
   return `<section id="tab-mehr">
-  <h2>Meine Kamera-Belegung</h2>
-  <div class="card">
-    <p style="margin-top:0"><b>So findest du sie heraus:</b></p>
-    <p>① Tasten: <span class="osd">DISP/BACK lange drücken</span> → Übersicht aller Fn-Belegungen.<br>
-       ② Presets: Rad durch C1–C7 drehen und <span class="osd">Q</span> drücken (Foto UND Video-Modus!).<br>
-       ③ Details: <span class="osd">MENU → IQ → BENUTZEREINST. BEARB./SPEICH.</span></p>
-    <p class="hint">Nur anschauen ändert nichts. Trage hier den SOLL-Zustand ein — wegen Auto-Update ist das deine Referenz, falls sich ein Preset verändert hat.</p>
-  </div>
-  <div id="fields">
-    ${fieldsHtml}
-  </div>
-  <button class="btn" onclick="saveFields()">Belegung speichern</button>
-  <span class="saved" id="savedMsg"></span>
-  <p class="hint" style="margin-top:10px">Hinweis: Das Speichern funktioniert, wenn die Datei im Browser (Safari/Chrome) geöffnet ist. Tipp fürs iPhone: Datei in Safari öffnen → Teilen → „Zum Home-Bildschirm“.</p>
+  <h2>Mehr</h2>
+  <a class="lnk" href="${hrefFor("belegung")}"><em>NOTIZEN</em><b>Meine Kamera-Belegung</b><span>C1–C7 und Tasten eintragen — deine Referenz, falls Auto-Update etwas verändert hat.</span></a>
+  <a class="lnk" href="${hrefFor("verbindung")}"><em>VERBINDUNG</em><b>XApp, Übertragung &amp; Backup</b><span>Handy koppeln, Bilder übertragen, Speicherkarten-Backup verstehen.</span></a>
+  <a class="lnk" href="${hrefFor("referenz")}"><em>REFERENZ</em><b>Spickzettel, Menüwege &amp; RAW-Entwicklung</b><span>Schnell nachschlagen unterwegs, plus die komplette RAW-Konvertierungs-Anleitung.</span></a>
 
-  <h2>Handy-Setup: FUJIFILM XApp</h2>
-  <div class="card">
-    <p style="margin-top:0">Einmal einrichten, dreifach profitieren — <b>am besten noch vor der Reise:</b></p>
-    <p><b>1 · Koppeln:</b> App „FUJIFILM XApp“ installieren (App Store / Play Store), Bluetooth an, in der App „Kamera koppeln“ und den Anweisungen folgen.</p>
-    <p><b>2 · Einstellungs-Backup:</b> In der XApp die Funktion zum <b>Sichern/Wiederherstellen der Kameraeinstellungen</b> nutzen („Registrierung/Wiederherstellung der Kameraeinstellungen“). Damit lassen sich alle Presets und Menüs im Notfall mit einem Fingertipp zurückspielen — das Sicherheitsnetz gegen versehentlich veränderte Presets (Auto-Update!). Nach dem Verifizieren der Belegung einmal sichern.</p>
-    <p><b>3 · Geo-Tagging:</b> Standortsync in der App erlauben und an der Kamera <span class="osd">${FACTS.geotaggingPath}</span>. Dann steht in jedem Foto automatisch der Aufnahmeort.</p>
-    <p><b>4 · Bilder übertragen:</b> in der Wiedergabe auswählen &amp; senden — oder Auto-Übertragung aktivieren.</p>
-    <p class="hint">Bluetooth kostet kaum Akku; WLAN wird nur während der Übertragung aktiviert.</p>
-  </div>
-
-  <a class="lnk" href="https://app.fujifilm-dsc.com/"><em>OFFIZIELL</em><b>XApp-Infoseite von Fujifilm</b><span>Download-Links und Funktionsübersicht</span></a>
-
-  <h2>Unterwegs sichern — drei Wege</h2>
-  <div class="card">
-    <p style="margin-top:0"><b>Weg 1 · Direkt ans Android-Handy:</b> Kamera einschalten und per USB-C-Kabel mit dem Handy verbinden — die Kamera erscheint als Laufwerk, Bilder einfach in der Dateien-App rüberziehen.</p>
-    <p><b>Weg 2 · Manuell über USB-C-Hub:</b> SD-Karte in den Hub stecken und die Dateien auf SSD/Stick kopieren. <span class="hint">Hinweis: Die CFexpress liest du mit dem beigelegten Kombi-Reader (SD&nbsp;+&nbsp;CFE) aus — oder einfach erst zu Hause nach der Reise am Rechner. Das reicht völlig, denn die Fotos liegen ja als Backup auch auf der SD.</span></p>
-    <p><b>Weg 3 · Mit der FUJIFILM XApp:</b> Kamera koppeln (siehe Karte oben), dann Bilder auswählen und übertragen. Zum Platzsparen die <b>Verkleinern-Funktion</b> aktivieren: <span class="osd">MENU → Netzwerk/USB → Bild übertragen/verkleinern AN</span> bzw. die Größenoption in der XApp — überträgt handygerechte, kleinere Dateien.</p>
-    <p class="hint">Wenn die Übertragung mal hakt: nicht ärgern, einfach nochmal probieren — Verbindung trennen, App neu öffnen, ggf. Bluetooth aus/an. Das löst es fast immer.</p>
-    <div class="chips" style="margin-bottom:0">
-      <button class="chip" onclick="openPage(314)">📖 Handbuch: Übertragung/Verkleinern · S. 314</button>
-      <button class="chip" onclick="openPage(232)">📖 Handbuch: Bild auf Smartphone übertragen · S. 232</button>
-    </div>
-  </div>
-
-  <h2>Speicherkarten: Backup auf beide Karten</h2>
-  <div class="card">
-    <p style="margin-top:0">Diese Kamera ist auf <b>SICHERUNG (Backup)</b> für beide Steckplätze eingestellt — Steckplatz&nbsp;1 = CFexpress, Steckplatz&nbsp;2 = SD. Das bedeutet:</p>
-    <p>✅ <b>Jedes Foto</b> (HEIF <b>und</b> RAW) wird <b>gleichzeitig auf beide Karten</b> geschrieben — eine automatische Sicherheitskopie. Fällt eine Karte aus oder geht verloren, ist kein Bild weg.</p>
-    <p>📹 <b>Videos</b> werden dagegen <b>immer nur auf die CFexpress (Steckplatz&nbsp;1)</b> gespeichert — auf der SD-Karte liegen also keine Videos.</p>
-    <p>⚠️ Beide Karten füllen sich bei Fotos parallel; die kleinere bzw. vollere Karte begrenzt. Meldet die Kamera „voll“, die betroffene Karte tauschen oder aufräumen — danach geht es weiter.</p>
-    <p class="hint">Einstellung ansehen/ändern: <span class="osd">MENU → Schraubenschlüssel → DATENSPEICHER-EINSTELLUNG</span></p>
-    <div class="chips" style="margin-bottom:0">
-      <button class="chip" onclick="openPage(281)">📖 Handbuch: Datenspeicher-Einstellung · S. 281</button>
-    </div>
-  </div>
-
-  <h2>Spickzettel</h2>
-  <div class="fact">${FACTS.shutter}</div>
-  <div class="fact">${FACTS.lostInMenu}</div>
-  <div class="fact"><b>Presets speichern Änderungen automatisch</b> (Auto-Update AN). Q-Menü zeigt den Ist-Zustand; Soll-Zustand steht auf der Seite „Mehr“ (Meine Belegung). Schutzmodus: ${FACTS.autoUpdateDisablePath}</div>
-  <div class="fact"><b>Belichtungsdreieck:</b> Blende (klein = unscharfer Hintergrund) · Zeit (kurz = Bewegung einfrieren) · ISO (hoch = heller, aber körniger).</div>
-  <div class="fact"><b>Bild zu hell/dunkel:</b> zuerst Belichtungskorrektur (±) prüfen.</div>
-  <div class="fact"><b>Modus A</b> = du wählst die Blende, Kamera den Rest. Der beste erste Schritt aus den Presets.</div>
-
-  <h2>Wichtige Menüwege</h2>
-  <table class="mini">
-    ${menuRows}
-  </table>
-
-
-  <h2 id="raw-konvertierung">Bildformate &amp; RAW-Entwicklung</h2>
-  <div class="card">
-    <p style="margin-top:0"><b>Was ist was?</b></p>
-    <p><b>RAW</b> — das digitale Negativ: alle Sensordaten, riesige Reserven für die Nachbearbeitung, muss aber „entwickelt“ werden (in der Kamera, s.&nbsp;u., oder am Rechner). Für wichtige Bilder und schwieriges Licht.</p>
-    <p><b>JPEG</b> — das klassische fertige Bild (8&nbsp;Bit). Überall kompatibel, aber technisch überholt.</p>
-    <p><b>HEIF</b> — der moderne JPEG-Nachfolger (10&nbsp;Bit Farbtiefe): sichtbar mehr Qualitätsreserven bei kleineren Dateien. iPhone, Mac und aktuelles Windows zeigen HEIF direkt an.</p>
-    <p><b>Wie nutzt du was?</b> Alltag: <b>HEIF</b>. Wichtige Motive / kniffliges Licht: <b>RAW&nbsp;+&nbsp;HEIF</b> (beides wird gespeichert). JPEG nur, falls ein altes Gerät oder ein Webdienst HEIF nicht annimmt — oder per RAW-Konvertierung nachträglich erzeugen.</p>
-    <p><b>Wo einstellen?</b><br>
-      Format: <span class="osd">${FACTS.jpegHeifPath}</span> (S.&nbsp;129)<br>
-      RAW dazu: <span class="osd">MENU → IQ → BILDQUALITÄT → z.&nbsp;B. RAW+</span> (S.&nbsp;127)<br>
-      RAW-Kompression: <span class="osd">MENU → IQ → RAW-AUFNAHME</span> (S.&nbsp;128, „verlustfrei komprimiert“ ist ein guter Standard)</p>
-  </div>
-
-  <div class="card">
-    <p style="margin-top:0"><b>RAW in der Kamera entwickeln</b> — ohne Computer, direkt auf der Reise:</p>
-    <p>① Bild in der Wiedergabe anzeigen (RAW-Symbol) → <span class="osd">MENU/OK → RAW-KONVERTIERUNG</span><br>
-       ② <b>Zuerst DATEITYP auf HEIF stellen</b> — legt das Ausgabeformat der Kopie fest.<br>
-       ③ Weitere Einstellungen nach Bedarf anpassen (Fokushebel: markieren → rechts öffnet Optionen → wählen → MENU/OK bestätigt; Liste aller Einstellungen unten).<br>
-       ④ Taste <span class="osd">Q</span> zeigt eine Vorschau der Kopie.<br>
-       ⑤ <span class="osd">MENU/OK</span> speichert die Kopie als neue Datei — das Original-RAW bleibt unverändert erhalten.</p>
-    <p class="hint"><b>Wichtig: Schritt ② immer zuerst.</b> Wird DATEITYP nicht umgestellt, entsteht aus Versehen ein altes JPEG statt eines hochwertigen HEIF — unabhängig davon, was du sonst noch änderst.</p>
-    <p class="hint">So wird z.&nbsp;B. aus einem C1-Schwarzweiß-RAW nachträglich doch ein Farbbild: FILMSIMULATION in Schritt ③ auf PROVIA o.&nbsp;ä. wechseln.</p>
-  </div>
-
-  <details>
-    <summary>Alle RAW-Konvertierungs-Einstellungen erklärt</summary>
-    <div class="body">
-      <table class="mini">
-        <tr><td>AUFN.BED. BERÜCKS.</td><td>Kopie exakt mit den Einstellungen von der Aufnahme erzeugen — der schnelle Reset auf den Originalzustand.</td></tr>
-        <tr><td>DATEITYP</td><td><b>Immer zuerst auf HEIF stellen.</b> Ausgabeformat der Kopie — HEIF bessere Qualität (10 Bit) bei kleinerer Datei, JPEG nur für alte Geräte/Webdienste.</td></tr>
-        <tr><td>BILDGRÖSSE</td><td>Auflösung der Kopie (L/M/S) — kleiner zum schnellen Teilen unterwegs, L zum Aufbewahren/Drucken.</td></tr>
-        <tr><td>BILDQUALITÄT</td><td>Kompressionsgrad (Fein/Normal) — bei wichtigen Bildern Fein wählen.</td></tr>
-        <tr><td>PUSH/PULL-VERARB.</td><td>Belichtung nachträglich heller/dunkler ziehen. In kleinen Schritten arbeiten — große Sprünge erzeugen sichtbares Rauschen.</td></tr>
-        <tr><td>DYNAMIKBEREICH</td><td>Zeichnung in hellen Bildbereichen verbessern — hilfreich bei kontrastreichem Licht (Himmel, Strand).</td></tr>
-        <tr><td>D-BEREICHSPRIORITÄT</td><td>Reduziert Detailverlust in Lichtern <b>und</b> Schatten gleichzeitig — die stärkere Variante für harte Kontraste.</td></tr>
-        <tr><td>FILMSIMULATION</td><td>Bildlook nachträglich wechseln — z.&nbsp;B. aus einem C1-Schwarzweiß-RAW mit PROVIA ein Farbbild erzeugen.</td></tr>
-        <tr><td>MONOCHROME FARBE</td><td>Farbstich für Schwarzweißbilder (nur bei ACROS/MONOCHROME) — z.&nbsp;B. leicht warm oder kühl einfärben.</td></tr>
-        <tr><td>KÖRNUNGSEFFEKT</td><td>Filmkorn nachträglich hinzufügen — analoger Look.</td></tr>
-        <tr><td>FARBE CHROME-EFFEKT</td><td>Mehr Zeichnung in kräftig gesättigten Rot-/Gelb-/Grüntönen.</td></tr>
-        <tr><td>FARBE CHROM FX BLAU</td><td>Dasselbe für Blautöne — z.&nbsp;B. für Himmel und Wasser.</td></tr>
-        <tr><td>WEISSABGLEICH</td><td>Farbstich korrigieren, falls beim Fotografieren falsch eingestellt.</td></tr>
-        <tr><td>WA VERSCHIEBEN</td><td>Weißabgleich feinjustieren (Richtung Amber/Blau bzw. Grün/Magenta).</td></tr>
-        <tr><td>TONKURVE</td><td>Kontrast in Lichtern und Schatten getrennt anpassen.</td></tr>
-        <tr><td>FARBE</td><td>Farbsättigung erhöhen oder verringern.</td></tr>
-        <tr><td>SCHÄRFE</td><td>Konturen schärfen oder weicher zeichnen.</td></tr>
-        <tr><td>RAUSCHREDUKTION HIGH-ISO</td><td>Bildrauschen reduzieren — nützlich bei Nacht-/Innenaufnahmen mit hohem ISO.</td></tr>
-        <tr><td>KLARHEIT</td><td>Feinkontrast erhöhen, ohne hart nachzuschärfen.</td></tr>
-        <tr><td>OBJEKTIVMOD.-OPT.</td><td>Korrigiert Beugung und Randunschärfe des Objektivs — am besten AN lassen.</td></tr>
-        <tr><td>FARBRAUM</td><td>Farbraum wählen — sRGB für Web/Teilen (Empfehlung für unterwegs), Adobe RGB für professionellen Druck.</td></tr>
-        <tr><td>HDR-MODUS</td><td>Verringert Detailverluste in Lichtern und Schatten gleichzeitig, ähnlich D-Bereichspriorität.</td></tr>
-      </table>
-      <p class="hint">Nicht jede Einstellung steht immer zur Verfügung — abhängig davon, wie das Bild aufgenommen wurde.</p>
-    </div>
-  </details>
-
-  <div class="chips" style="margin:10px 0 20px">
-    <button class="chip" onclick="openPage(220)">📖 Handbuch: RAW-Konvertierung · S. 220</button>
-    <button class="chip" onclick="openPage(129)">📖 Handbuch: JPEG/HEIF · S. 129</button>
-    <a class="chip" href="${hrefFor("uebungen")}">✓ Übung: RAW-Konvertierung üben</a>
-    <a class="chip" href="${hrefFor("sos")}">✚ SOS: Bilder plötzlich schwarzweiß</a>
-  </div>
-
-  <h2>Handbücher</h2>
-  <a class="lnk" href="https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_de_s_f.pdf"><em>PDF · DEUTSCH</em><b>Offizielles Handbuch (deutsch)</b><span>Download, 7 MB — mit allen Abbildungen, offline nutzbar</span></a>
-  <a class="lnk" href="https://fujifilm-dsc.com/en/manual/x-h2s/"><em>WEB · EN</em><b>Online-Handbuch X-H2S</b><span>Durchsuchbar, handyfreundlich</span></a>
-  <p class="mut">Der Volltext des deutschen Handbuchs steckt auf der Seite „Handbuch“ (Suche funktioniert offline); das PDF mit Abbildungen gibt es dort per Download-Button.</p>
-
-  <a class="lnk" href="X-H2S_Einfuehrung_und_Lernpfad.pdf" target="_blank" rel="noopener"><em>PDF · DEUTSCH</em><b>Einführung &amp; Lernpfad (16 Seiten)</b><span>Das ausführliche Begleitdokument zu dieser Website</span></a>
-
-  <h2>Videos: Deutsch</h2>
-  <a class="lnk" href="https://www.youtube.com/watch?v=2gh4e6giFfQ"><em>YOUTUBE · PFLICHT</em><b>Die Presets C1–C7 erklärt</b><span>Genau das System dieser Kamera</span></a>
-  <a class="lnk" href="https://www.youtube.com/watch?v=IcCmSHWJ3VU"><em>YOUTUBE · PFLICHT</em><b>Autofokus-Tipps X-H2/X-H2S</b><span>Fokusmodi &amp; Motiverkennung (Fujifilm DE)</span></a>
-  <a class="lnk" href="https://www.youtube.com/watch?v=4VF3JrYjaPs"><em>YOUTUBE</em><b>Custom Settings erklärt (fuji-store.de)</b><span>Benutzereinstellungen vertieft</span></a>
-  <a class="lnk" href="https://www.youtube.com/watch?v=fI3uVUQVMPI"><em>YOUTUBE</em><b>Einstellungs-Kurs X-T5/X-H2(s)</b><span>Menüpunkt für Menüpunkt (Pixelcatcher)</span></a>
-
-  <h2>Videos &amp; Guides: Englisch</h2>
-  <a class="lnk" href="https://pal2tech.com/videos/2022/10/14/2022-fujifilm-xh2s-and-xh2-recommended-settings-for-setup"><em>VIDEO · EN</em><b>pal2tech: Recommended Settings</b><span>Der beste Fuji-Erklärkanal, ruhiges Englisch</span></a>
-  <a class="lnk" href="https://pal2tech.com/guides/"><em>TEXT · EN</em><b>pal2tech: alle Schritt-für-Schritt-Guides</b><span>PASM-Rad, Zonen-AF, Back-Button-Fokus u.v.m.</span></a>
-  <a class="lnk" href="https://www.peltierphotocourses.com/courses/fujifilm-xh2-xh2s-tutorial"><em>KURS · DE-UNTERTITEL</em><b>Peltier: X-H2/X-H2S Komplettkurs</b><span>Strukturierter Videokurs mit deutschen Untertiteln</span></a>
+  <script>
+    // Alte Lesezeichen auf #raw-konvertierung (früher hier auf "Mehr") weiterleiten —
+    // der Inhalt lebt jetzt auf referenz.html.
+    if (location.hash === "#raw-konvertierung") { location.replace("${hrefFor("referenz")}#raw-konvertierung"); }
+  </script>
 </section>`;
 }

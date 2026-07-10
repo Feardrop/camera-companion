@@ -1,6 +1,6 @@
-// Mehr-Seite: Belegungs-Formular-Interaktion. Die Felder selbst sind bereits
-// von build/build.js statisch gerendert (content/data/belegung-fields.js)
-// — dieses Skript liest/schreibt nur noch den localStorage-Inhalt.
+// Belegung-Seite: Formular-Interaktion. Die Felder selbst sind bereits von
+// build/build.js statisch gerendert (content/data/belegung-fields.js) —
+// dieses Skript liest/schreibt nur noch den localStorage-Inhalt.
 const saved = store.get("fields") || {};
 document.querySelectorAll("#fields [data-field]").forEach(el => {
   const k = el.dataset.field;

@@ -8,7 +8,7 @@ export const EX = [
     "Schalter auf STILL. Rad langsam durch C1–C7 drehen und bei jedem Halt aufs Display schauen: Was ändert sich?",
     "Bei jedem Preset einmal Q drücken und die Kacheln überfliegen.",
     "Dasselbe mit Schalter auf MOVIE.",
-    "Gefundene Belegung im Tab „Mehr“ (Meine Belegung) eintragen — danach per XApp ein Einstellungs-Backup machen.",
+    "Gefundene Belegung auf der Seite „Belegung“ eintragen — danach per XApp ein Einstellungs-Backup machen.",
   ], goal: "Ziel: Du weißt ohne Nachdenken, welches Rad-Segment was tut — und hast ein Sicherheitsnetz." },
   { t: "2 · Filmsimulations-Vergleich", ph: "VOR DER REISE · 10 MIN", steps: [
     "Eine Szene mit Farben suchen (Balkon, Straße, Obstschale).",
@@ -45,5 +45,5 @@ export const EX = [
     "Eine weitere Einstellung ausprobieren, z. B. FILMSIMULATION wechseln oder PUSH/PULL-VERARB. für die Belichtung.",
     "Mit Q die Vorschau ansehen, mit MENU/OK speichern.",
     "Original und neue Kopie in der Wiedergabe vergleichen — das RAW bleibt unverändert erhalten.",
-  ], goal: `Ziel: Du traust dich, ein RAW-Bild direkt in der Kamera zu „entwickeln“ — inklusive dem wichtigen ersten Schritt DATEITYP → HEIF. Alle Einstellungen erklärt: <a href="${RAW_KONV_LINK}">Seite „Mehr“</a>.` },
+  ], goal: `Ziel: Du traust dich, ein RAW-Bild direkt in der Kamera zu „entwickeln“ — inklusive dem wichtigen ersten Schritt DATEITYP → HEIF. Alle Einstellungen erklärt: <a href="${RAW_KONV_LINK}">Seite „Referenz“</a>.` },
 ];

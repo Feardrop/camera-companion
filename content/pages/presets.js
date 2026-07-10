@@ -18,7 +18,7 @@ function renderCard(p) {
 export function render() {
   return `<section id="tab-presets">
   <div class="card" style="border-left:4px solid var(--amber)">
-    <p style="margin:0"><b>⚠️ Reihenfolge prüfen:</b> Die Speicherplätze können in Wirklichkeit anders verteilt sein als hier gezeigt (z.&nbsp;B. C4/C5 getauscht oder zusätzliche Plätze belegt). Einmal das Rad durchdrehen, mit <span class="osd">Q</span> vergleichen und die echte Belegung auf der Seite „Mehr“ notieren.</p>
+    <p style="margin:0"><b>⚠️ Reihenfolge prüfen:</b> Die Speicherplätze können in Wirklichkeit anders verteilt sein als hier gezeigt (z.&nbsp;B. C4/C5 getauscht oder zusätzliche Plätze belegt). Einmal das Rad durchdrehen, mit <span class="osd">Q</span> vergleichen und die echte Belegung auf der Seite „Belegung“ notieren.</p>
   </div>
 
   <h2>Was willst du aufnehmen?</h2>
@@ -48,7 +48,7 @@ export function render() {
     <p><b>B — Schutzmodus:</b> Auto-Update abschalten, dann springt jedes Preset beim Radwechsel auf den gespeicherten Stand zurück:<br>
     <span class="osd">MENU → IQ → AUTOM. AKT. BEN.-EINST. → DEAKT.</span><br>
     <span class="mut">(englisch: AUTO UPDATE CUSTOM SETTING → DISABLE)</span></p>
-    <p class="hint">Sicherheitsnetz für beide Fälle: einmal ein Einstellungs-Backup mit der XApp machen — siehe Seite „Mehr“.</p>
+    <p class="hint">Sicherheitsnetz für beide Fälle: einmal ein Einstellungs-Backup mit der XApp machen — siehe Seite „Verbindung“.</p>
   </div>
 </section>`;
 }

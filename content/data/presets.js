@@ -18,7 +18,7 @@ export const PRESETS = [
     note: "Halb drücken &amp; Motiv verfolgen — die Kamera puffert schon Bilder VOR dem Durchdrücken. Erzeugt viele Fotos: Karte im Blick behalten! Fn1 schaltet die Tiererkennung an/aus; die Motiv-Art (Tier/Vogel) wählst du im Q-Menü." },
   { id: "C5", v: false, look: "vermutlich ähnlich C4 · Tier/Vogel-AF", title: "Tiere &amp; Action (zweite Variante)",
     use: "Zweite Action-Belegung — oft eine Variante von C4 (z. B. andere Serienbild-Geschwindigkeit oder Verschlusszeit), Werksbelegung ist aber nicht einheitlich.",
-    note: "Diese Kamera liefert C4 und C5 oft mit ähnlicher, ergänzender Belegung aus. Rad auf C5 drehen, <span class=\"osd\">Q</span> drücken und die echte Belegung prüfen — dann auf der Seite „Mehr“ eintragen." },
+    note: "Diese Kamera liefert C4 und C5 oft mit ähnlicher, ergänzender Belegung aus. Rad auf C5 drehen, <span class=\"osd\">Q</span> drücken und die echte Belegung prüfen — dann auf der Seite „Belegung“ eintragen." },
   { id: "C6", v: true, look: "4K 100p · ETERNA", title: "Zeitlupe (4×)",
     use: "Wasser, Tiere in Bewegung, Sport — alles, was in Zeitlupe magisch wird.",
     note: "Nur im MOVIE-Modus. Braucht viel Licht, Speicher und Akku; bei Hitze Pausen machen." },

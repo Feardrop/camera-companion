@@ -17,7 +17,7 @@ export function render() {
 
   <div class="card" style="margin-top:16px">
     <h3>Nichts davon hilft?</h3>
-    <p>Offizielles Troubleshooting: im Seite <b>„Handbuch“</b> auf „Troubleshooting“ tippen (S. 358) — oder dort nach dem Stichwort suchen.</p>
+    <p>Offizielles Troubleshooting: auf der Seite <b>„Handbuch“</b> auf „Troubleshooting“ tippen (S. 358) — oder dort nach dem Stichwort suchen.</p>
   </div>
 </section>`;
 }

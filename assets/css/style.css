@@ -22,7 +22,9 @@
   h2{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);
      margin:26px 0 10px;font-weight:700}
   h2:first-child{margin-top:4px}
-  h2[id]{scroll-margin-top:90px}
+  [id]{scroll-margin-top:90px}
+  .back{display:inline-block;color:var(--muted);font-size:.82rem;text-decoration:none;margin:0 0 14px}
+  .back:active{color:var(--green)}
 
   /* ---- Modusrad (Signatur) ---- */
   .dial{display:flex;gap:8px;overflow-x:auto;padding:6px 2px 12px;scrollbar-width:none}
@@ -229,11 +231,11 @@ header{padding-top:calc(12px + env(safe-area-inset-top));
   padding-left:calc(16px + env(safe-area-inset-left));
   padding-right:calc(16px + env(safe-area-inset-right))}
 
-/* Kompakte, garantiert passende Tab-Leiste (6 Tabs) */
+/* Garantiert passende Tab-Leiste (5 Tabs — SOS ist per Schnellzugriff/App-Shortcut erreichbar) */
 nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
-nav a,nav button{flex:1 1 0;min-width:0;padding:7px 0 6px;font-size:.56rem;
+nav a,nav button{flex:1 1 0;min-width:0;padding:7px 0 6px;font-size:.66rem;
   letter-spacing:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-nav a .ic,nav button .ic{font-size:1.12rem}
+nav a .ic,nav button .ic{font-size:1.15rem}
 nav a{transition:color .15s}
 nav a.on .ic{transform:translateY(-1px)}
 

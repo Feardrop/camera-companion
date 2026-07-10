@@ -17,6 +17,9 @@ import * as sosPage from "../content/pages/sos.js";
 import * as handbuchPage from "../content/pages/handbuch.js";
 import * as uebungenPage from "../content/pages/uebungen.js";
 import * as mehrPage from "../content/pages/mehr.js";
+import * as belegungPage from "../content/pages/belegung.js";
+import * as verbindungPage from "../content/pages/verbindung.js";
+import * as referenzPage from "../content/pages/referenz.js";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -27,6 +30,9 @@ const PAGE_MODULES = {
   handbuch: handbuchPage,
   uebungen: uebungenPage,
   mehr: mehrPage,
+  belegung: belegungPage,
+  verbindung: verbindungPage,
+  referenz: referenzPage,
 };
 
 // Static assets that aren't build output but still belong in the offline
@@ -38,7 +44,7 @@ const STATIC_SHELL_ASSETS = [
   "./assets/js/presets.js",
   "./assets/js/handbuch.js",
   "./assets/js/uebungen.js",
-  "./assets/js/mehr.js",
+  "./assets/js/belegung.js",
   "./assets/data/manual-de.js",
   "./assets/icons/icon-192.png",
   "./assets/icons/icon-512.png",
