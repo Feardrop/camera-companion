@@ -1,4 +1,5 @@
 import { FIELDS } from "../data/belegung-fields.js";
+import { renderSteps } from "../../build/lib/content-helpers.js";
 
 export const scripts = ["assets/js/ui.js", "assets/js/search.js", "assets/js/belegung.js"];
 
@@ -20,9 +21,11 @@ export function render() {
   <h2>Meine Kamera-Belegung</h2>
   <div class="card">
     <p style="margin-top:0"><b>So findest du sie heraus:</b></p>
-    <p>① Tasten: <span class="osd">DISP/BACK lange drücken</span> → Übersicht aller Fn-Belegungen.<br>
-       ② Presets: Rad durch C1–C7 drehen und <span class="osd">Q</span> drücken (Foto UND Video-Modus!).<br>
-       ③ Details: <span class="osd">MENU → IQ → BENUTZEREINST. BEARB./SPEICH.</span></p>
+    ${renderSteps([
+      `Tasten: <span class="osd">DISP/BACK lange drücken</span> → Übersicht aller Fn-Belegungen.`,
+      `Presets: Rad durch C1–C7 drehen und <span class="osd">Q</span> drücken (Foto UND Video-Modus!).`,
+      `Details: <span class="osd">MENU → IQ → BENUTZEREINST. BEARB./SPEICH.</span>`,
+    ])}
     <p class="hint">Nur anschauen ändert nichts. Trage hier den SOLL-Zustand ein — wegen Auto-Update ist das deine Referenz, falls sich ein Preset verändert hat.</p>
   </div>
   <div id="fields">

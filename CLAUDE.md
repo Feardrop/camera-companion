@@ -84,6 +84,23 @@ normally; every other page lazy-loads it only if the user opens search there. Se
 `target` URLs (`sos.html#id`, `presets.html?preset=C1`, `uebungen.html#ex-N`, `handbuch.html?page=N`,
 `referenz.html#raw-konvertierung`) — clicking one is a normal navigation, not JS-managed state.
 
+### Design tokens & the `.steplist` component
+
+`assets/css/style.css`'s `:root` has a spacing scale (`--space-1..5`) and a radius scale (`--radius-xs/sm/md/lg/pill`)
+alongside the color tokens — use these instead of one-off pixel values when adding new rules. The file is a
+single authoritative pass (no append-only "v2 patch" layer anymore — if you need to override an existing
+selector, edit that rule in place rather than adding a new one later in the file; two definitions of the same
+selector is exactly the bug class that caused `nav a,nav button` and `table.mini` to have conflicting values
+in the past).
+
+Any genuine "do this, then this" step sequence (as opposed to an unordered list of facts/tips) should render
+as `<ol class="steplist">` — the numbered-circle visual matching `.jstep`. `build/lib/content-helpers.js`'s
+`renderBody()` already applies this automatically to SOS/tutorial entries authored with `type: "ol"` (`type:
+"ul"` stays a plain bullet list, for non-sequential content); for step sequences authored directly in a
+`content/pages/*.js` file, call `renderSteps(items)` from the same module instead of hand-typing a `<p>` with
+circled-digit characters and `<br>` — that pattern has no list semantics for screen readers and is exactly
+what this component replaced.
+
 ### Conventions to preserve
 
 - **New page checklist**: add an entry to `content/pages.js`, create `content/pages/<slug>.js` exporting

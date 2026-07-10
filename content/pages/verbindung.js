@@ -1,4 +1,5 @@
 import { FACTS } from "../data/facts.js";
+import { renderSteps } from "../../build/lib/content-helpers.js";
 
 export const scripts = ["assets/js/ui.js", "assets/js/search.js"];
 
@@ -7,10 +8,12 @@ export function render() {
   <h2>Handy-Setup: FUJIFILM XApp</h2>
   <div class="card">
     <p style="margin-top:0">Einmal einrichten, dreifach profitieren — <b>am besten noch vor der Reise:</b></p>
-    <p><b>1 · Koppeln:</b> App „FUJIFILM XApp“ installieren (App Store / Play Store), Bluetooth an, in der App „Kamera koppeln“ und den Anweisungen folgen.</p>
-    <p><b>2 · Einstellungs-Backup:</b> In der XApp die Funktion zum <b>Sichern/Wiederherstellen der Kameraeinstellungen</b> nutzen („Registrierung/Wiederherstellung der Kameraeinstellungen“). Damit lassen sich alle Presets und Menüs im Notfall mit einem Fingertipp zurückspielen — das Sicherheitsnetz gegen versehentlich veränderte Presets (Auto-Update!). Nach dem Verifizieren der Belegung einmal sichern.</p>
-    <p><b>3 · Geo-Tagging:</b> Standortsync in der App erlauben und an der Kamera <span class="osd">${FACTS.geotaggingPath}</span>. Dann steht in jedem Foto automatisch der Aufnahmeort.</p>
-    <p><b>4 · Bilder übertragen:</b> in der Wiedergabe auswählen &amp; senden — oder Auto-Übertragung aktivieren.</p>
+    ${renderSteps([
+      `<b>Koppeln:</b> App „FUJIFILM XApp“ installieren (App Store / Play Store), Bluetooth an, in der App „Kamera koppeln“ und den Anweisungen folgen.`,
+      `<b>Einstellungs-Backup:</b> In der XApp die Funktion zum <b>Sichern/Wiederherstellen der Kameraeinstellungen</b> nutzen („Registrierung/Wiederherstellung der Kameraeinstellungen“). Damit lassen sich alle Presets und Menüs im Notfall mit einem Fingertipp zurückspielen — das Sicherheitsnetz gegen versehentlich veränderte Presets (Auto-Update!). Nach dem Verifizieren der Belegung einmal sichern.`,
+      `<b>Geo-Tagging:</b> Standortsync in der App erlauben und an der Kamera <span class="osd">${FACTS.geotaggingPath}</span>. Dann steht in jedem Foto automatisch der Aufnahmeort.`,
+      `<b>Bilder übertragen:</b> in der Wiedergabe auswählen &amp; senden — oder Auto-Übertragung aktivieren.`,
+    ])}
     <p class="hint">Bluetooth kostet kaum Akku; WLAN wird nur während der Übertragung aktiviert.</p>
   </div>
 

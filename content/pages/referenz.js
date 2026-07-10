@@ -2,6 +2,7 @@ import { PAGES } from "../pages.js";
 import { FACTS } from "../data/facts.js";
 import { MENU_PATHS } from "../data/menu-paths.js";
 import { RAW_SETTINGS } from "../data/raw-settings.js";
+import { renderSteps } from "../../build/lib/content-helpers.js";
 
 const hrefFor = slug => PAGES.find(p => p.slug === slug).file;
 
@@ -41,13 +42,15 @@ export function render() {
 
   <div class="card">
     <p style="margin-top:0"><b>RAW in der Kamera entwickeln</b> — ohne Computer, direkt auf der Reise:</p>
-    <p>① Bild in der Wiedergabe anzeigen (RAW-Symbol) → <span class="osd">MENU/OK → RAW-KONVERTIERUNG</span><br>
-       ② <b>Zuerst DATEITYP auf HEIF stellen</b> — legt das Ausgabeformat der Kopie fest.<br>
-       ③ Weitere Einstellungen nach Bedarf anpassen (Fokushebel: markieren → rechts öffnet Optionen → wählen → MENU/OK bestätigt; Liste aller Einstellungen unten).<br>
-       ④ Taste <span class="osd">Q</span> zeigt eine Vorschau der Kopie.<br>
-       ⑤ <span class="osd">MENU/OK</span> speichert die Kopie als neue Datei — das Original-RAW bleibt unverändert erhalten.</p>
-    <p class="hint"><b>Wichtig: Schritt ② immer zuerst.</b> Wird DATEITYP nicht umgestellt, entsteht aus Versehen ein altes JPEG statt eines hochwertigen HEIF — unabhängig davon, was du sonst noch änderst.</p>
-    <p class="hint">So wird z.&nbsp;B. aus einem C1-Schwarzweiß-RAW nachträglich doch ein Farbbild: FILMSIMULATION in Schritt ③ auf PROVIA o.&nbsp;ä. wechseln.</p>
+    ${renderSteps([
+      `Bild in der Wiedergabe anzeigen (RAW-Symbol) → <span class="osd">MENU/OK → RAW-KONVERTIERUNG</span>`,
+      `<b>Zuerst DATEITYP auf HEIF stellen</b> — legt das Ausgabeformat der Kopie fest.`,
+      `Weitere Einstellungen nach Bedarf anpassen (Fokushebel: markieren → rechts öffnet Optionen → wählen → MENU/OK bestätigt; Liste aller Einstellungen unten).`,
+      `Taste <span class="osd">Q</span> zeigt eine Vorschau der Kopie.`,
+      `<span class="osd">MENU/OK</span> speichert die Kopie als neue Datei — das Original-RAW bleibt unverändert erhalten.`,
+    ])}
+    <p class="hint"><b>Wichtig: Schritt 2 immer zuerst.</b> Wird DATEITYP nicht umgestellt, entsteht aus Versehen ein altes JPEG statt eines hochwertigen HEIF — unabhängig davon, was du sonst noch änderst.</p>
+    <p class="hint">So wird z.&nbsp;B. aus einem C1-Schwarzweiß-RAW nachträglich doch ein Farbbild: FILMSIMULATION in Schritt 3 auf PROVIA o.&nbsp;ä. wechseln.</p>
   </div>
 
   <details>
