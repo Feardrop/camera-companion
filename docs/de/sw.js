@@ -1,6 +1,6 @@
 // GENERATED FILE — computed by build/lib/sw-gen.js from build/build.js's shell file
 // list. Do not hand-edit; SHELL and CACHE regenerate automatically on every build.
-const CACHE = "xh2s-v1.0.0-e6d35fc0";
+const CACHE = "xh2s-v1.0.0-8fadd17d";
 const SHELL = [
     "./",
     "./index.html",
@@ -16,6 +16,7 @@ const SHELL = [
     "./manifest.webmanifest",
     "./assets/css/style.css",
     "./assets/js/ui.js",
+    "./assets/js/start.js",
     "./assets/js/presets.js",
     "./assets/js/manual.js",
     "./assets/js/exercises.js",
@@ -28,6 +29,13 @@ const SHELL = [
     "./assets/icons/icon-512.png",
     "./assets/icons/icon-maskable-512.png",
     "./assets/icons/apple-touch-icon.png",
+    "./assets/fonts/fraunces-600.woff2",
+    "./assets/fonts/fraunces-700.woff2",
+    "./assets/fonts/plex-sans-400.woff2",
+    "./assets/fonts/plex-sans-600.woff2",
+    "./assets/fonts/plex-sans-700.woff2",
+    "./assets/fonts/plex-mono-400.woff2",
+    "./assets/fonts/plex-mono-500.woff2",
     "./X-H2S_Einfuehrung_und_Lernpfad.pdf"
   ];
 

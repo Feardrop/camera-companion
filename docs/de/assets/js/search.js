@@ -152,7 +152,7 @@ function buildDialog() {
   dlg.className = "search-dialog";
   dlg.innerHTML = `<div class="search-dialog-head">
       <input type="search" id="globalQ" placeholder="${t("searchPlaceholder")}" autocomplete="off">
-      <button type="button" class="search-close" aria-label="${t("close")}">✕</button>
+      <button type="button" class="search-close" aria-label="${t("close")}"><svg class="icon"><use href="#i-close"/></svg></button>
     </div>
     <div id="globalRes"></div>`;
   document.body.appendChild(dlg);
@@ -162,13 +162,16 @@ function buildDialog() {
   dlg.querySelector("#globalQ").addEventListener("input", e => {
     clearTimeout(timer);
     const value = e.target.value;
-    timer = setTimeout(() => runGlobalSearch(value), 120);
+    timer = setTimeout(() => runSearchInto(value, "globalQ", "globalRes"), 120);
   });
   return dlg;
 }
 
-function renderGlobalResults(hits, query) {
-  const container = document.getElementById("globalRes");
+// Shared by the header's search dialog (#globalQ/#globalRes) and any other
+// page that wants an inline search box (e.g. start.html's #startQ/#startRes)
+// — same engine, same result rendering, different DOM ids.
+function renderSearchResults(hits, query, queryId, resultsId) {
+  const container = document.getElementById(resultsId);
   if (!query.trim()) { container.innerHTML = ""; return; }
   if (!hits.length) {
     const suggestion = suggestTypo(query);
@@ -177,9 +180,9 @@ function renderGlobalResults(hits, query) {
       : `<p class="mut">${t("noResultsFor", { q: esc(query) })}</p>`;
     const retryBtn = container.querySelector("[data-retry]");
     if (retryBtn) retryBtn.addEventListener("click", () => {
-      const input = document.getElementById("globalQ");
+      const input = document.getElementById(queryId);
       input.value = retryBtn.dataset.retry;
-      runGlobalSearch(input.value);
+      runSearchInto(input.value, queryId, resultsId);
     });
     return;
   }
@@ -193,8 +196,8 @@ function renderGlobalResults(hits, query) {
     </a>`).join("")}`).join("");
 }
 
-async function runGlobalSearch(query) {
-  const container = document.getElementById("globalRes");
+async function runSearchInto(query, queryId, resultsId) {
+  const container = document.getElementById(resultsId);
   if (!query.trim()) { container.innerHTML = ""; return; }
   if (typeof SEARCH_INDEX === "undefined") {
     container.innerHTML = `<p class="mut">${t("indexLoading")}</p>`;
@@ -202,8 +205,21 @@ async function runGlobalSearch(query) {
   }
   if (typeof MANUAL === "undefined") { await ensureManualLoaded().catch(() => {}); }
   const manual = (typeof MANUAL !== "undefined") ? { list: MANUAL, offset: OFFSET } : null;
-  renderGlobalResults(searchAll(query, { manual }), query);
+  renderSearchResults(searchAll(query, { manual }), query, queryId, resultsId);
 }
+// Wires an <input> + results container pair to live search-as-you-type —
+// used directly by any page with its own inline search box (start.js).
+function initInlineSearch(queryId, resultsId) {
+  const input = document.getElementById(queryId);
+  if (!input) return;
+  let timer;
+  input.addEventListener("input", e => {
+    clearTimeout(timer);
+    const value = e.target.value;
+    timer = setTimeout(() => runSearchInto(value, queryId, resultsId), 120);
+  });
+}
+window.initInlineSearch = initInlineSearch;
 
 function openSearch() {
   const dlg = _dialogEl || (_dialogEl = buildDialog());

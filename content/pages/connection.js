@@ -1,5 +1,6 @@
 import { FACTS } from "../data/facts.js";
 import { localize } from "../../build/lib/i18n.js";
+import { icon } from "../../build/lib/partials/icons.js";
 import { renderSteps } from "../../build/lib/content-helpers.js";
 
 export const scripts = ["assets/data/strings.js", "assets/js/ui.js", "assets/js/search.js"];
@@ -28,20 +29,20 @@ const T = {
           en: `<b>Way 3 · With the FUJIFILM XApp:</b> pair the camera (see the card above), then select images and transfer them. To save space, turn on the <b>resize</b> feature: <span class="osd">MENU → Network/USB → Image Transfer/Resize ON</span>, or the size option in the XApp — sends smaller, phone-friendly files.` },
   hiccupHint: { de: "Wenn die Übertragung mal hakt: nicht ärgern, einfach nochmal probieren — Verbindung trennen, App neu öffnen, ggf. Bluetooth aus/an. Das löst es fast immer.",
                 en: "If a transfer ever hiccups: don't worry, just try again — disconnect, reopen the app, toggle Bluetooth off/on if needed. That fixes it almost every time." },
-  chipResize: { de: "📖 Handbuch: Größe ändern · S. 226", en: "📖 Manual: resize · p. 226" },
-  chipTransferPhone: { de: "📖 Handbuch: Bild auf Smartphone übertragen · S. 232", en: "📖 Manual: transfer images to phone · p. 232" },
+  chipResize: { de: "Handbuch: Größe ändern · S. 226", en: "Manual: resize · p. 226" },
+  chipTransferPhone: { de: "Handbuch: Bild auf Smartphone übertragen · S. 232", en: "Manual: transfer images to phone · p. 232" },
   cardsHeading: { de: "Speicherkarten: Backup auf beide Karten", en: "Memory cards: backup to both cards" },
   cardsIntro: { de: "Diese Kamera ist auf <b>SICHERUNG (Backup)</b> für beide Steckplätze eingestellt — Steckplatz&nbsp;1 = CFexpress, Steckplatz&nbsp;2 = SD. Das bedeutet:",
                 en: "This camera is set to <b>BACKUP</b> across both card slots — slot&nbsp;1 = CFexpress, slot&nbsp;2 = SD. That means:" },
-  cardsPhotos: { de: "✅ <b>Jedes Foto</b> (HEIF <b>und</b> RAW) wird <b>gleichzeitig auf beide Karten</b> geschrieben — eine automatische Sicherheitskopie. Fällt eine Karte aus oder geht verloren, ist kein Bild weg.",
-                 en: "✅ <b>Every photo</b> (HEIF <b>and</b> RAW) is written <b>to both cards at once</b> — an automatic backup copy. If one card fails or gets lost, no image is gone." },
-  cardsVideos: { de: "📹 <b>Videos</b> werden dagegen <b>immer nur auf die CFexpress (Steckplatz&nbsp;1)</b> gespeichert — auf der SD-Karte liegen also keine Videos.",
-                 en: "📹 <b>Videos</b>, on the other hand, are <b>always saved only to the CFexpress card (slot&nbsp;1)</b> — so the SD card never has videos on it." },
-  cardsWarn: { de: "⚠️ Beide Karten füllen sich bei Fotos parallel; die kleinere bzw. vollere Karte begrenzt. Meldet die Kamera „voll“, die betroffene Karte tauschen oder aufräumen — danach geht es weiter.",
-               en: "⚠️ Both cards fill up in parallel with photos; whichever is smaller or fuller becomes the limit. If the camera says “full”, swap or clear the affected card — then you're good to keep shooting." },
+  cardsPhotos: { de: "<b>Jedes Foto</b> (HEIF <b>und</b> RAW) wird <b>gleichzeitig auf beide Karten</b> geschrieben — eine automatische Sicherheitskopie. Fällt eine Karte aus oder geht verloren, ist kein Bild weg.",
+                 en: "<b>Every photo</b> (HEIF <b>and</b> RAW) is written <b>to both cards at once</b> — an automatic backup copy. If one card fails or gets lost, no image is gone." },
+  cardsVideos: { de: "<b>Videos</b> werden dagegen <b>immer nur auf die CFexpress (Steckplatz&nbsp;1)</b> gespeichert — auf der SD-Karte liegen also keine Videos.",
+                 en: "<b>Videos</b>, on the other hand, are <b>always saved only to the CFexpress card (slot&nbsp;1)</b> — so the SD card never has videos on it." },
+  cardsWarn: { de: "Beide Karten füllen sich bei Fotos parallel; die kleinere bzw. vollere Karte begrenzt. Meldet die Kamera „voll“, die betroffene Karte tauschen oder aufräumen — danach geht es weiter.",
+               en: "Both cards fill up in parallel with photos; whichever is smaller or fuller becomes the limit. If the camera says “full”, swap or clear the affected card — then you're good to keep shooting." },
   cardsSettingHint: { de: `Einstellung ansehen/ändern: <span class="osd">MENU → Schraubenschlüssel → DATENSPEICHER-EINSTELLUNG</span>`,
                       en: `View/change this setting: <span class="osd">MENU → wrench icon → DATA STORAGE SETTING</span>` },
-  chipDataStorage: { de: "📖 Handbuch: Datenspeicher-Einstellung · S. 281", en: "📖 Manual: data storage setting · p. 281" },
+  chipDataStorage: { de: "Handbuch: Datenspeicher-Einstellung · S. 281", en: "Manual: data storage setting · p. 281" },
 };
 
 export function render(locale) {
@@ -51,11 +52,11 @@ export function render(locale) {
   // Both language editions of the manual share identical pagination (see
   // CLAUDE.md), so these page numbers are valid in both locales.
   const chips = `<div class="chips" style="margin-bottom:0">
-      <button class="chip" onclick="openPage(226)">${t.chipResize}</button>
-      <button class="chip" onclick="openPage(232)">${t.chipTransferPhone}</button>
+      <button class="chip" onclick="openPage(226)">${icon("book")}${t.chipResize}</button>
+      <button class="chip" onclick="openPage(232)">${icon("book")}${t.chipTransferPhone}</button>
     </div>`;
   const dataStorageChip = `<div class="chips" style="margin-bottom:0">
-      <button class="chip" onclick="openPage(281)">${t.chipDataStorage}</button>
+      <button class="chip" onclick="openPage(281)">${icon("book")}${t.chipDataStorage}</button>
     </div>`;
 
   return `<section id="tab-connection">
@@ -80,9 +81,9 @@ export function render(locale) {
   <h2>${t.cardsHeading}</h2>
   <div class="card">
     <p style="margin-top:0">${t.cardsIntro}</p>
-    <p>${t.cardsPhotos}</p>
-    <p>${t.cardsVideos}</p>
-    <p>${t.cardsWarn}</p>
+    <p>${icon("check-circle")}${t.cardsPhotos}</p>
+    <p>${icon("video")}${t.cardsVideos}</p>
+    <p>${icon("alert-triangle")}${t.cardsWarn}</p>
     <p class="hint">${t.cardsSettingHint}</p>
     ${dataStorageChip}
   </div>

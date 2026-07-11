@@ -1,14 +1,22 @@
 import { PAGES } from "../pages.js";
 import { FACTS } from "../data/facts.js";
 import { TUTORIAL } from "../data/tutorial.js";
+import { STRINGS } from "../i18n/strings.js";
 import { localize } from "../../build/lib/i18n.js";
+import { icon } from "../../build/lib/partials/icons.js";
 import { renderBody, renderDetails } from "../../build/lib/content-helpers.js";
 
 const hrefFor = slug => PAGES.find(p => p.slug === slug).file;
 
-export const scripts = ["assets/data/strings.js", "assets/js/ui.js", "assets/js/search.js"];
+export const scripts = ["assets/data/strings.js", "assets/js/ui.js", "assets/js/search.js", "assets/js/start.js"];
 
 const T = {
+  searchHint: { de: "Direkt zum Ziel: Presets, Handbuch, SOS und Übungen durchsuchen.", en: "Get there directly: search presets, manual, SOS and exercises at once." },
+  quickAccess: { de: "Schnellzugriff", en: "Quick access" },
+  navSos: { de: "Problem? SOS", en: "Got a problem? SOS" },
+  navPresets: { de: "Preset-Wahl", en: "Choose a preset" },
+  navManual: { de: "Handbuch-Suche", en: "Search the manual" },
+  navExercises: { de: "Übungen", en: "Exercises" },
   overview: { de: "Auf einen Blick", en: "At a glance" },
   switchLine: {
     de: "<b>Schalter oben links:</b> <span class=\"osd\">STILL</span> = Foto · <span class=\"osd\">MOVIE</span> = Video (jeweils eigene Presets!).",
@@ -19,11 +27,8 @@ const T = {
     en: "<b>Mode dial:</b> C1 black &amp; white · C2 warm/bright · C3 portrait/all-rounder · C4/C5 animals &amp; action · C6 slow motion · C7 video 50p.",
   },
   unsurePreset: { de: "Unsicher, welches Preset? Nimm C3 — damit geht fast nichts schief.", en: "Not sure which preset? Go with C3 — you can barely go wrong with it." },
-  quickAccess: { de: "Schnellzugriff", en: "Quick access" },
-  navSos: { de: "✚ Problem? SOS", en: "✚ Got a problem? SOS" },
-  navPresets: { de: "◎ Preset-Wahl", en: "◎ Choose a preset" },
-  navManual: { de: "📖 Handbuch-Suche", en: "📖 Search the manual" },
-  navExercises: { de: "✓ Übungen", en: "✓ Exercises" },
+  offTrack: { de: "Etwas verstellt?", en: "Something off?" },
+  offTrackTail: { de: "zeigt alles auf einen Blick.", en: "shows everything at a glance." },
   journeyHeading: { de: "Dein Weg durch die App", en: "Your path through the app" },
   step1t: { de: "Grundlagen lernen", en: "Learn the basics" },
   step1d: { de: "Das Tutorial unten auf dieser Seite — 8 kurze Kapitel, je 5–15 Minuten.", en: "The tutorial below on this page — 8 short chapters, 5–15 minutes each." },
@@ -37,7 +42,7 @@ const T = {
   step5d: { de: "7 abhakbare Übungen führen dich zum Enthusiasten-Level.", en: "7 checkable exercises take you to enthusiast level." },
   step6t: { de: "Unterwegs bei Problemen", en: "If something goes wrong on the road" },
   step6d: { de: "SOS löst die 15 häufigsten Situationen; für alles andere: Handbuch-Suche.", en: "SOS covers the 15 most common situations; for anything else: search the manual." },
-  autoUpdateHeading: { de: "🔁 Auto-Update der Presets: AN oder AUS?", en: "🔁 Preset Auto Update: on or off?" },
+  autoUpdateHeading: { de: "Auto-Update der Presets: AN oder AUS?", en: "Preset Auto Update: on or off?" },
   autoUpdateP: {
     de: "Diese Kamera speichert Änderungen automatisch dauerhaft ins aktive C-Preset (<b>Auto-Update = AN</b>). Wer versehentliches Verstellen verhindern will, schaltet es aus — dann springt jedes Preset beim Radwechsel auf den gespeicherten Stand zurück:",
     en: "This camera saves changes into the active C preset automatically and permanently (<b>Auto Update = ON</b>). If you'd rather prevent accidental changes from sticking, turn it off — then every preset snaps back to its saved state when you switch the dial away and back:",
@@ -57,6 +62,7 @@ const T = {
 
 export function render(locale) {
   const t = localize(T, locale);
+  const strings = localize(STRINGS, locale);
   const facts = localize(FACTS, locale);
   const tutorial = localize(TUTORIAL, locale);
   const chapters = tutorial.map(ch => renderDetails({
@@ -66,47 +72,54 @@ export function render(locale) {
   })).join("\n\n");
 
   return `<section id="tab-start">
+  <div class="search">
+    <svg class="icon search-icon"><use href="#i-search"/></svg>
+    <input id="startQ" type="search" placeholder="${strings.searchPlaceholder}" aria-label="${strings.searchPlaceholder}">
+  </div>
+  <div id="startRes"></div>
+  <p class="mut" id="startSearchHint" style="margin:0 0 22px">${t.searchHint}</p>
+
+  <h2>${t.quickAccess}</h2>
+  <div class="quicknav">
+    <a href="${hrefFor("sos")}">${icon("cross")}${t.navSos}</a>
+    <a href="${hrefFor("presets")}">${icon("aperture")}${t.navPresets}</a>
+    <a href="${hrefFor("manual")}">${icon("book")}${t.navManual}</a>
+    <a href="${hrefFor("exercises")}">${icon("check-circle")}${t.navExercises}</a>
+  </div>
+
   <h2>${t.overview}</h2>
   <div class="card">
     <p style="margin-top:0">${facts.shutter}</p>
     <p>${t.switchLine}</p>
     <p>${t.dialLine}</p>
-    <p>${facts.lostInMenu} <b>${locale === "de" ? "Etwas verstellt?" : "Something off?"}</b> <span class="osd">Q</span> ${locale === "de" ? "zeigt alles auf einen Blick." : "shows everything at a glance."}</p>
+    <p>${facts.lostInMenu} <b>${t.offTrack}</b> <span class="osd">Q</span> ${t.offTrackTail}</p>
     <p class="hint">${t.unsurePreset}</p>
-  </div>
-
-  <h2>${t.quickAccess}</h2>
-  <div class="quicknav">
-    <a href="${hrefFor("sos")}">${t.navSos}</a>
-    <a href="${hrefFor("presets")}">${t.navPresets}</a>
-    <a href="${hrefFor("manual")}">${t.navManual}</a>
-    <a href="${hrefFor("exercises")}">${t.navExercises}</a>
   </div>
 
   <h2>${t.journeyHeading}</h2>
   <div class="journey">
     <a class="jstep" href="#tut1" onclick="document.getElementById('tut1').open=true">
-      <div class="no">1</div><div class="tx"><b>${t.step1t}</b><span>${t.step1d}</span></div><div class="go">›</div>
+      <div class="no">1</div><div class="tx"><b>${t.step1t}</b><span>${t.step1d}</span></div><div class="go">${icon("chevron-right")}</div>
     </a>
     <a class="jstep" href="${hrefFor("presets")}">
-      <div class="no">2</div><div class="tx"><b>${t.step2t}</b><span>${t.step2d}</span></div><div class="go">›</div>
+      <div class="no">2</div><div class="tx"><b>${t.step2t}</b><span>${t.step2d}</span></div><div class="go">${icon("chevron-right")}</div>
     </a>
     <a class="jstep" href="${hrefFor("my-setup")}">
-      <div class="no">3</div><div class="tx"><b>${t.step3t}</b><span>${t.step3d}</span></div><div class="go">›</div>
+      <div class="no">3</div><div class="tx"><b>${t.step3t}</b><span>${t.step3d}</span></div><div class="go">${icon("chevron-right")}</div>
     </a>
     <a class="jstep" href="${hrefFor("connection")}">
-      <div class="no">4</div><div class="tx"><b>${t.step4t}</b><span>${t.step4d}</span></div><div class="go">›</div>
+      <div class="no">4</div><div class="tx"><b>${t.step4t}</b><span>${t.step4d}</span></div><div class="go">${icon("chevron-right")}</div>
     </a>
     <a class="jstep" href="${hrefFor("exercises")}">
-      <div class="no">5</div><div class="tx"><b>${t.step5t}</b><span>${t.step5d}</span></div><div class="go">›</div>
+      <div class="no">5</div><div class="tx"><b>${t.step5t}</b><span>${t.step5d}</span></div><div class="go">${icon("chevron-right")}</div>
     </a>
     <a class="jstep" href="${hrefFor("sos")}">
-      <div class="no">✚</div><div class="tx"><b>${t.step6t}</b><span>${t.step6d}</span></div><div class="go">›</div>
+      <div class="no">${icon("cross")}</div><div class="tx"><b>${t.step6t}</b><span>${t.step6d}</span></div><div class="go">${icon("chevron-right")}</div>
     </a>
   </div>
 
   <div class="card">
-    <h3>${t.autoUpdateHeading}</h3>
+    <h3>${icon("refresh")}${t.autoUpdateHeading}</h3>
     <p>${t.autoUpdateP}</p>
     <p><b>${t.turnOff}</b> <span class="osd">${facts.autoUpdateDisablePath}</span><br>
        <b>${t.turnOn}</b> <span class="osd">${facts.autoUpdateEnablePath}</span></p>

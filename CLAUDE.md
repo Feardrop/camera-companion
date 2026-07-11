@@ -84,12 +84,14 @@ above for the GitHub Pages publish-folder constraint:
 | Source | Generates |
 |---|---|
 | `content/pages.js` | Single source of truth for the page list: file name, nav slug, icon, bilingual label/title, and whether it's a bottom-tab page (`tab: true`) or belongs under one (`parent: "more"`). Drives the generated `<nav>` (real `<a href>` tags — no client-side `go(slug)` lookup, so a typo'd page reference is a build-time issue, not a silently-dead link), the parent-tab highlighting + "‹ back" breadcrumb for sub-pages (`build/lib/shell.js`), and `sw.js`'s precache list. |
-| `content/data/*.js` | Structured content, one file per content type, every translatable field `{de,en}`: `presets.js` (mode-dial C1–C7 cards, `PRESETS`), `sos.js` (troubleshooting entries, `SOS`, with locale-invariant English anchor `id`s), `exercises.js` (checkable training plan, `EX`), `tutorial.js` (the 8-chapter start-page tutorial, `TUTORIAL`), `belegung-fields.js` (the "My Setup" notes-form fields, `FIELDS` — the storage `key` in each row is locale-invariant, see Storage), `menu-paths.js` (the "Key menu paths" reference table — English rows show the camera's real English menu-item names, not literal translations), `raw-settings.js` (the RAW-conversion settings table, `RAW_SETTINGS`, same real-menu-name treatment), `facts.js` (short strings/menu paths repeated verbatim across multiple pages — e.g. the Auto Update menu path, the shutter-button explanation — consolidated here so wording can't drift page-to-page, plus `RAW_KONV_LINK` and `MANUAL_PDF_URL`), `manifest.js` (PWA manifest content, localized by `build/lib/manifest-gen.js`). |
+| `content/data/*.js` | Structured content, one file per content type, every translatable field `{de,en}`: `presets.js` (mode-dial C1–C7 cards, `PRESETS` — each also carries a locale-invariant `swatch` CSS-gradient
+string driving the film-canister card's color spine, see "Design system"), `sos.js` (troubleshooting entries, `SOS`, with locale-invariant English anchor `id`s), `exercises.js` (checkable training plan, `EX`), `tutorial.js` (the 8-chapter start-page tutorial, `TUTORIAL`), `belegung-fields.js` (the "My Setup" notes-form fields, `FIELDS` — the storage `key` in each row is locale-invariant, see Storage), `menu-paths.js` (the "Key menu paths" reference table — English rows show the camera's real English menu-item names, not literal translations), `raw-settings.js` (the RAW-conversion settings table, `RAW_SETTINGS`, same real-menu-name treatment), `facts.js` (short strings/menu paths repeated verbatim across multiple pages — e.g. the Auto Update menu path, the shutter-button explanation — consolidated here so wording can't drift page-to-page, plus `RAW_KONV_LINK` and `MANUAL_PDF_URL`), `manifest.js` (PWA manifest content, localized by `build/lib/manifest-gen.js`). |
 | `content/i18n/strings.js` | Runtime UI-string dictionary — see Internationalization above. |
 | `content/pages/*.js` | One file per output page (`start.js` → `index.html`, plus `presets.js`, `manual.js`, `exercises.js`, `sos.js`, and the "More" hub + its four sub-pages: `more.js`, `my-setup.js`, `connection.js`, `reference.js`, `about.js`). Each exports `render(locale)` (returns the page's inner `<main>` HTML for that locale, usually assembled from the `content/data/*` arrays above via `localize()`) and `scripts` (the list of `<script src>` tags the page needs). |
 | `content/data/app-meta.js` | Reads `version` out of `package.json` (Node-only `fs.readFileSync`, same as any other `content/data/*.js` file) and exports `VERSION` — used by `about.js` to display it and by `build/lib/sw-gen.js` to fold it into `sw.js`'s `CACHE` name. Single source of truth; see Versioning below. |
 | `build/lib/i18n.js` | `localize(value, locale)` (see Internationalization above) and `otherLocaleUrl(file, locale)`, shared by `shell.js` and `about.js`. |
-| `build/lib/shell.js` + `build/lib/partials/{head,header,nav}.js` | The shared `<head>`/`<header>`/`<nav>` wrapper, locale-aware (`<html lang>`, page `<title>` brand suffix, header subtitle, search-button `aria-label`) — this is what used to be ~100 duplicated lines per HTML file plus runtime-injected header/nav; now written once and reused for every page/locale. The header partial also renders the global-search button. |
+| `build/lib/shell.js` + `build/lib/partials/{head,header,nav}.js` | The shared `<head>`/`<header>`/`<nav>` wrapper, locale-aware (`<html lang>`, page `<title>` brand suffix, header subtitle, search-button `aria-label`) — this is what used to be ~100 duplicated lines per HTML file plus runtime-injected header/nav; now written once and reused for every page/locale. The header partial also renders the global-search button. `shell.js` also injects the icon sprite (`renderIconSprite()`, see `build/lib/partials/icons.js` below and "Design system") once per page. |
+| `build/lib/partials/icons.js` | The hand-drawn SVG line-icon set backing every UI symbol in the app (nav, chips, buttons — no emoji). `renderIconSprite()` / `icon(name)` — see "Design system" below. |
 | `build/lib/content-helpers.js` | Shared renderers for the "static `<details>` accordion" content shape used by both SOS entries and tutorial chapters (`renderBody`/`renderDetails`) — locale-agnostic, operates on already-localized plain strings. |
 | `build/lib/sw-gen.js` | Computes each locale tree's `sw.js`'s `SHELL` precache array from that build's actual output file list (plus a hand-maintained static-asset list for CSS/JS/icons/manual/PDF in `build/build.js`) and a `CACHE` name combining the app version and a content hash — both regenerate automatically on every build, so a renamed page or a forgotten version bump can no longer desync the offline cache. |
 | `build/lib/search-index.js` | Assembles `assets/data/search-index.js` (a `const SEARCH_INDEX=[...]` script, like `manual-*.js`'s format — script-tag-loadable, not JSON, so it still works under `file://`) from every already-localized `content/data/*` array **except** the manual — see Search below for why. Builds every `target` URL from the (localized) `PAGES` list rather than hand-typed filename strings. |
@@ -111,20 +113,25 @@ half of this repo's hand-written source, alongside `content/`:
   search UI (header button → `openSearch()` → a native `<dialog>`, built and populated lazily on first open,
   all visible strings via `t()`). `manual.js`'s inline manual search also calls `searchAll` (pre-filtered to
   `types: ["manual"]`) instead of duplicating ranking logic — one engine, two entry points.
-- `src/js/<page>.js` — one per interactive page (`presets.js`, `exercises.js`, `manual.js`, `my-setup.js`),
-  each much thinner than a client-rendered app would need: since the build renders all content-derived markup
-  statically (per locale), these only handle *interaction* against already-rendered DOM (e.g. `presets.js`
-  filters pre-rendered preset cards by `data-preset` on click; `exercises.js` toggles checkboxes and
-  reads/writes `localStorage`), never building HTML from a data array at runtime. Visible strings they do
-  generate at runtime go through `t()`.
-- `src/css/style.css` — single shared stylesheet (identical for both locales); design tokens (colors, fonts)
-  live in `:root`. No CSS build/preprocessor — edit the file directly.
+- `src/js/<page>.js` — one per interactive page (`presets.js`, `exercises.js`, `manual.js`, `my-setup.js`,
+  `start.js`), each much thinner than a client-rendered app would need: since the build renders all
+  content-derived markup statically (per locale), these only handle *interaction* against already-rendered DOM
+  (e.g. `presets.js` filters pre-rendered preset cards by `data-preset` on click; `exercises.js` toggles
+  checkboxes and reads/writes `localStorage`; `start.js` just wires the Start page's inline search box to the
+  shared search engine via `initInlineSearch()`), never building HTML from a data array at runtime. Visible
+  strings they do generate at runtime go through `t()`.
+- `src/css/style.css` — single shared stylesheet (identical for both locales); design tokens (colors,
+  spacing/radius, fonts) live in `:root` — see "Design system" below. No CSS build/preprocessor — edit the file
+  directly.
 - `src/data/manual-de.js` / `src/data/manual-en.js` — the manual text as a JS array `MANUAL` plus
   `const OFFSET`, one file per locale; `build.js` copies the locale-matching one to each tree's
   `assets/data/manual.js` (a locale-invariant destination path). Both are the full text (404 pages each,
   ~410–450 KB), hand-edited via the pdftotext workflow (see "Updating the manual text" below) against the
   vendored PDFs (`src/manual-de.pdf` / `src/manual-en.pdf` — see "The manual" below).
-- `src/icons/` — App icons (192/512/maskable/apple-touch), identical for both locales.
+- `src/icons/` — App icons (192/512/maskable/apple-touch), identical for both locales. (Not to be confused
+  with the in-app UI icon set, which is code — `build/lib/partials/icons.js` — not a static asset; see "Design
+  system" below.)
+- `src/fonts/` — Vendored `.woff2` files for the app's three typefaces; see "Design system" below.
 
 ### The manual
 
@@ -199,14 +206,68 @@ container (`renderPdfPage()` does this) — PDF.js's own text-layer spans size t
 `calc(var(--scale-factor)*Npx)`, and without it every span silently falls back to the browser default font
 size, which desyncs the highlight rectangles from the actual rendered glyphs.
 
-### Design tokens & the `.steplist` component
+### Design system
 
-`src/css/style.css`'s `:root` has a spacing scale (`--space-1..5`) and a radius scale (`--radius-xs/sm/md/lg/pill`)
-alongside the color tokens — use these instead of one-off pixel values when adding new rules. The file is a
-single authoritative pass (no append-only "v2 patch" layer anymore — if you need to override an existing
-selector, edit that rule in place rather than adding a new one later in the file; two definitions of the same
-selector is exactly the bug class that caused `nav a,nav button` and `table.mini` to have conflicting values
-in the past).
+The visual identity is a **darkroom/film-label register** — a warm near-black ground, a single tungsten-amber
+accent used sparingly (like a safelight or an indicator LED), a muted moss green for secondary/confirmation
+state, and rust for warnings — deliberately *not* a generic dark-mode SaaS look. It draws on the same visual
+language as Fuji X Weekly's recipe cards (see the film-canister preset cards below) without using any real
+product photography, which this project has no rights to license.
+
+- **Color tokens** (`src/css/style.css`'s `:root`): `--ink`/`--panel`/`--panel-2`/`--line` (surfaces),
+  `--paper`/`--muted`/`--faint` (text), `--amber`/`--amber-dim`/`--amber-ink` (the one accent — use it
+  sparingly, for the thing on a screen that should draw the eye, not as a general highlight color),
+  `--moss`/`--moss-dim` (secondary/success), `--rust`/`--rust-dim` (warnings). Always go through a token in
+  component rules — never hardcode a hex value — because every token is redefined for the light theme (see
+  below) and a hardcoded value silently breaks that.
+- **Type**: `--font-display` (Fraunces, a serif with real character for headings/wordmark — evokes type
+  printed on a film box or a manual's cover), `--font-body` (IBM Plex Sans, for everything else), `--font-mono`
+  (IBM Plex Mono, reserved for anything that mirrors what's physically printed on the camera — button names,
+  menu paths, `<span class="osd">`, page numbers). All three are **vendored** as static `.woff2` files in
+  `src/fonts/` (SIL OFL 1.1, see `src/fonts/README.md` for source/update instructions) rather than linked from
+  Google's CDN — consistent with this app's zero-dependency, fully-offline architecture (same treatment as
+  PDF.js and the manual PDFs). `build/build.js`'s `copyStaticAssets()` copies them into each locale tree's
+  `assets/fonts/`; they're in `STATIC_SHELL_ASSETS` so the service worker precaches them on install.
+- **Spacing/radius scale**: `--sp-1..5` and `--r-xs/sm/md/lg/pill` — use these instead of one-off pixel values
+  when adding new rules. The file is a single authoritative pass (no append-only "v2 patch" layer — if you need
+  to override an existing selector, edit that rule in place rather than adding a new one later in the file; two
+  definitions of the same selector is exactly the bug class that caused `nav a,nav button` and `table.mini` to
+  have conflicting values in the past).
+- **Light/dark theming**: dark values are the `:root` defaults; a `@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){...}}`
+  block overrides every token for light, and a parallel `:root[data-theme="light"]{...}` rule exists for a
+  possible future manual toggle (no toggle UI exists yet — theme currently follows the OS/browser preference
+  only). When adding a themed rule, override at the **token** level inside these two blocks, never with a
+  component-scoped media query — that's what caused the header's dark gradient stripe bug in light mode
+  (fixed by simplifying to a flat `background:var(--ink)`).
+
+#### Icons
+
+Every symbol in the app is a hand-drawn line icon from `build/lib/partials/icons.js`'s `ICONS` map (24×24,
+1.75px stroke, round caps/joins) — **no emoji** are used as UI symbols anywhere (nav, chips, buttons, page
+headings). `renderIconSprite()` renders the full set once per page as a hidden `<svg><symbol>` sprite
+(injected by `build/lib/shell.js`, right after the locale script); `icon(name, extraClass?)` returns the
+`<svg class="icon ..."><use href="#i-name"/></svg>` snippet a page module calls inline. Current inventory:
+`search`, `home`, `aperture`, `book`, `check-circle`, `grid`, `cross`, `notebook`, `wifi`, `bookmark`, `info`,
+`alert-triangle`, `close`, `film`, `image`, `globe`, `video`, `download`, `chevron-right`, `chevron-left`,
+`refresh`. Coverage is deliberately not 1:1 with every emoji the app used to have — a few low-stakes
+decorative uses (e.g. the quick-filter chips on `presets.html`) were simplified to text-only pills instead of
+adding more bespoke icons.
+
+**Critical implementation detail:** `fill`/`stroke`/`stroke-width` etc. must be set via CSS on the `.icon`
+class (`src/css/style.css`), never as presentation attributes on the sprite's own hidden `<svg>` wrapper —
+a `<use>` element clones the referenced `<symbol>` and inherits styling from **its own position** in the light
+DOM, not from the sprite definition's position, so attributes on the hidden sprite element never reach the
+rendered icon. `content/pages.js`'s `PAGES` entries reference icons by name in their `icon` field (never a
+literal emoji glyph) for the bottom-tab nav.
+
+#### Film-canister preset cards
+
+`content/pages/presets.js`'s `renderFilmCard()` renders each C1–C7/VID preset as a `.filmcard`: a vertical
+color-gradient "spine" (`.strip`, from the preset's `swatch` field in `content/data/presets.js` — a
+locale-invariant CSS `linear-gradient` string, loosely modeled on that film simulation's actual color science,
+e.g. Acros greyscale, Classic Neg warm amber, Astia soft nature tones) next to the card body. This stands in
+for the sample photography a real recipe card would show, which this project has no rights to license, while
+still directly evoking the requested Fuji X Weekly recipe-card aesthetic.
 
 Any genuine "do this, then this" step sequence (as opposed to an unordered list of facts/tips) should render
 as `<ol class="steplist">` — the numbered-circle visual matching `.jstep`. `build/lib/content-helpers.js`'s

@@ -4,6 +4,7 @@ import { MENU_PATHS } from "../data/menu-paths.js";
 import { RAW_SETTINGS } from "../data/raw-settings.js";
 import { localize } from "../../build/lib/i18n.js";
 import { renderSteps } from "../../build/lib/content-helpers.js";
+import { icon } from "../../build/lib/partials/icons.js";
 
 const hrefFor = slug => PAGES.find(p => p.slug === slug).file;
 
@@ -56,10 +57,10 @@ const T = {
   allSettingsSummary: { de: "Alle RAW-Konvertierungs-Einstellungen erklärt", en: "Every RAW-conversion setting explained" },
   notAllAvailable: { de: "Nicht jede Einstellung steht immer zur Verfügung — abhängig davon, wie das Bild aufgenommen wurde.",
                       en: "Not every setting is always available — it depends on how the image was shot." },
-  chipRawConv: { de: "📖 Handbuch: RAW-Konvertierung · S. 220", en: "📖 Manual: RAW conversion · p. 220" },
-  chipJpegHeif: { de: "📖 Handbuch: JPEG/HEIF · S. 129", en: "📖 Manual: JPEG/HEIF · p. 129" },
-  chipExercise: { de: "✓ Übung: RAW-Konvertierung üben", en: "✓ Exercise: practice RAW conversion" },
-  chipSos: { de: "✚ SOS: Bilder plötzlich schwarzweiß", en: "✚ SOS: shots suddenly black &amp; white" },
+  chipRawConv: { de: "Handbuch: RAW-Konvertierung · S. 220", en: "Manual: RAW conversion · p. 220" },
+  chipJpegHeif: { de: "Handbuch: JPEG/HEIF · S. 129", en: "Manual: JPEG/HEIF · p. 129" },
+  chipExercise: { de: "Übung: RAW-Konvertierung üben", en: "Exercise: practice RAW conversion" },
+  chipSos: { de: "SOS: Bilder plötzlich schwarzweiß", en: "SOS: shots suddenly black &amp; white" },
   manualsHeading: { de: "Handbücher", en: "Manuals" },
   officialManualTag: { de: "PDF", en: "PDF" },
   officialManualTitle: { de: "Offizielles Handbuch", en: "Official manual" },
@@ -102,8 +103,8 @@ export function render(locale) {
 
   // Both language editions of the manual share identical pagination (see
   // CLAUDE.md), so these page numbers are valid in both locales.
-  const pageChips = `<button class="chip" onclick="openPage(220)">${t.chipRawConv}</button>
-    <button class="chip" onclick="openPage(129)">${t.chipJpegHeif}</button>`;
+  const pageChips = `<button class="chip" onclick="openPage(220)">${icon("book")}${t.chipRawConv}</button>
+    <button class="chip" onclick="openPage(129)">${icon("book")}${t.chipJpegHeif}</button>`;
 
   const videosDe = `<h2>${t.videosDeHeading}</h2>
   <a class="lnk" href="https://www.youtube.com/watch?v=2gh4e6giFfQ"><em>${t.ytMust}</em><b>${t.vid1title}</b><span>${t.vid1desc}</span></a>
@@ -161,8 +162,8 @@ export function render(locale) {
 
   <div class="chips" style="margin:10px 0 20px">
     ${pageChips}
-    <a class="chip" href="${hrefFor("exercises")}">${t.chipExercise}</a>
-    <a class="chip" href="${hrefFor("sos")}">${t.chipSos}</a>
+    <a class="chip" href="${hrefFor("exercises")}">${icon("check-circle")}${t.chipExercise}</a>
+    <a class="chip" href="${hrefFor("sos")}">${icon("cross")}${t.chipSos}</a>
   </div>
 
   <h2>${t.manualsHeading}</h2>

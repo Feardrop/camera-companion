@@ -1,25 +1,26 @@
 import { PRESETS } from "../data/presets.js";
 import { localize } from "../../build/lib/i18n.js";
+import { icon } from "../../build/lib/partials/icons.js";
 
 export const scripts = ["assets/data/strings.js", "assets/js/ui.js", "assets/js/search.js", "assets/js/presets.js"];
 
 const T = {
   checkOrder: {
-    de: "<b>⚠️ Reihenfolge prüfen:</b> Die Speicherplätze können in Wirklichkeit anders verteilt sein als hier gezeigt (z.&nbsp;B. C4/C5 getauscht oder zusätzliche Plätze belegt). Einmal das Rad durchdrehen, mit <span class=\"osd\">Q</span> vergleichen und die echte Belegung auf der Seite „Belegung“ notieren.",
-    en: "<b>⚠️ Check the real order:</b> your dial's slots may actually be arranged differently than shown here (e.g. C4/C5 swapped, or extra slots reassigned). Turn the dial through once, compare with <span class=\"osd\">Q</span>, and note the real setup on the “My Setup” page.",
+    de: "<b>Reihenfolge prüfen:</b> Die Speicherplätze können in Wirklichkeit anders verteilt sein als hier gezeigt (z.&nbsp;B. C4/C5 getauscht oder zusätzliche Plätze belegt). Einmal das Rad durchdrehen, mit <span class=\"osd\">Q</span> vergleichen und die echte Belegung auf der Seite „Belegung“ notieren.",
+    en: "<b>Check the real order:</b> your dial's slots may actually be arranged differently than shown here (e.g. C4/C5 swapped, or extra slots reassigned). Turn the dial through once, compare with <span class=\"osd\">Q</span>, and note the real setup on the “My Setup” page.",
   },
   whatToShoot: { de: "Was willst du aufnehmen?", en: "What do you want to shoot?" },
-  chipPeople: { de: "🧑 Menschen", en: "🧑 People" },
-  chipAnimals: { de: "🦅 Tiere &amp; Action", en: "🦅 Animals &amp; action" },
-  chipVacation: { de: "🌇 Urlaubsstimmung", en: "🌇 Vacation mood" },
-  chipBw: { de: "⬛ Schwarzweiß", en: "⬛ Black & white" },
-  chipVideo: { de: "🎬 Video normal", en: "🎬 Video, normal" },
-  chipSlowmo: { de: "🐌 Zeitlupe", en: "🐌 Slow motion" },
+  chipPeople: { de: "Menschen", en: "People" },
+  chipAnimals: { de: "Tiere &amp; Action", en: "Animals &amp; action" },
+  chipVacation: { de: "Urlaubsstimmung", en: "Vacation mood" },
+  chipBw: { de: "Schwarzweiß", en: "Black & white" },
+  chipVideo: { de: "Video normal", en: "Video, normal" },
+  chipSlowmo: { de: "Zeitlupe", en: "Slow motion" },
   dialHeading: { de: "Das Modusrad", en: "The mode dial" },
   photoBadge: { de: "FOTO", en: "PHOTO" },
   usedFor: { de: "Wofür:", en: "For:" },
   showAll: { de: "Alle Presets zeigen", en: "Show all presets" },
-  updateHeading: { de: "⚠️ Wichtig: Presets merken sich Änderungen!", en: "⚠️ Important: presets remember changes!" },
+  updateHeading: { de: "Wichtig: Presets merken sich Änderungen!", en: "Important: presets remember changes!" },
   updateP1: {
     de: "Diese Kamera ist auf <b>AUTO-UPDATE</b> eingestellt: Was du in einem C-Preset veränderst (Filmsimulation, Korrektur, …), wird <b>automatisch dauerhaft ins Preset gespeichert</b>. Rad wegdrehen und zurück setzt also NICHTS zurück.",
     en: "This camera has <b>AUTO UPDATE</b> turned on: whatever you change in a C preset (film simulation, exposure correction, …) gets <b>saved into the preset automatically and permanently</b>. Turning the dial away and back resets NOTHING.",
@@ -39,23 +40,27 @@ const T = {
   },
 };
 
-function renderCard(p, t) {
-  return `<div class="card" data-preset="${p.id}">
-      <h3><span class="badge${p.v ? " v" : ""}">${p.id === "VID" ? "▶ VIDEO" : p.id}</span>${p.title}</h3>
-      <p class="look">${p.look}</p>
-      <p><b>${t.usedFor}</b> ${p.use}</p>
-      <p class="hint">${p.note}</p>
+function renderFilmCard(p, t) {
+  return `<div class="filmcard" data-preset="${p.id}">
+      <div class="strip" style="background:${p.swatch}"></div>
+      <div class="body">
+        <div class="row1"><span class="id">${p.id}</span>${p.v ? `<span class="badge v">${icon("video")}VIDEO</span>` : ""}</div>
+        <h3>${p.title}</h3>
+        <p class="look">${p.look}</p>
+        <p class="use"><b>${t.usedFor}</b> ${p.use}</p>
+        <p class="hint">${p.note}</p>
+      </div>
     </div>`;
 }
 
 export function render(locale) {
   const t = localize(T, locale);
   const presets = localize(PRESETS, locale);
-  const dial = presets.map(p => `<button class="stop${p.v ? " video" : ""}" id="stop-${p.id}" data-preset="${p.id}" aria-label="${p.title}">${p.id === "VID" ? "▶" : p.id}<small>${p.v ? "MOVIE" : t.photoBadge}</small></button>`).join("");
+  const dial = presets.map(p => `<button class="stop${p.v ? " video" : ""}" id="stop-${p.id}" data-preset="${p.id}" aria-label="${p.title}">${p.id === "VID" ? icon("video") : p.id}<small>${p.v ? "MOVIE" : t.photoBadge}</small></button>`).join("");
 
   return `<section id="tab-presets">
-  <div class="card" style="border-left:4px solid var(--amber)">
-    <p style="margin:0">${t.checkOrder}</p>
+  <div class="card" style="border-left:3px solid var(--amber);display:flex;gap:12px;align-items:flex-start">
+    ${icon("alert-triangle", "warn")}<p style="margin:0">${t.checkOrder}</p>
   </div>
 
   <h2>${t.whatToShoot}</h2>
@@ -73,12 +78,12 @@ export function render(locale) {
     <div class="dial" id="dial">${dial}</div>
   </div>
   <div id="presetCards">
-    ${presets.map(p => renderCard(p, t)).join("\n    ")}
+    ${presets.map(p => renderFilmCard(p, t)).join("\n    ")}
     <button class="btn ghost" id="presetBack" style="display:none" onclick="showAllPresets()">${t.showAll}</button>
   </div>
 
   <div class="card">
-    <h3>${t.updateHeading}</h3>
+    <h3>${icon("alert-triangle")}${t.updateHeading}</h3>
     <p>${t.updateP1}</p>
     <p>${t.updateP2}</p>
     <p>${t.updateA}</p>

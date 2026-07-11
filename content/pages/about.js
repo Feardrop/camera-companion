@@ -1,6 +1,7 @@
 import { VERSION } from "../data/app-meta.js";
 import { PAGES } from "../pages.js";
 import { localize, otherLocaleUrl } from "../../build/lib/i18n.js";
+import { icon } from "../../build/lib/partials/icons.js";
 
 const hrefFor = slug => PAGES.find(p => p.slug === slug).file;
 
@@ -38,7 +39,7 @@ export function render(locale) {
   <h2>${t.languageHeading}</h2>
   <div class="card">
     <p style="margin-top:0">${t.languageDesc}</p>
-    <a class="btn ghost" href="${switchHref}" onclick="window.setLocalePreference &amp;&amp; window.setLocalePreference('${locale === "de" ? "en" : "de"}')">🌐 ${switchLabel}</a>
+    <a class="btn ghost" href="${switchHref}" onclick="window.setLocalePreference &amp;&amp; window.setLocalePreference('${locale === "de" ? "en" : "de"}')">${icon("globe")}${switchLabel}</a>
   </div>
 </section>`;
 }

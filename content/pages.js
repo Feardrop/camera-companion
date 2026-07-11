@@ -14,15 +14,17 @@
 // via the Start-page quicknav button and a manifest.webmanifest shortcut) to
 // give the remaining 5 tabs more room; "More" became a short hub linking out
 // to four focused sub-pages instead of one long catch-all.
+// `icon` names a symbol from build/lib/partials/icons.js — never a literal
+// emoji glyph (see CLAUDE.md's "Icons" section).
 export const PAGES = [
-  { file: "index.html",       slug: "start",      icon: "⚑",  label: { de: "Start",      en: "Start" },      title: { de: "Start",               en: "Start" },                 tab: true },
-  { file: "presets.html",     slug: "presets",    icon: "◎",  label: { de: "Presets",    en: "Presets" },    title: { de: "Presets",             en: "Presets" },               tab: true },
-  { file: "manual.html",      slug: "manual",     icon: "📖", label: { de: "Handbuch",   en: "Manual" },     title: { de: "Handbuch",            en: "Manual" },                tab: true },
-  { file: "exercises.html",   slug: "exercises",  icon: "✓",  label: { de: "Übungen",    en: "Exercises" },  title: { de: "Übungen",             en: "Exercises" },             tab: true },
-  { file: "more.html",        slug: "more",       icon: "☰",  label: { de: "Mehr",       en: "More" },       title: { de: "Mehr",                en: "More" },                  tab: true },
-  { file: "sos.html",         slug: "sos",        icon: "✚",  label: { de: "SOS",        en: "SOS" },        title: { de: "SOS — Erste Hilfe",   en: "SOS — Troubleshooting" }, tab: false },
-  { file: "my-setup.html",    slug: "my-setup",   icon: "📝", label: { de: "Belegung",   en: "My Setup" },   title: { de: "Meine Belegung",      en: "My Setup" },              tab: false, parent: "more" },
-  { file: "connection.html",  slug: "connection", icon: "📶", label: { de: "Verbindung", en: "Connection" }, title: { de: "Verbindung & Backup", en: "Connection & Backup" },   tab: false, parent: "more" },
-  { file: "reference.html",   slug: "reference",  icon: "📚", label: { de: "Referenz",   en: "Reference" },  title: { de: "Referenz",            en: "Reference" },             tab: false, parent: "more" },
-  { file: "about.html",       slug: "about",      icon: "ℹ️", label: { de: "Über",       en: "About" },      title: { de: "Über",                en: "About" },                 tab: false, parent: "more" },
+  { file: "index.html",       slug: "start",      icon: "home",         label: { de: "Start",      en: "Start" },      title: { de: "Start",               en: "Start" },                 tab: true },
+  { file: "presets.html",     slug: "presets",    icon: "aperture",     label: { de: "Presets",    en: "Presets" },    title: { de: "Presets",             en: "Presets" },               tab: true },
+  { file: "manual.html",      slug: "manual",     icon: "book",         label: { de: "Handbuch",   en: "Manual" },     title: { de: "Handbuch",            en: "Manual" },                tab: true },
+  { file: "exercises.html",   slug: "exercises",  icon: "check-circle", label: { de: "Übungen",    en: "Exercises" },  title: { de: "Übungen",             en: "Exercises" },             tab: true },
+  { file: "more.html",        slug: "more",       icon: "grid",         label: { de: "Mehr",       en: "More" },       title: { de: "Mehr",                en: "More" },                  tab: true },
+  { file: "sos.html",         slug: "sos",        icon: "cross",        label: { de: "SOS",        en: "SOS" },        title: { de: "SOS — Erste Hilfe",   en: "SOS — Troubleshooting" }, tab: false },
+  { file: "my-setup.html",    slug: "my-setup",   icon: "notebook",     label: { de: "Belegung",   en: "My Setup" },   title: { de: "Meine Belegung",      en: "My Setup" },              tab: false, parent: "more" },
+  { file: "connection.html",  slug: "connection", icon: "wifi",         label: { de: "Verbindung", en: "Connection" }, title: { de: "Verbindung & Backup", en: "Connection & Backup" },   tab: false, parent: "more" },
+  { file: "reference.html",   slug: "reference",  icon: "bookmark",     label: { de: "Referenz",   en: "Reference" },  title: { de: "Referenz",            en: "Reference" },             tab: false, parent: "more" },
+  { file: "about.html",       slug: "about",      icon: "info",         label: { de: "Über",       en: "About" },      title: { de: "Über",                en: "About" },                 tab: false, parent: "more" },
 ];

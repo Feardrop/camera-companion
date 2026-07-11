@@ -5,7 +5,7 @@ function pick(id) {
   document.querySelectorAll(".stop").forEach(s => s.classList.remove("sel"));
   const st = document.getElementById("stop-" + id);
   if (st) st.classList.add("sel");
-  document.querySelectorAll("#presetCards .card").forEach(c => {
+  document.querySelectorAll("#presetCards .filmcard").forEach(c => {
     c.style.display = c.dataset.preset === id ? "" : "none";
   });
   const back = document.getElementById("presetBack");
@@ -13,7 +13,7 @@ function pick(id) {
 }
 function showAllPresets() {
   document.querySelectorAll(".stop").forEach(s => s.classList.remove("sel"));
-  document.querySelectorAll("#presetCards .card").forEach(c => { c.style.display = ""; });
+  document.querySelectorAll("#presetCards .filmcard").forEach(c => { c.style.display = ""; });
   const back = document.getElementById("presetBack");
   if (back) back.style.display = "none";
 }
