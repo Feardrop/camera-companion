@@ -210,7 +210,14 @@ const SEARCH_INDEX = [
   "type": "exercise",
   "title": "7 · RAW-Konvertierung üben",
   "target": "exercises.html#ex-6",
-  "text": "Ein RAW-Bild (RAW+HEIF muss beim Fotografieren aktiv gewesen sein) in der Wiedergabe auswählen. MENU/OK → RAW-KONVERTIERUNG öffnen. Zuerst DATEITYP auf HEIF stellen — immer als erster Schritt! Eine weitere Einstellung ausprobieren, z. B. FILMSIMULATION wechseln oder PUSH/PULL-VERARB. für die Belichtung. Mit Q die Vorschau ansehen, mit MENU/OK speichern. Original und neue Kopie in der Wiedergabe vergleichen — das RAW bleibt unverändert erhalten. Ziel: Du traust dich, ein RAW-Bild direkt in der Kamera zu „entwickeln“ — inklusive dem wichtigen ersten Schritt DATEITYP → HEIF. Alle Einstellungen erklärt: Seite „Referenz“ ."
+  "text": "Ein RAW-Bild (RAW+HEIF muss beim Fotografieren aktiv gewesen sein) in der Wiedergabe auswählen. MENU/OK → RAW-KONVERTIERUNG öffnen — oder schneller: Taste Q drücken (funktioniert direkt, wenn ein RAW-Bild angezeigt wird). Zuerst DATEITYP auf HEIF stellen — immer als erster Schritt! Eine weitere Einstellung ausprobieren, z. B. FILMSIMULATION wechseln oder PUSH/PULL-VERARB. für die Belichtung. Mit Q die Vorschau ansehen, mit MENU/OK speichern. Original und neue Kopie in der Wiedergabe vergleichen — das RAW bleibt unverändert erhalten. Ziel: Du traust dich, ein RAW-Bild direkt in der Kamera zu „entwickeln“ — inklusive dem wichtigen ersten Schritt DATEITYP → HEIF, und weißt: nur Original-RAW-Bilder lassen sich konvertieren, keine bereits erzeugten Kopien. Alle Einstellungen erklärt: Seite „Referenz“ ."
+ },
+ {
+  "id": "ex-7",
+  "type": "exercise",
+  "title": "8 · Bearbeiten &amp; Zuschneiden kombinieren",
+  "target": "exercises.html#ex-7",
+  "text": "Wie in Übung 7 ein RAW-Bild per RAW-Konvertierung bearbeiten (z. B. andere Filmsimulation oder Belichtung) und als Kopie speichern. In der Wiedergabe zur neu erzeugten Kopie navigieren. MENU/OK → AUSSCHNEIDEN öffnen — mit dem hinteren Einstellrad zoomen, mit dem Fokushebel den Ausschnitt verschieben. Zweimal MENU/OK drücken, um den zugeschnittenen Ausschnitt als weitere, eigene Kopie zu speichern. Original-RAW, bearbeitete Kopie und zugeschnittene Kopie in der Wiedergabe vergleichen. Ziel: Du kombinierst Bearbeitung und Bildausschnitt gezielt in zwei Schritten, ganz ohne Computer — und weißt, dass Zuschneiden ein eigener Schritt nach der RAW-Konvertierung ist. Details: Seite „Referenz“ ."
  },
  {
   "id": "tutorial-tut1",
@@ -322,7 +329,14 @@ const SEARCH_INDEX = [
   "type": "menupath",
   "title": "RAW-KONVERT.",
   "target": "reference.html",
-  "text": "RAW-KONVERT. Wiedergabe → MENU → RAW-KONVERTIERUNG — RAW direkt in der Kamera entwickeln (S. 220)"
+  "text": "RAW-KONVERT. Wiedergabe → Taste Q (bei RAW-Bild) oder MENU → RAW-KONVERTIERUNG — RAW direkt in der Kamera entwickeln (S. 220)"
+ },
+ {
+  "id": "menupath-AUSSCHNEIDEN",
+  "type": "menupath",
+  "title": "AUSSCHNEIDEN",
+  "target": "reference.html",
+  "text": "AUSSCHNEIDEN Wiedergabe → MENU → AUSSCHNEIDEN — Bildausschnitt ändern, auch auf bereits erzeugten Kopien (S. 225)"
  },
  {
   "id": "menupath-KARTEN-BACKUP",

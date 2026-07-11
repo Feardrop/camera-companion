@@ -40,7 +40,8 @@
     <tr><td>MOTIVERKENNUNG</td><td>MENU → AF/MF → MOTIVERKENNUNGS-EINST. (Tier, Vogel, …)</td></tr>
     <tr><td>Fn-TASTEN</td><td>DISP/BACK lange drücken — oder MENU → Schraubenschlüssel → TASTEN/RAD-EINSTELLUNG</td></tr>
     <tr><td>JPEG/HEIF</td><td>MENU → IQ → JPEG/HEIF AUSWAHL — Empfehlung: HEIF (bessere Qualität, kleinere Datei)</td></tr>
-    <tr><td>RAW-KONVERT.</td><td>Wiedergabe → MENU → RAW-KONVERTIERUNG — RAW direkt in der Kamera entwickeln (S. 220)</td></tr>
+    <tr><td>RAW-KONVERT.</td><td>Wiedergabe → Taste Q (bei RAW-Bild) oder MENU → RAW-KONVERTIERUNG — RAW direkt in der Kamera entwickeln (S. 220)</td></tr>
+    <tr><td>AUSSCHNEIDEN</td><td>Wiedergabe → MENU → AUSSCHNEIDEN — Bildausschnitt ändern, auch auf bereits erzeugten Kopien (S. 225)</td></tr>
     <tr><td>KARTEN-BACKUP</td><td>MENU → Schraubenschlüssel → DATENSPEICHER-EINSTELLUNG — Fotos auf beide Karten (S. 281)</td></tr>
     <tr><td>GEOTAGGING</td><td>MENU → Netzwerk/USB → GEOTAGGING → AN (XApp gekoppelt)</td></tr>
     <tr><td>WELTZEIT</td><td>MENU → Schraubenschlüssel → BEN.-EINSTELLUNG → WELTZEIT</td></tr>
@@ -62,9 +63,17 @@
 
   <div class="card">
     <p style="margin-top:0"><b>RAW in der Kamera entwickeln</b> — ohne Computer, direkt auf der Reise:</p>
-    <ol class="steplist"><li>Bild in der Wiedergabe anzeigen (RAW-Symbol) → <span class="osd">MENU/OK → RAW-KONVERTIERUNG</span></li><li><b>Zuerst DATEITYP auf HEIF stellen</b> — legt das Ausgabeformat der Kopie fest.</li><li>Weitere Einstellungen nach Bedarf anpassen (Fokushebel: markieren → rechts öffnet Optionen → wählen → MENU/OK bestätigt; Liste aller Einstellungen unten).</li><li>Taste <span class="osd">Q</span> zeigt eine Vorschau der Kopie.</li><li><span class="osd">MENU/OK</span> speichert die Kopie als neue Datei — das Original-RAW bleibt unverändert erhalten.</li></ol>
+    <ol class="steplist"><li>Bild in der Wiedergabe anzeigen (RAW-Symbol) → Taste <span class="osd">Q</span> drücken (schnellster Weg) oder <span class="osd">MENU/OK → RAW-KONVERTIERUNG</span></li><li><b>Zuerst DATEITYP auf HEIF stellen</b> — legt das Ausgabeformat der Kopie fest.</li><li>Weitere Einstellungen nach Bedarf anpassen (Fokushebel: markieren → rechts öffnet Optionen → wählen → MENU/OK bestätigt; Liste aller Einstellungen unten).</li><li>Taste <span class="osd">Q</span> zeigt eine Vorschau der Kopie.</li><li><span class="osd">MENU/OK</span> speichert die Kopie als neue Datei — das Original-RAW bleibt unverändert erhalten.</li></ol>
     <p class="hint"><b>Wichtig: Schritt 2 immer zuerst.</b> Wird DATEITYP nicht umgestellt, entsteht aus Versehen ein altes JPEG statt eines hochwertigen HEIF — unabhängig davon, was du sonst noch änderst.</p>
     <p class="hint">So wird z.&nbsp;B. aus einem C1-Schwarzweiß-RAW nachträglich doch ein Farbbild: FILMSIMULATION in Schritt 3 auf PROVIA o.&nbsp;ä. wechseln.</p>
+    <p class="hint">Nur Original-RAW-Bilder lassen sich konvertieren. Eine bereits erzeugte HEIF- oder JPEG-Kopie ist selbst kein RAW mehr und taucht in der RAW-Konvertierung nicht als Ausgangsbild auf.</p>
+  </div>
+
+  <div class="card">
+    <p style="margin-top:0"><b>Bildausschnitt ändern (Zuschneiden)</b></p>
+    <p>Die RAW-Konvertierung selbst hat keine Zuschneide-Option. Für den Bildausschnitt gibt es im Wiedergabemenü die eigene Funktion <span class="osd">AUSSCHNEIDEN</span> — sie funktioniert auf RAW-Bildern genauso wie auf bereits erzeugten HEIF-/JPEG-Kopien.</p>
+    <p>Um ein Bild zu bekommen, das sowohl bearbeitet als auch zugeschnitten ist:</p>
+    <ol class="steplist"><li>Gewünschte Bearbeitung per RAW-Konvertierung erzeugen (siehe oben).</li><li>Zur neu erzeugten Kopie in der Wiedergabe navigieren.</li><li>Dort die <span class="osd">AUSSCHNEIDEN</span>-Funktion anwenden.</li></ol>
   </div>
 
   <details>
@@ -101,6 +110,7 @@
   <div class="chips" style="margin:10px 0 20px">
     <button class="chip" onclick="openPage(220)"><svg class="icon"><use href="#i-book"/></svg>Handbuch: RAW-Konvertierung · S. 220</button>
     <button class="chip" onclick="openPage(129)"><svg class="icon"><use href="#i-book"/></svg>Handbuch: JPEG/HEIF · S. 129</button>
+    <button class="chip" onclick="openPage(225)"><svg class="icon"><use href="#i-book"/></svg>Handbuch: Ausschneiden · S. 225</button>
     <a class="chip" href="exercises.html"><svg class="icon"><use href="#i-check-circle"/></svg>Übung: RAW-Konvertierung üben</a>
     <a class="chip" href="sos.html"><svg class="icon"><use href="#i-cross"/></svg>SOS: Bilder plötzlich schwarzweiß</a>
   </div>
