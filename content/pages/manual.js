@@ -4,19 +4,15 @@ import { localize } from "../../build/lib/i18n.js";
 export const scripts = ["assets/data/strings.js", "assets/data/manual.js", "assets/js/ui.js", "assets/js/search.js", "assets/js/manual.js"];
 
 const T = {
-  heading: { de: "Offizielles Handbuch (deutsch)", en: "Official manual" },
+  heading: { de: "Offizielles Handbuch", en: "Official manual" },
   intro: {
-    de: "Der komplette <b>Text</b> aller 404 Seiten ist in dieser App eingebaut und <b>offline durchsuchbar</b> — die Suche funktioniert immer, auch ohne Netz. Beim Öffnen einer Seite zeigt die App zusätzlich die <b>echte PDF-Seite mit Abbildungen</b> an (braucht dafür einmal Netzverbindung); ohne Netz springt sie automatisch auf die eingebaute Text-Ansicht zurück.",
-    en: "The complete German <b>text</b> of all 404 pages is built into this app and <b>searchable offline</b> — search always works, even with no network. Opening a page also shows the <b>real PDF page with illustrations</b> (needs a network connection for that); with no network it automatically falls back to the built-in text view. The English offline text isn't extracted yet — see the note below.",
+    de: "Der komplette <b>Text</b> aller 404 Seiten ist in dieser App eingebaut und <b>offline durchsuchbar</b> — die Suche funktioniert immer, auch ohne Netz. Beim Öffnen einer Seite zeigt die App zusätzlich die <b>echte PDF-Seite mit Abbildungen</b> an (die PDF ist in der App enthalten, kein Netz nötig); ist die PDF ausnahmsweise noch nicht zwischengespeichert, springt die App automatisch auf die eingebaute Text-Ansicht zurück.",
+    en: "The complete <b>text</b> of all 404 pages is built into this app and <b>searchable offline</b> — search always works, even with no network. Opening a page also shows the <b>real PDF page with illustrations</b> (the PDF ships with the app, no network needed); if it hasn't been cached locally yet for some reason, the app automatically falls back to the built-in text view.",
   },
-  dlPdf: { de: "📥 Handbuch-PDF herunterladen (deutsch, 7 MB)", en: "📥 Download the manual PDF" },
-  dlWeb: { de: "🌐 Online-Handbuch (Web)", en: "🌐 Online manual (web)" },
+  dlPdf: { de: "📥 Handbuch-PDF herunterladen (7 MB)", en: "📥 Download the manual PDF (7 MB)" },
+  dlWeb: { de: "🌐 Online-Handbuch (Web, Fujifilm)", en: "🌐 Online manual (web, Fujifilm)" },
   searchPlaceholder: { de: "Im Handbuch suchen … z. B. Selbstauslöser", en: "Search the manual … e.g. self-timer" },
   chaptersHeading: { de: "Direkt zu den Kapiteln", en: "Jump straight to a chapter" },
-  englishNote: {
-    de: "",
-    en: "Chapter shortcuts below use page numbers from the German PDF and aren't available here yet — the English PDF's real page numbers haven't been confirmed. Full-text search above covers the German manual for now; use the PDF/online links to browse the English manual directly.",
-  },
   prevPage: { de: "Vorherige Seite", en: "Previous page" },
   nextPage: { de: "Nächste Seite", en: "Next page" },
   close: { de: "Schließen", en: "Close" },
@@ -25,45 +21,38 @@ const T = {
   fallbackLink: { de: "PDF stattdessen extern öffnen", en: "Open the PDF externally instead" },
 };
 
-const CHAPTERS_DE = [
-  [358, "🚑 Fehlerbehebung · 358"],
-  [365, "⚠️ Warnmeldungen · 365"],
-  [220, "🎞️ RAW-Konvertierung · 220"],
-  [129, "🖼️ JPEG/HEIF · 129"],
-  [1, "Kap. 1 Grundlagen · 1"],
-  [37, "Kap. 2 Erste Schritte · 37"],
-  [55, "Kap. 3 Foto-Basics · 55"],
-  [63, "Kap. 4 Video-Basics · 63"],
-  [71, "Kap. 5 Fotografieren · 71"],
-  [125, "Kap. 6 Aufnahmemenüs · 125"],
-  [142, "Custom Settings · 142"],
-  [157, "Motiverkennung · 157"],
-  [213, "Kap. 7 Wiedergabe · 213"],
-  [243, "Kap. 9 Setup · 243"],
-  [268, "Tasten/Räder · 268"],
-  [285, "Kap. 10 Shortcuts · 285"],
+// Both language editions of the manual share identical pagination (404
+// pages, verified page-by-page against the official PDFs — see CLAUDE.md),
+// so one page-number list covers both locales; only the chip labels differ.
+const CHAPTERS = [
+  [358, { de: "🚑 Fehlerbehebung · 358", en: "🚑 Troubleshooting · 358" }],
+  [365, { de: "⚠️ Warnmeldungen · 365", en: "⚠️ Warning messages · 365" }],
+  [220, { de: "🎞️ RAW-Konvertierung · 220", en: "🎞️ RAW conversion · 220" }],
+  [129, { de: "🖼️ JPEG/HEIF · 129", en: "🖼️ JPEG/HEIF · 129" }],
+  [1, { de: "Kap. 1 Grundlagen · 1", en: "Ch. 1 Before You Begin · 1" }],
+  [37, { de: "Kap. 2 Erste Schritte · 37", en: "Ch. 2 First Steps · 37" }],
+  [55, { de: "Kap. 3 Foto-Basics · 55", en: "Ch. 3 Photography Basics · 55" }],
+  [63, { de: "Kap. 4 Video-Basics · 63", en: "Ch. 4 Movie Basics · 63" }],
+  [71, { de: "Kap. 5 Fotografieren · 71", en: "Ch. 5 Taking Photographs · 71" }],
+  [125, { de: "Kap. 6 Aufnahmemenüs · 125", en: "Ch. 6 The Shooting Menus · 125" }],
+  [142, { de: "Custom Settings · 142", en: "Custom Settings · 142" }],
+  [157, { de: "Motiverkennung · 157", en: "Subject Detection · 157" }],
+  [213, { de: "Kap. 7 Wiedergabe · 213", en: "Ch. 7 Playback · 213" }],
+  [243, { de: "Kap. 9 Setup · 243", en: "Ch. 9 Setup · 243" }],
+  [268, { de: "Tasten/Räder · 268", en: "Buttons/Dials · 268" }],
+  [285, { de: "Kap. 10 Shortcuts · 285", en: "Ch. 10 Shortcuts · 285" }],
 ];
 
 export function render(locale) {
   const t = localize(T, locale);
-  const manualPdfUrl = MANUAL_PDF_URL[locale];
-
-  // Chapter shortcuts carry printed-PDF page numbers from the German
-  // manual; the English PDF's real pagination hasn't been confirmed yet
-  // (see CLAUDE.md), so they're German-only for now — the English page
-  // shows an explanation instead (t.englishNote).
-  const chaptersBlock = locale === "de"
-    ? `<div class="chips">
-    ${CHAPTERS_DE.map(([pdf, label]) => `<button class="chip" onclick="openPage(${pdf})">${label}</button>`).join("\n    ")}
-  </div>`
-    : `<p class="mut">${t.englishNote}</p>`;
+  const chapters = localize(CHAPTERS, locale);
 
   return `<section id="tab-manual">
   <h2>${t.heading}</h2>
   <div class="card">
     <p style="margin-top:0">${t.intro}</p>
     <div class="dlbtns">
-      <a class="btn" href="${manualPdfUrl}" target="_blank" rel="noopener">${t.dlPdf}</a>
+      <a class="btn" href="${MANUAL_PDF_URL}" target="_blank" rel="noopener">${t.dlPdf}</a>
       <a class="btn ghost" href="https://fujifilm-dsc.com/en/manual/x-h2s/" target="_blank" rel="noopener">${t.dlWeb}</a>
     </div>
   </div>
@@ -74,7 +63,9 @@ export function render(locale) {
   <div id="mres"></div>
 
   <h2>${t.chaptersHeading}</h2>
-  ${chaptersBlock}
+  <div class="chips">
+    ${chapters.map(([pdf, label]) => `<button class="chip" onclick="openPage(${pdf})">${label}</button>`).join("\n    ")}
+  </div>
 
   <div id="pageview" style="display:none" class="pageview">
     <div class="pagenav">
@@ -89,7 +80,7 @@ export function render(locale) {
       <div id="pdfTextLayer" class="pdf-text-layer"></div>
     </div>
     <div class="pagetext" id="pgtext" style="display:none"></div>
-    <p class="mut" style="margin:10px 0 0" id="pdffallbacknote">${t.fallbackNote} <a id="pdfdeep" href="${manualPdfUrl}" target="_blank" rel="noopener">${t.fallbackLink}</a></p>
+    <p class="mut" style="margin:10px 0 0" id="pdffallbacknote">${t.fallbackNote} <a id="pdfdeep" href="${MANUAL_PDF_URL}" target="_blank" rel="noopener">${t.fallbackLink}</a></p>
   </div>
 </section>`;
 }

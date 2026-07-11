@@ -72,9 +72,8 @@ future page rename is still a one-line change in `content/pages.js`, not a per-l
   manual) exists. `content/pages/about.js` has a manual "English / Deutsch" switcher link
   (`window.setLocalePreference(lang)`, also in `ui.js`) so the auto-redirect is never a trap.
 - **Not yet bilingual**: `src/X-H2S_Einfuehrung_und_Lernpfad.pdf` (the tutorial's companion PDF) stays
-  German-only in both trees — translating it wasn't in scope for the file-rename/i18n pass; and the manual's
-  full offline text is German-only (see "The manual" below) — the English tree ships a short explanatory stub
-  instead of the real 404-page extraction.
+  German-only in both trees — translating it wasn't in scope for the file-rename/i18n pass. The manual itself
+  (text and PDF) is now fully bilingual — see "The manual" below.
 
 ## Architecture
 
@@ -122,26 +121,29 @@ half of this repo's hand-written source, alongside `content/`:
   live in `:root`. No CSS build/preprocessor — edit the file directly.
 - `src/data/manual-de.js` / `src/data/manual-en.js` — the manual text as a JS array `MANUAL` plus
   `const OFFSET`, one file per locale; `build.js` copies the locale-matching one to each tree's
-  `assets/data/manual.js` (a locale-invariant destination path). `manual-de.js` is the full German text (404
-  pages, ~450 KB), hand-edited via the pdftotext workflow (see "Updating the manual text" below).
-  `manual-en.js` is currently a short placeholder — see "The manual" below.
+  `assets/data/manual.js` (a locale-invariant destination path). Both are the full text (404 pages each,
+  ~410–450 KB), hand-edited via the pdftotext workflow (see "Updating the manual text" below) against the
+  vendored PDFs (`src/manual-de.pdf` / `src/manual-en.pdf` — see "The manual" below).
 - `src/icons/` — App icons (192/512/maskable/apple-touch), identical for both locales.
 
-### The manual (English gap)
+### The manual
 
-The manual's full offline-searchable text only exists in German (`src/data/manual-de.js`). Extracting the
-English equivalent requires the actual official English PDF (`pdftotext`, same workflow as German — see
-"Updating the manual text" below) — nobody has run that yet, so `src/data/manual-en.js` is a short stub
-explaining the gap rather than the real 404-page array. This does **not** block the English manual page from
-being useful: `manual.html`'s in-app PDF viewer still fetches and renders the real English PDF (network
-required, exactly like the German version already works — see "In-app PDF viewer" below), it's specifically
-the zero-network fallback text view that's thin until someone does this extraction. `content/pages/manual.js`
-also omits the numbered chapter-shortcut chips on the English tree, since those page numbers come from the
-German PDF's pagination and the English PDF's real page numbers haven't been confirmed — don't add them back
-without verifying against the actual English PDF first. `content/data/facts.js`'s `MANUAL_PDF_URL.en` is a
-best-guess URL (swapping `de`→`en` in Fujifilm's existing URL pattern) that has not been verified from this
-environment either; if it's wrong, fix it there (single source of truth, also consumed by
-`content/pages/reference.js`).
+Both the manual **text** (`src/data/manual-de.js` / `manual-en.js`, extracted via `pdftotext` — see "Updating
+the manual text" below) and the manual **PDF** (`src/manual-de.pdf` / `src/manual-en.pdf`) are fully bilingual
+and vendored directly in this repo — the app no longer depends on Fujifilm's site at all for the manual
+feature (see "In-app PDF viewer" below for why that used to be different, and why it changed). Both PDF
+editions have **404 pages with byte-for-byte identical pagination** (verified page-by-page against every
+chapter start, every cross-referenced setting page, and the front-matter offset — `OFFSET = 24` in both
+files): a printed-page citation that's correct in one locale is correct in the other, so
+`content/pages/manual.js`'s chapter-shortcut chips and the specific page-number chips in
+`content/pages/reference.js`/`connection.js` use one shared page-number list for both locales (only the
+labels are `{de,en}`). If you add a new page citation, you don't need to re-verify it per locale — but if
+Fujifilm ever ships a revised PDF with different pagination in only one language, this assumption would need
+re-checking.
+
+`content/data/facts.js`'s `MANUAL_PDF_URL` is a single locale-invariant relative path (`"manual.pdf"`) —
+`build.js` copies whichever locale's source PDF into that same destination name per tree, so page modules
+and `src/js/manual.js` never need to branch on locale to link to it.
 
 ### Search
 
@@ -175,17 +177,20 @@ PDF.js (Apache-2.0; see its own `README.md` for the exact version and how to upd
 dependency, consistent with this repo having none; update by replacing those two files directly in `src/`
 (the build copies them into each tree's `assets/js/vendor/pdfjs/` like everything else in `src/`).
 
-The manual PDF itself is **not** vendored — it stays fetched from Fujifilm's own site (`content/data/facts.js`'s
-`MANUAL_PDF_URL`, one entry per locale) since it's a third-party copyrighted document, not something to
-redistribute in this repo. That means the in-app PDF view needs network access on first load per session; if
-it fails for any reason (offline, first visit with no connection, the remote host unreachable),
-`renderPdfPage()` calls `onFallback()` and `manual.js` falls back to the built-in `MANUAL[]` text view
-automatically — the text search and text view must keep working with zero network access, full stop,
-regardless of what happens to the PDF feature (on the English tree that fallback is currently just the
-explanatory stub — see "The manual" above). Once a device has loaded the PDF/worker JS once, the service
-worker's normal same-origin stale-while-revalidate caching (`sw.js`) picks them up like any other asset —
-they're deliberately **not** in the mandatory install-time precache list, only cached opportunistically after
-first real use.
+The manual PDF **is vendored** directly in this repo (`src/manual-de.pdf` / `src/manual-en.pdf`, copied by
+`build.js` to each tree's `manual.pdf` — see "The manual" above) — an earlier version of this app fetched it
+from Fujifilm's own site instead, specifically to avoid redistributing a third-party copyrighted document, but
+the repo owner made the deliberate call to vendor it locally instead (own the copy, don't depend on
+Fujifilm's hosting or CORS/availability). `PDF_URL` in `src/js/manual.js` is same-origin now, so
+`renderPdfPage()`'s `onFallback()` path (falling back to the built-in `MANUAL[]` text view) is a much rarer
+edge case than it used to be — it still exists and is still exercised (e.g. if the service worker hasn't
+cached `manual.pdf` yet and the device is offline), so the text search and text view must still keep working
+with zero network access, full stop, regardless of the PDF feature. `manual.pdf` is deliberately **not** in
+the mandatory install-time precache list (same treatment as the vendored PDF.js library files) — at ~7 MB per
+locale it would otherwise force every visitor to download it on install whether or not they ever open the
+manual page; instead the service worker's normal same-origin stale-while-revalidate caching (`sw.js`) picks
+it up opportunistically the first time someone actually opens a manual page, after which it's cached for
+good.
 
 `?page=N&q=term` on `manual.html` (used by both the inline search and global-search manual results, via
 `search.js`'s manual target) drives which PDF page renders and which text gets highlighted + scrolled into
@@ -231,8 +236,8 @@ of an opaque hash-only history). One version number covers both locale trees.
   (`{de,en}` pairs run through `localize()` — see Internationalization above).
 - **Manual deep links**: `manual.html?page=220` opens *printed* manual page 220 (in whichever locale tree
   you're already on). From any other page, call `openPage(220)` (defined in `ui.js`, resolved on
-  `manual.html`). Printed page = PDF page − `OFFSET` (currently 24 for German; unset/placeholder for English
-  until its offline text is real — see "The manual" above), defined per-locale in `manual-de.js`/`manual-en.js`.
+  `manual.html`). Printed page = PDF page − `OFFSET` (currently 24, identical in both locales — see "The
+  manual" above), defined per-locale in `manual-de.js`/`manual-en.js`.
 - **Cross-page links**: don't hand-type another page's filename as a string. Import `PAGES` from
   `content/pages.js` and look up the file by slug (see `hrefFor` in `content/pages/start.js` or `more.js`),
   or use the `RAW_KONV_LINK` pattern in `content/data/facts.js` for a specific in-page anchor referenced from
@@ -254,8 +259,9 @@ of an opaque hash-only history). One version number covers both locale trees.
   `version` itself).
 - **Content is bilingual** (English default, German), aimed at a non-technical reader; every translatable
   string is a `{de,en}` pair — keep new copy in both languages, and keep IDs like `xh2s_` and code comments
-  in English unless told otherwise. The manual text is the one deliberate exception (German-only for now, see
-  "The manual" above).
+  in English unless told otherwise. `src/X-H2S_Einfuehrung_und_Lernpfad.pdf` is the one deliberate exception
+  (German-only in both trees, see "Things that look like app files but aren't" below) — the manual itself is
+  fully bilingual (see "The manual" above).
 
 ### Things that look like app files but aren't
 
@@ -270,17 +276,23 @@ of an opaque hash-only history). One version number covers both locale trees.
 
 ## Updating the manual text
 
-The German manual (`src/data/manual-de.js`) was generated from the official German PDF, not hand-authored:
+Both `src/data/manual-de.js` and `src/data/manual-en.js` are generated from the matching vendored PDF
+(`src/manual-de.pdf` / `src/manual-en.pdf` — see "The manual" above), not hand-authored:
 
 ```
-pdftotext -layout x-h2s_manual_de_s_f.pdf -
+pdftotext -layout src/manual-de.pdf -   # or src/manual-en.pdf
 ```
 
-then split per page on the form-feed character (`\f`) and written as `const MANUAL = [...]; const OFFSET = 24;`.
+Each page comes out separated by a form-feed character (`\f`). Normalize each page's text before storing it —
+for every line, collapse internal whitespace runs to a single space and drop lines that end up empty (i.e.
+`line.split()` + `" ".join(...)` per line in Python, or the equivalent), then join the surviving lines with
+`\n`; this is what keeps `manual-de.js`/`manual-en.js`'s pdftotext-with-`-layout`-preserved table/column
+padding from bloating the stored text or throwing off search snippets. Write the result as
+`const MANUAL = [...]; const OFFSET = 24;` (`OFFSET` is confirmed identical — 24 — for both current PDF
+editions; re-verify it if either PDF is ever replaced with a revised edition, by finding the page that reads
+just "1" under the chapter-1 divider and computing `OFFSET = <that page's index> + 1 - 1`).
 
-The **English manual** (`src/data/manual-en.js`) needs the same treatment against the official English PDF
-(`content/data/facts.js`'s `MANUAL_PDF_URL.en` — verify this URL first, see "The manual" above) but hasn't
-been done yet; it currently ships as a short explanatory stub. Whoever does this should also determine the
-real `OFFSET` for the English PDF (printed page = PDF page − OFFSET) and update
-`content/pages/manual.js`'s German-only chapter-shortcut chips to include English page numbers once they're
-confirmed.
+If Fujifilm ever ships a revised PDF (new firmware, corrections, etc.), replace the matching `src/manual-*.pdf`
+and re-run this extraction — and re-verify pagination hasn't drifted between locales before trusting the
+shared `CHAPTERS` page-number list in `content/pages/manual.js` or the page-number chips in
+`content/pages/reference.js`/`connection.js`.

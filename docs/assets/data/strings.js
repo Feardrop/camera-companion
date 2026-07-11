@@ -26,7 +26,7 @@ const STRINGS = {
  "saveUnavailable": "Saving isn't possible here — please open this in a browser",
  "exercisesCompleted": "exercises completed",
  "langSwitchTo": "Deutsch",
- "manualPdfUrl": "https://fujifilm-dsc.com/en-int/manual/x-h2s/x-h2s_manual_en_s_f.pdf"
+ "manualPdfUrl": "manual.pdf"
 };
 function t(key, vars) {
   let s = STRINGS[key] || key;
