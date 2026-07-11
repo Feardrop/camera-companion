@@ -40,7 +40,8 @@
     <tr><td>SUBJECT DETECTION</td><td>MENU → AF/MF → SUBJECT DETECTION SETTING (animal, bird, …)</td></tr>
     <tr><td>Fn BUTTONS</td><td>Long-press DISP/BACK — or MENU → wrench icon → BUTTON/DIAL SETTING</td></tr>
     <tr><td>JPEG/HEIF</td><td>MENU → IQ → JPEG/HEIF SETTING — recommendation: HEIF (better quality, smaller file)</td></tr>
-    <tr><td>RAW CONVERSION</td><td>Playback → MENU → RAW CONVERSION — develop RAW files right in the camera (p. 220)</td></tr>
+    <tr><td>RAW CONVERSION</td><td>Playback → Q button (with a RAW image shown) or MENU → RAW CONVERSION — develop RAW files right in the camera (p. 220)</td></tr>
+    <tr><td>CROP</td><td>Playback → MENU → CROP — reframe a shot, also works on copies you've already created (p. 225)</td></tr>
     <tr><td>CARD BACKUP</td><td>MENU → wrench icon → DATA STORAGE SETTING — photos written to both cards (p. 281)</td></tr>
     <tr><td>GEOTAGGING</td><td>MENU → Network/USB → GEOTAGGING → ON (XApp paired)</td></tr>
     <tr><td>TIME DIFFERENCE</td><td>MENU → wrench icon → USER SETTING → TIME DIFFERENCE</td></tr>
@@ -62,9 +63,17 @@
 
   <div class="card">
     <p style="margin-top:0"><b>Developing RAW in the camera</b> — no computer needed, right on the trip:</p>
-    <ol class="steplist"><li>Show the image in playback (RAW icon) → <span class="osd">MENU/OK → RAW CONVERSION</span></li><li><b>Set FILE FORMAT to HEIF first</b> — this decides the copy's output format.</li><li>Adjust any other settings you need (focus lever: highlight → right opens options → choose → MENU/OK confirms; full list of settings below).</li><li>The <span class="osd">Q</span> button shows a preview of the copy.</li><li><span class="osd">MENU/OK</span> saves the copy as a new file — the original RAW stays unchanged.</li></ol>
+    <ol class="steplist"><li>Show the image in playback (RAW icon) → press <span class="osd">Q</span> (the quickest way) or <span class="osd">MENU/OK → RAW CONVERSION</span></li><li><b>Set FILE FORMAT to HEIF first</b> — this decides the copy's output format.</li><li>Adjust any other settings you need (focus lever: highlight → right opens options → choose → MENU/OK confirms; full list of settings below).</li><li>The <span class="osd">Q</span> button shows a preview of the copy.</li><li><span class="osd">MENU/OK</span> saves the copy as a new file — the original RAW stays unchanged.</li></ol>
     <p class="hint"><b>Important: always do step 2 first.</b> If FILE FORMAT isn't changed, you accidentally get an old-style JPEG instead of a high-quality HEIF — regardless of what else you change.</p>
     <p class="hint">This is also how a C1 black &amp; white RAW can become a color image after the fact: switch FILM SIMULATION to PROVIA or similar in step 3.</p>
+    <p class="hint">Only original RAW files can be converted. A HEIF or JPEG copy you already created isn't a RAW file itself, so it won't show up in RAW conversion as a source image.</p>
+  </div>
+
+  <div class="card">
+    <p style="margin-top:0"><b>Reframing a shot (cropping)</b></p>
+    <p>RAW conversion itself has no crop option. For reframing, the playback menu has its own <span class="osd">CROP</span> function — it works on RAW files just as well as on HEIF/JPEG copies you've already created.</p>
+    <p>To end up with a shot that's both edited and cropped:</p>
+    <ol class="steplist"><li>Create the desired edit via RAW conversion (see above).</li><li>Navigate to the newly created copy in playback.</li><li>Apply the <span class="osd">CROP</span> function to that copy.</li></ol>
   </div>
 
   <details>
@@ -101,6 +110,7 @@
   <div class="chips" style="margin:10px 0 20px">
     <button class="chip" onclick="openPage(220)"><svg class="icon"><use href="#i-book"/></svg>Manual: RAW conversion · p. 220</button>
     <button class="chip" onclick="openPage(129)"><svg class="icon"><use href="#i-book"/></svg>Manual: JPEG/HEIF · p. 129</button>
+    <button class="chip" onclick="openPage(225)"><svg class="icon"><use href="#i-book"/></svg>Manual: crop · p. 225</button>
     <a class="chip" href="exercises.html"><svg class="icon"><use href="#i-check-circle"/></svg>Exercise: practice RAW conversion</a>
     <a class="chip" href="sos.html"><svg class="icon"><use href="#i-cross"/></svg>SOS: shots suddenly black &amp; white</a>
   </div>

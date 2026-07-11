@@ -210,7 +210,14 @@ const SEARCH_INDEX = [
   "type": "exercise",
   "title": "7 · Practice RAW conversion",
   "target": "exercises.html#ex-6",
-  "text": "Select a RAW image in playback (RAW+HEIF must have been active while shooting). Open MENU/OK → RAW CONVERSION. Set FILE FORMAT to HEIF first — always the first step! Try one more setting, e.g. switch FILM SIMULATION or use PUSH/PULL PROCESSING for exposure. Check the preview with Q, save with MENU/OK. Compare the original and the new copy in playback — the RAW file stays unchanged. Goal: you're comfortable “developing” a RAW file right in the camera — including the important first step, FILE FORMAT → HEIF. Every setting explained: “Reference” page ."
+  "text": "Select a RAW image in playback (RAW+HEIF must have been active while shooting). Open MENU/OK → RAW CONVERSION — or faster: press the Q button (works directly whenever a RAW image is shown). Set FILE FORMAT to HEIF first — always the first step! Try one more setting, e.g. switch FILM SIMULATION or use PUSH/PULL PROCESSING for exposure. Check the preview with Q, save with MENU/OK. Compare the original and the new copy in playback — the RAW file stays unchanged. Goal: you're comfortable “developing” a RAW file right in the camera — including the important first step, FILE FORMAT → HEIF — and you know that only original RAW files can be converted, not copies you've already created. Every setting explained: “Reference” page ."
+ },
+ {
+  "id": "ex-7",
+  "type": "exercise",
+  "title": "8 · Combine editing &amp; cropping",
+  "target": "exercises.html#ex-7",
+  "text": "Like in exercise 7, edit a RAW image via RAW conversion (e.g. a different film simulation or exposure) and save it as a copy. Navigate to the newly created copy in playback. Open MENU/OK → CROP — zoom with the rear command dial, nudge the framing with the focus lever. Press MENU/OK twice to save the cropped frame as another, separate copy. Compare the original RAW, the edited copy, and the cropped copy in playback. Goal: you can deliberately combine editing and reframing in two steps, no computer needed — and know that cropping is its own step after RAW conversion. Details: “Reference” page ."
  },
  {
   "id": "tutorial-tut1",
@@ -322,7 +329,14 @@ const SEARCH_INDEX = [
   "type": "menupath",
   "title": "RAW CONVERSION",
   "target": "reference.html",
-  "text": "RAW CONVERSION Playback → MENU → RAW CONVERSION — develop RAW files right in the camera (p. 220)"
+  "text": "RAW CONVERSION Playback → Q button (with a RAW image shown) or MENU → RAW CONVERSION — develop RAW files right in the camera (p. 220)"
+ },
+ {
+  "id": "menupath-CROP",
+  "type": "menupath",
+  "title": "CROP",
+  "target": "reference.html",
+  "text": "CROP Playback → MENU → CROP — reframe a shot, also works on copies you've already created (p. 225)"
  },
  {
   "id": "menupath-CARD BACKUP",

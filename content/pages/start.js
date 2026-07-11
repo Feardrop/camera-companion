@@ -39,7 +39,7 @@ const T = {
   step4t: { de: "XApp koppeln + Backup", en: "Pair the XApp + back up" },
   step4d: { de: "Einstellungs-Backup als Sicherheitsnetz, Bildübertragung, Geo-Tagging.", en: "A settings backup as a safety net, image transfer, geo-tagging." },
   step5t: { de: "Üben — vor und auf der Reise", en: "Practice — before and during the trip" },
-  step5d: { de: "7 abhakbare Übungen führen dich zum Enthusiasten-Level.", en: "7 checkable exercises take you to enthusiast level." },
+  step5d: { de: "8 abhakbare Übungen führen dich zum Enthusiasten-Level.", en: "8 checkable exercises take you to enthusiast level." },
   step6t: { de: "Unterwegs bei Problemen", en: "If something goes wrong on the road" },
   step6d: { de: "SOS löst die 15 häufigsten Situationen; für alles andere: Handbuch-Suche.", en: "SOS covers the 15 most common situations; for anything else: search the manual." },
   autoUpdateHeading: { de: "Auto-Update der Presets: AN oder AUS?", en: "Preset Auto Update: on or off?" },

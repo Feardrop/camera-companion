@@ -41,8 +41,8 @@ const T = {
   },
   developHeading: { de: "RAW in der Kamera entwickeln", en: "Developing RAW in the camera" },
   developIntro: { de: "— ohne Computer, direkt auf der Reise:", en: "— no computer needed, right on the trip:" },
-  step1: { de: `Bild in der Wiedergabe anzeigen (RAW-Symbol) → <span class="osd">MENU/OK → RAW-KONVERTIERUNG</span>`,
-           en: `Show the image in playback (RAW icon) → <span class="osd">MENU/OK → RAW CONVERSION</span>` },
+  step1: { de: `Bild in der Wiedergabe anzeigen (RAW-Symbol) → Taste <span class="osd">Q</span> drücken (schnellster Weg) oder <span class="osd">MENU/OK → RAW-KONVERTIERUNG</span>`,
+           en: `Show the image in playback (RAW icon) → press <span class="osd">Q</span> (the quickest way) or <span class="osd">MENU/OK → RAW CONVERSION</span>` },
   step2: { de: `<b>Zuerst DATEITYP auf HEIF stellen</b> — legt das Ausgabeformat der Kopie fest.`,
            en: `<b>Set FILE FORMAT to HEIF first</b> — this decides the copy's output format.` },
   step3: { de: `Weitere Einstellungen nach Bedarf anpassen (Fokushebel: markieren → rechts öffnet Optionen → wählen → MENU/OK bestätigt; Liste aller Einstellungen unten).`,
@@ -54,11 +54,21 @@ const T = {
                en: "<b>Important: always do step 2 first.</b> If FILE FORMAT isn't changed, you accidentally get an old-style JPEG instead of a high-quality HEIF — regardless of what else you change." },
   bwHint: { de: "So wird z.&nbsp;B. aus einem C1-Schwarzweiß-RAW nachträglich doch ein Farbbild: FILMSIMULATION in Schritt 3 auf PROVIA o.&nbsp;ä. wechseln.",
             en: "This is also how a C1 black &amp; white RAW can become a color image after the fact: switch FILM SIMULATION to PROVIA or similar in step 3." },
+  rawOnlyHint: { de: "Nur Original-RAW-Bilder lassen sich konvertieren. Eine bereits erzeugte HEIF- oder JPEG-Kopie ist selbst kein RAW mehr und taucht in der RAW-Konvertierung nicht als Ausgangsbild auf.",
+                 en: "Only original RAW files can be converted. A HEIF or JPEG copy you already created isn't a RAW file itself, so it won't show up in RAW conversion as a source image." },
   allSettingsSummary: { de: "Alle RAW-Konvertierungs-Einstellungen erklärt", en: "Every RAW-conversion setting explained" },
   notAllAvailable: { de: "Nicht jede Einstellung steht immer zur Verfügung — abhängig davon, wie das Bild aufgenommen wurde.",
                       en: "Not every setting is always available — it depends on how the image was shot." },
+  reframeHeading: { de: "Bildausschnitt ändern (Zuschneiden)", en: "Reframing a shot (cropping)" },
+  reframeIntro: { de: `Die RAW-Konvertierung selbst hat keine Zuschneide-Option. Für den Bildausschnitt gibt es im Wiedergabemenü die eigene Funktion <span class="osd">AUSSCHNEIDEN</span> — sie funktioniert auf RAW-Bildern genauso wie auf bereits erzeugten HEIF-/JPEG-Kopien.`,
+                en: `RAW conversion itself has no crop option. For reframing, the playback menu has its own <span class="osd">CROP</span> function — it works on RAW files just as well as on HEIF/JPEG copies you've already created.` },
+  combineIntro: { de: "Um ein Bild zu bekommen, das sowohl bearbeitet als auch zugeschnitten ist:", en: "To end up with a shot that's both edited and cropped:" },
+  combineStep1: { de: "Gewünschte Bearbeitung per RAW-Konvertierung erzeugen (siehe oben).", en: "Create the desired edit via RAW conversion (see above)." },
+  combineStep2: { de: "Zur neu erzeugten Kopie in der Wiedergabe navigieren.", en: "Navigate to the newly created copy in playback." },
+  combineStep3: { de: `Dort die <span class="osd">AUSSCHNEIDEN</span>-Funktion anwenden.`, en: `Apply the <span class="osd">CROP</span> function to that copy.` },
   chipRawConv: { de: "Handbuch: RAW-Konvertierung · S. 220", en: "Manual: RAW conversion · p. 220" },
   chipJpegHeif: { de: "Handbuch: JPEG/HEIF · S. 129", en: "Manual: JPEG/HEIF · p. 129" },
+  chipCrop: { de: "Handbuch: Ausschneiden · S. 225", en: "Manual: crop · p. 225" },
   chipExercise: { de: "Übung: RAW-Konvertierung üben", en: "Exercise: practice RAW conversion" },
   chipSos: { de: "SOS: Bilder plötzlich schwarzweiß", en: "SOS: shots suddenly black &amp; white" },
   manualsHeading: { de: "Handbücher", en: "Manuals" },
@@ -104,7 +114,8 @@ export function render(locale) {
   // Both language editions of the manual share identical pagination (see
   // CLAUDE.md), so these page numbers are valid in both locales.
   const pageChips = `<button class="chip" onclick="openPage(220)">${icon("book")}${t.chipRawConv}</button>
-    <button class="chip" onclick="openPage(129)">${icon("book")}${t.chipJpegHeif}</button>`;
+    <button class="chip" onclick="openPage(129)">${icon("book")}${t.chipJpegHeif}</button>
+    <button class="chip" onclick="openPage(225)">${icon("book")}${t.chipCrop}</button>`;
 
   const videosDe = `<h2>${t.videosDeHeading}</h2>
   <a class="lnk" href="https://www.youtube.com/watch?v=2gh4e6giFfQ"><em>${t.ytMust}</em><b>${t.vid1title}</b><span>${t.vid1desc}</span></a>
@@ -148,6 +159,14 @@ export function render(locale) {
     ${renderSteps([t.step1, t.step2, t.step3, t.step4, t.step5])}
     <p class="hint">${t.step2Hint}</p>
     <p class="hint">${t.bwHint}</p>
+    <p class="hint">${t.rawOnlyHint}</p>
+  </div>
+
+  <div class="card">
+    <p style="margin-top:0"><b>${t.reframeHeading}</b></p>
+    <p>${t.reframeIntro}</p>
+    <p>${t.combineIntro}</p>
+    ${renderSteps([t.combineStep1, t.combineStep2, t.combineStep3])}
   </div>
 
   <details>
