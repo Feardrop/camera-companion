@@ -78,6 +78,7 @@ const STATIC_SHELL_ASSETS = [
   "./manifest.webmanifest",
   "./assets/css/style.css",
   "./assets/js/ui.js",
+  "./assets/js/start.js",
   "./assets/js/presets.js",
   "./assets/js/manual.js",
   "./assets/js/exercises.js",
@@ -90,6 +91,13 @@ const STATIC_SHELL_ASSETS = [
   "./assets/icons/icon-512.png",
   "./assets/icons/icon-maskable-512.png",
   "./assets/icons/apple-touch-icon.png",
+  "./assets/fonts/fraunces-600.woff2",
+  "./assets/fonts/fraunces-700.woff2",
+  "./assets/fonts/plex-sans-400.woff2",
+  "./assets/fonts/plex-sans-600.woff2",
+  "./assets/fonts/plex-sans-700.woff2",
+  "./assets/fonts/plex-mono-400.woff2",
+  "./assets/fonts/plex-mono-500.woff2",
   "./X-H2S_Einfuehrung_und_Lernpfad.pdf",
 ];
 
@@ -108,6 +116,10 @@ function copyStaticAssets(locale) {
   cpSync(join(SRC_DIR, "css"), join(outDir, "assets/css"), { recursive: true });
   cpSync(join(SRC_DIR, "js"), join(outDir, "assets/js"), { recursive: true });
   cpSync(join(SRC_DIR, "icons"), join(outDir, "assets/icons"), { recursive: true });
+  mkdirSync(join(outDir, "assets/fonts"), { recursive: true });
+  for (const f of ["fraunces-600.woff2", "fraunces-700.woff2", "plex-sans-400.woff2", "plex-sans-600.woff2", "plex-sans-700.woff2", "plex-mono-400.woff2", "plex-mono-500.woff2"]) {
+    cpSync(join(SRC_DIR, "fonts", f), join(outDir, "assets/fonts", f));
+  }
   cpSync(join(SRC_DIR, `data/manual-${locale}.js`), join(outDir, "assets/data/manual.js"));
   cpSync(join(SRC_DIR, `manual-${locale}.pdf`), join(outDir, "manual.pdf"));
   writeFileSync(join(outDir, "manifest.webmanifest"), generateManifest(MANIFEST, locale), "utf8");

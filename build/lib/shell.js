@@ -1,12 +1,13 @@
 import { renderHead } from "./partials/head.js";
 import { renderHeader } from "./partials/header.js";
 import { renderNav } from "./partials/nav.js";
+import { renderIconSprite, icon } from "./partials/icons.js";
 import { otherLocaleUrl as siblingUrl } from "./i18n.js";
 
 function renderBreadcrumb(page, pages) {
   if (!page.parent) return "";
   const parent = pages.find(p => p.slug === page.parent);
-  return `<a class="back" href="${parent.file}">‹ ${parent.label}</a>`;
+  return `<a class="back" href="${parent.file}">${icon("chevron-left")} ${parent.label}</a>`;
 }
 
 // Wraps a page's inner <main> HTML with the shared <head>/header/nav shell.
@@ -32,6 +33,7 @@ ${renderHead(page, locale)}
 </head>
 <body data-page="${page.slug}">
 <script>window.__LOCALE__=${JSON.stringify(locale)};window.__OTHER_LOCALE_URL__=${JSON.stringify(otherLocaleUrl)};</script>
+${renderIconSprite()}
 ${renderHeader(locale)}
 <main>
 ${renderBreadcrumb(page, pages)}

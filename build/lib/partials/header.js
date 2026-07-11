@@ -1,3 +1,5 @@
+import { icon } from "./icons.js";
+
 const BRAND = { de: "REISEBEGLEITER", en: "COMPANION" };
 const SUBTITLE = {
   de: "Tutorial · Presets · SOS · Handbuch · Übungen",
@@ -6,5 +8,5 @@ const SUBTITLE = {
 const SEARCH_LABEL = { de: "Suche", en: "Search" };
 
 export function renderHeader(locale) {
-  return `<header><button class="search-btn" type="button" aria-label="${SEARCH_LABEL[locale]}" onclick="openSearch()">🔍</button><h1>X-H2S <b>${BRAND[locale]}</b></h1><p>${SUBTITLE[locale]}</p></header>`;
+  return `<header><button class="search-btn" type="button" aria-label="${SEARCH_LABEL[locale]}" onclick="openSearch()">${icon("search")}</button><h1>X-H2S <b>${BRAND[locale]}</b></h1><p>${SUBTITLE[locale]}</p></header>`;
 }

@@ -28,6 +28,8 @@ src/manual-en.pdf               vendorte offizielle Handbuch-PDF (englisch)
 src/data/manual-de.js           Volltext des dt. Handbuchs als JS-Array (404 Seiten, ~450 KB)
 src/data/manual-en.js           Volltext des engl. Handbuchs als JS-Array (404 Seiten, ~410 KB)
 src/icons/                      App-Icons (192/512/maskable/apple-touch)
+src/fonts/                      vendorte Web-Fonts (Fraunces, IBM Plex Sans/Mono), SIL OFL 1.1
+build/lib/partials/icons.js    SVG-Icon-Set (ersetzt sämtliche Emoji als UI-Symbole)
 content/data/manifest.js         PWA-Manifest-Inhalt (Name, Icons, Standalone-Modus), zweisprachig
 docs/                             GENERIERT — nicht von Hand bearbeiten, wird bei jedem Build überschrieben
 ```
