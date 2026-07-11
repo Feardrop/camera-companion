@@ -36,13 +36,21 @@ export function buildSearchIndex({ SOS, PRESETS, EX, TUTORIAL, MENU_PATHS, RAW_S
   const docs = [];
 
   for (const s of SOS) {
-    docs.push({ id: `sos-${s.id}`, type: "sos", title: s.summary, target: `${fileFor("sos")}#${s.id}`, text: sosText(s) });
+    docs.push({
+      id: `sos-${s.id}`,
+      type: "sos",
+      title: s.summary,
+      target: `${fileFor("sos")}#${s.id}`,
+      text: sosText(s),
+    });
   }
 
   for (const p of PRESETS) {
     const label = p.id === "VID" ? p.videoLabel : p.id;
     docs.push({
-      id: `preset-${p.id}`, type: "preset", title: `${label} · ${p.title}`,
+      id: `preset-${p.id}`,
+      type: "preset",
+      title: `${label} · ${p.title}`,
       target: `${fileFor("presets")}?preset=${p.id}`,
       text: `${p.look} ${stripHtml(p.use)} ${stripHtml(p.note)}`,
     });
@@ -50,21 +58,42 @@ export function buildSearchIndex({ SOS, PRESETS, EX, TUTORIAL, MENU_PATHS, RAW_S
 
   EX.forEach((e, i) => {
     docs.push({
-      id: `ex-${i}`, type: "exercise", title: e.t, target: `${fileFor("exercises")}#ex-${i}`,
+      id: `ex-${i}`,
+      type: "exercise",
+      title: e.t,
+      target: `${fileFor("exercises")}#ex-${i}`,
       text: `${e.steps.map(stripHtml).join(" ")} ${stripHtml(e.goal)}`,
     });
   });
 
   for (const ch of TUTORIAL) {
-    docs.push({ id: `tutorial-${ch.id}`, type: "tutorial", title: `Tutorial ${ch.num} · ${stripHtml(ch.title)}`, target: `${fileFor("start")}#${ch.id}`, text: tutorialText(ch) });
+    docs.push({
+      id: `tutorial-${ch.id}`,
+      type: "tutorial",
+      title: `Tutorial ${ch.num} · ${stripHtml(ch.title)}`,
+      target: `${fileFor("start")}#${ch.id}`,
+      text: tutorialText(ch),
+    });
   }
 
   for (const [key, desc] of MENU_PATHS) {
-    docs.push({ id: `menupath-${key}`, type: "menupath", title: key, target: fileFor("reference"), text: `${key} ${stripHtml(desc)}` });
+    docs.push({
+      id: `menupath-${key}`,
+      type: "menupath",
+      title: key,
+      target: fileFor("reference"),
+      text: `${key} ${stripHtml(desc)}`,
+    });
   }
 
   for (const [key, desc] of RAW_SETTINGS) {
-    docs.push({ id: `raw-${key}`, type: "raw-setting", title: key, target: `${fileFor("reference")}#raw-conversion`, text: `${key} ${stripHtml(desc)}` });
+    docs.push({
+      id: `raw-${key}`,
+      type: "raw-setting",
+      title: key,
+      target: `${fileFor("reference")}#raw-conversion`,
+      text: `${key} ${stripHtml(desc)}`,
+    });
   }
 
   const json = JSON.stringify(docs, null, 1);

@@ -1,0 +1,11 @@
+npm run verify
+
+# Belt-and-suspenders check for the pre-commit hook's docs/ rule, in case a
+# commit was made with --no-verify: fail the push if docs/ (rebuilt by
+# `npm run verify` above) doesn't match what's committed.
+if ! git diff --quiet -- docs; then
+  echo ""
+  echo "docs/ is out of sync with content/ or src/ — run: npm run build && git add docs && git commit"
+  echo ""
+  exit 1
+fi

@@ -62,7 +62,15 @@ function highlightAndScroll(container, query) {
 // Text-Layer-Overlay in `textLayerEl`. Markiert `query` im Text-Layer und
 // scrollt zum ersten Treffer, falls angegeben. Ruft `onFallback()` auf,
 // wenn das PDF nicht geladen/gerendert werden kann.
-export async function renderPdfPage({ pdfUrl, pdfPageNum, canvasEl, textLayerEl, containerWidth, query, onFallback }) {
+export async function renderPdfPage({
+  pdfUrl,
+  pdfPageNum,
+  canvasEl,
+  textLayerEl,
+  containerWidth,
+  query,
+  onFallback,
+}) {
   let lib, doc, page;
   try {
     lib = await loadPdfjs();
@@ -97,7 +105,11 @@ export async function renderPdfPage({ pdfUrl, pdfPageNum, canvasEl, textLayerEl,
   try {
     await page.render({ canvasContext: ctx, viewport, transform }).promise;
     const textContent = await page.getTextContent();
-    const textLayer = new lib.TextLayer({ textContentSource: textContent, container: textLayerEl, viewport });
+    const textLayer = new lib.TextLayer({
+      textContentSource: textContent,
+      container: textLayerEl,
+      viewport,
+    });
     await textLayer.render();
     highlightAndScroll(textLayerEl, query);
     return true;

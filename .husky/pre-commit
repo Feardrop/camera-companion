@@ -1,0 +1,14 @@
+# Enforce this repo's #1 rule (see CLAUDE.md's "Running / developing"):
+# after editing content/ or src/, docs/ must be rebuilt before committing.
+if git diff --cached --name-only | grep -qE '^(content|src)/'; then
+  npm run build > /dev/null
+  if ! git diff --quiet -- docs; then
+    echo ""
+    echo "content/ or src/ changed but docs/ wasn't rebuilt to match it."
+    echo "Run: npm run build && git add docs"
+    echo ""
+    exit 1
+  fi
+fi
+
+npx lint-staged
