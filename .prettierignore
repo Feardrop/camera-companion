@@ -1,0 +1,18 @@
+# Generated output — never hand-edited, let alone formatted.
+docs/
+
+# Hand-aligned bilingual content ({de,en} pairs formatted for
+# translator/reviewer readability) and the deliberately compact stylesheet —
+# see CLAUDE.md's "Design system" and "Conventions to preserve" sections.
+# Reformatting these would blow away the manual alignment, not just change
+# whitespace.
+content/
+src/css/
+src/data/
+
+# Vendored / binary / third-party.
+src/js/vendor/
+src/fonts/
+src/icons/
+*.pdf
+X-H2S Reisebegleiter.html

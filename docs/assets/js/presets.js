@@ -13,7 +13,9 @@ function pick(id) {
 }
 function showAllPresets() {
   document.querySelectorAll(".stop").forEach(s => s.classList.remove("sel"));
-  document.querySelectorAll("#presetCards .filmcard").forEach(c => { c.style.display = ""; });
+  document.querySelectorAll("#presetCards .filmcard").forEach(c => {
+    c.style.display = "";
+  });
   const back = document.getElementById("presetBack");
   if (back) back.style.display = "none";
 }

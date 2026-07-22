@@ -1,6 +1,6 @@
 // GENERATED FILE — computed by build/lib/sw-gen.js from build/build.js's shell file
 // list. Do not hand-edit; SHELL and CACHE regenerate automatically on every build.
-const CACHE = "xh2s-v1.0.0-18ce2f89";
+const CACHE = "xh2s-v1.0.0-1f1375ef";
 const SHELL = [
     "./",
     "./index.html",

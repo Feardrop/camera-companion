@@ -117,13 +117,24 @@ function copyStaticAssets(locale) {
   cpSync(join(SRC_DIR, "js"), join(outDir, "assets/js"), { recursive: true });
   cpSync(join(SRC_DIR, "icons"), join(outDir, "assets/icons"), { recursive: true });
   mkdirSync(join(outDir, "assets/fonts"), { recursive: true });
-  for (const f of ["fraunces-600.woff2", "fraunces-700.woff2", "plex-sans-400.woff2", "plex-sans-600.woff2", "plex-sans-700.woff2", "plex-mono-400.woff2", "plex-mono-500.woff2"]) {
+  for (const f of [
+    "fraunces-600.woff2",
+    "fraunces-700.woff2",
+    "plex-sans-400.woff2",
+    "plex-sans-600.woff2",
+    "plex-sans-700.woff2",
+    "plex-mono-400.woff2",
+    "plex-mono-500.woff2",
+  ]) {
     cpSync(join(SRC_DIR, "fonts", f), join(outDir, "assets/fonts", f));
   }
   cpSync(join(SRC_DIR, `data/manual-${locale}.js`), join(outDir, "assets/data/manual.js"));
   cpSync(join(SRC_DIR, `manual-${locale}.pdf`), join(outDir, "manual.pdf"));
   writeFileSync(join(outDir, "manifest.webmanifest"), generateManifest(MANIFEST, locale), "utf8");
-  cpSync(join(SRC_DIR, "X-H2S_Einfuehrung_und_Lernpfad.pdf"), join(outDir, "X-H2S_Einfuehrung_und_Lernpfad.pdf"));
+  cpSync(
+    join(SRC_DIR, "X-H2S_Einfuehrung_und_Lernpfad.pdf"),
+    join(outDir, "X-H2S_Einfuehrung_und_Lernpfad.pdf"),
+  );
 }
 
 function buildPages(locale) {
@@ -164,7 +175,11 @@ function buildSearchIndexFile(locale) {
 function buildStringsFile(locale) {
   const outDir = outDirFor(locale);
   const extra = { manualPdfUrl: MANUAL_PDF_URL };
-  writeFileSync(join(outDir, "assets/data/strings.js"), generateStringsFile(STRINGS, locale, extra), "utf8");
+  writeFileSync(
+    join(outDir, "assets/data/strings.js"),
+    generateStringsFile(STRINGS, locale, extra),
+    "utf8",
+  );
 }
 
 function buildServiceWorker(locale, pageFiles) {
@@ -181,5 +196,7 @@ for (const locale of LOCALES) {
   buildStringsFile(locale);
   buildServiceWorker(locale, pageFiles);
   const rel = outDirFor(locale) === DOCS_DIR ? "docs" : `docs/${locale}`;
-  console.log(`Built ${pageFiles.length} pages + sw.js + search-index.js + strings.js into ${rel}/ (${locale}, v${VERSION})`);
+  console.log(
+    `Built ${pageFiles.length} pages + sw.js + search-index.js + strings.js into ${rel}/ (${locale}, v${VERSION})`,
+  );
 }

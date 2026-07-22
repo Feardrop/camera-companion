@@ -6,11 +6,12 @@ durchsuchbares Handbuch, Übungsplan und Notiz-Formular. Zweisprachig — Englis
 ## Struktur
 
 Quellcode liegt in `content/` (Seiten-/Daten-Definitionen) und `src/` (statische Browser-Assets); ein kleiner
-Node-Build (`node build/build.js`, keine Abhängigkeiten) fügt beides zu **zwei parallelen Baumstrukturen**
-zusammen: `docs/` (Englisch, der Ordner, den GitHub Pages tatsächlich veröffentlicht) und `docs/de/`
-(Deutsch). Beide verwenden dieselben (englischen) Dateinamen — nur der Inhalt unterscheidet sich. **Nach
-jeder Änderung unter `content/` oder `src/` einmal den Build laufen lassen**, bevor committet wird. Siehe
-`CLAUDE.md` für die vollständige Architektur-Doku (inkl. i18n-Mechanismus).
+Node-Build (`node build/build.js`, ohne Laufzeit-Abhängigkeiten) fügt beides zu **zwei parallelen
+Baumstrukturen** zusammen: `docs/` (Englisch, der Ordner, den GitHub Pages tatsächlich veröffentlicht) und
+`docs/de/` (Deutsch). Beide verwenden dieselben (englischen) Dateinamen — nur der Inhalt unterscheidet sich.
+**Nach jeder Änderung unter `content/` oder `src/` einmal den Build laufen lassen**, bevor committet wird
+(wird auch per Git-Hook erzwungen, siehe „Tooling" unten). Siehe `CLAUDE.md` für die vollständige
+Architektur-Doku (inkl. i18n-Mechanismus).
 
 ```
 content/pages.js            Seitenliste (Datei, Slug, Icon, zweisprachiges Label/Titel, Tab-Zugehörigkeit)
@@ -33,6 +34,25 @@ build/lib/partials/icons.js    SVG-Icon-Set (ersetzt sämtliche Emoji als UI-Sym
 content/data/manifest.js         PWA-Manifest-Inhalt (Name, Icons, Standalone-Modus), zweisprachig
 docs/                             GENERIERT — nicht von Hand bearbeiten, wird bei jedem Build überschrieben
 ```
+
+## Tooling
+
+Einmalig `npm ci` ausführen (installiert nur Contributor-Tooling als `devDependencies` — ESLint, Prettier,
+commitlint, Husky; der Build selbst bleibt abhängigkeitsfrei). Danach:
+
+- `npm run lint` / `npm run lint:fix` — ESLint (`eslint.config.js`)
+- `npm run format` / `npm run format:check` — Prettier (Umfang bewusst eingeschränkt, siehe
+  `.prettierignore` bzw. `CLAUDE.md`'s „Tooling"-Abschnitt — `content/**` und `src/css/` bleiben
+  unangetastet, da dort absichtlich handformatiert wird)
+- `npm run build` — wie oben
+- `npm run verify` — alle drei zusammen
+
+Git-Hooks (Husky, `.husky/`) laufen automatisch: `pre-commit` prüft, dass `docs/` zu geänderten
+`content/`/`src/`-Dateien passt, und lintet/formatiert gestagte Dateien; `commit-msg` erzwingt
+[Conventional Commits](https://www.conventionalcommits.org/) (`commitlint.config.js`); `pre-push` führt
+`npm run verify` aus. Dieselben Prüfungen laufen zusätzlich in CI (`.github/workflows/ci.yml`) auf jeden
+Push nach `main` und jeden Pull Request — die CI deployt nichts, GitHub Pages bedient weiterhin direkt aus
+dem committeten `docs/`-Ordner.
 
 ## Konventionen
 

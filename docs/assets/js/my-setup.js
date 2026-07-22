@@ -9,9 +9,11 @@ document.querySelectorAll("#fields [data-field]").forEach(el => {
 
 function saveFields() {
   const data = {};
-  document.querySelectorAll("#fields [data-field]").forEach(el => { data[el.dataset.field] = el.value; });
+  document.querySelectorAll("#fields [data-field]").forEach(el => {
+    data[el.dataset.field] = el.value;
+  });
   const ok = store.set("fields", data);
   const m = document.getElementById("savedMsg");
   m.textContent = ok ? t("saved") : t("saveUnavailable");
-  setTimeout(() => m.textContent = "", 4000);
+  setTimeout(() => (m.textContent = ""), 4000);
 }
